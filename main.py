@@ -2,17 +2,18 @@ import discord
 from discord.ext import commands
 import config
 import logging
+from logging.handlers import RotatingFileHandler
 import asyncio
 import random
 import time
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
-handler = logging.FileHandler(filename='discordbot.log', encoding='utf-8', mode='w')
+handler = RotatingFileHandler(filename='discordbot.log', maxBytes=1024, encoding='utf-8', mode='w')
 handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
 
-description = '''Kleiner Test Bot in Python, einfach weil ichs kann'''
+description = '''Kleiner Test Bot in Python, Discord.py rockt'''
 bot = commands.Bot(command_prefix=config.__prefix__, description=description)
 
 @bot.event
@@ -49,6 +50,7 @@ async def ping(ctx):
     '''Misst die Response Time'''
     ping = ctx.message
     pong = await bot.say(':ping_pong: Pong!')
+    await bot.send_typing(ctx.message.channel)
     delta = pong.timestamp - ping.timestamp
     delta = int(delta.total_seconds() * 1000)
     await bot.edit_message(pong, ':ping_pong: Pong! ({0} ms)'.format(delta))
@@ -56,13 +58,14 @@ async def ping(ctx):
 @bot.command()
 async def github():
     '''Weil Open Source cool ist'''
-    await bot.say('https://github.com/Der-Eddy/discord_bot')
+    await bot.say(':free: https://github.com/Der-Eddy/discord_bot')
 
-@bot.command()
-async def echo(*message):
+@bot.command(pass_context=True)
+async def echo(ctx, *message):
     '''Gibt ne Nachricht aus'''
     msg = ':mega: ' + ' '.join(message)
     await bot.say(msg)
+    await bot.delete_message(ctx.message)
 
 startTime = time.time()
 bot.run(config.__token__)

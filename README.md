@@ -3,7 +3,7 @@ Discord Bot
 
 This is mostly a german discord bot made with [discord.py](https://github.com/Rapptz/discord.py).
 
-Ihr benötigt mindestens Python 3.5 + [discord.py](https://github.com/Rapptz/discord.py) für diesen Bot und einen Discord Bot Account ([Infos über Bot Accounts bei discordapp.com/developers/](https://discordapp.com/developers/applications/me)).  
+Ihr benötigt mindestens Python 3.5 + [discord.py](https://github.com/Rapptz/discord.py) für diesen Bot und einen Discord Bot Account (siehe weiter unten).
 Vor dem Start muss im selben Ordner wie `main.py` eine Datei namens `config.py` angelegt werden, ein Beispiel einer solchen gibt es in `config.example.py` zu finden:
 
     __token__ = 'INSERT BOT TOKEN HERE'
@@ -15,6 +15,11 @@ Vor dem Start muss im selben Ordner wie `main.py` eine Datei namens `config.py` 
 Eine Auflistung aller Befehle gibt es unter `:help` (Standardpräfix)
 
 ![help command](https://i.imgur.com/CMms1if.png)
+
+Bot Accounts
+-------------
+Allgemeine Infos zu Discord Bot Accounts gibt es bei [discordapp.com/developers/](https://discordapp.com/developers/applications/me).  
+Einen Bot Account fügt man dann über diesen Link hinzu (Token einfügen nicht vergessen): `https://discordapp.com/oauth2/authorize?client_id=BOTTOKEN&scope=bot&permissions=0`
 
 License
 -------------

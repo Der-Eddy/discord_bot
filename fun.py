@@ -31,12 +31,13 @@ class fun():
         '''Counter Strike: Source'''
         await self.bot.say('http://i.imgur.com/TgPKFTz.gif')
 
-    @commands.command()
-    async def countdown(self):
+    @commands.command(pass_context=True)
+    async def countdown(self, ctx):
         '''It's the final countdown'''
         countdown = ['five', 'four', 'three', 'two', 'one']
         for num in countdown:
             await self.bot.say(':{0}:'.format(num))
+            await self.bot.send_typing(ctx.message.channel)
             await asyncio.sleep(1)
         await self.bot.say(':ok: DING DING DING')
 
