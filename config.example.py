@@ -1,0 +1,5 @@
+__token__ = 'INSERT BOT TOKEN HERE'
+__prefix__ = ':'
+__game__ = 'with Senpai'
+__adminid__ = 'YOUR USERID i.e. 102815825781596160'
+__adminrole__ = 'Administrator'
