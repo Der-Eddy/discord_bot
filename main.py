@@ -1,11 +1,21 @@
 import discord
 from discord.ext import commands
-import config
 import logging
 from logging.handlers import RotatingFileHandler
 import asyncio
 import random
 import time
+
+try:
+    from config import __token__, __prefix__, __game__, __adminid__, __adminrole__
+except ImportError:
+    #Heorku stuff
+    import os
+    __token__ = os.environ.get('DISCORD_TOKEN')
+    __prefix__ = os.environ.get('DISCORD_PREFIX')
+    __game__ = os.environ.get('DISCORD_GAME')
+    __adminid__ = os.environ.get('DISCORD_ADMINID')
+    __adminrole__ = os.environ.get('DISCORD_ADMINROLE')
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -14,7 +24,7 @@ handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(me
 logger.addHandler(handler)
 
 description = '''Kleiner Test Bot in Python, Discord.py rockt'''
-bot = commands.Bot(command_prefix=config.__prefix__, description=description)
+bot = commands.Bot(command_prefix=__prefix__, description=description)
 
 @bot.event
 async def on_ready():
@@ -22,7 +32,7 @@ async def on_ready():
     print(bot.user.name)
     print(bot.user.id)
     print('------')
-    await bot.change_status(discord.Game(name=config.__game__))
+    await bot.change_status(discord.Game(name=__game__))
     bot.load_extension('fun')
     bot.load_extension('admin')
 
@@ -68,4 +78,4 @@ async def echo(ctx, *message):
     await bot.delete_message(ctx.message)
 
 startTime = time.time()
-bot.run(config.__token__)
+bot.run(__token__)

@@ -1,11 +1,21 @@
 import discord
 from discord.ext import commands
-import config
 import sys
+
+try:
+    from config import __token__, __prefix__, __game__, __adminid__, __adminrole__
+except ImportError:
+    #Heorku stuff
+    import os
+    __token__ = os.environ.get('DISCORD_TOKEN')
+    __prefix__ = os.environ.get('DISCORD_PREFIX')
+    __game__ = os.environ.get('DISCORD_GAME')
+    __adminid__ = os.environ.get('DISCORD_ADMINID')
+    __adminrole__ = os.environ.get('DISCORD_ADMINROLE')
 
 class admin():
     '''Praktische Befehle für Administratoren'''
-    admin = config.__adminrole__
+    admin = __adminrole__
 
     def __init__(self, bot):
         self.bot = bot
