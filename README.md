@@ -1,6 +1,9 @@
 Discord Bot
 =====================
 
+[![Python3](https://img.shields.io/badge/python-3.5-blue.svg)](https://github.com/Der-Eddy/discord_bot)
+[![GitHub license](https://img.shields.io/badge/license-Unlicense-blue.svg)](https://raw.githubusercontent.com/Der-Eddy/discord_bot/master/LICENSE)
+
 This is mostly a german discord bot made with [discord.py](https://github.com/Rapptz/discord.py). This Bot also support Heroku.
 
 Ihr benötigt mindestens Python 3.5 + [discord.py](https://github.com/Rapptz/discord.py) für diesen Bot und einen Discord Bot Account (siehe weiter unten).
@@ -19,7 +22,8 @@ Eine Auflistung aller Befehle gibt es unter `:help` (Standardpräfix)
 Bot Accounts
 -------------
 Allgemeine Infos zu Discord Bot Accounts gibt es bei [discordapp.com/developers/](https://discordapp.com/developers/applications/me).  
-Einen Bot Account fügt man dann über diesen Link hinzu (Token einfügen nicht vergessen): `https://discordapp.com/oauth2/authorize?client_id=BOTTOKEN&scope=bot&permissions=0`
+Einen Bot Account fügt man dann über diesen Link hinzu (CLIENT ID einfügen nicht vergessen):  
+`https://discordapp.com/oauth2/authorize?client_id=CLIENTID&scope=bot&permissions=0`
 
 Full list of requirements
 -------------

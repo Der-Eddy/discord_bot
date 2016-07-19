@@ -40,11 +40,10 @@ async def on_ready():
 async def uptime():
     '''Wie lange bin ich schon online?'''
     timeUp = time.time() - startTime
-    hoursUp = timeUp // 36000
-    timeUp %= 36000
-    minutesUp = (timeUp // 60) - (hoursUp * 60)
-    timeUp = round(timeUp % 60, 0)
-    msg = ":up: Ich bin online seit: *{0:n} Stunden, {1:n} Minuten und {2:n} Sekunden*".format(hoursUp, minutesUp, timeUp)
+    hours = timeUp / 3600
+    minutes = (timeUp / 60) % 60
+    seconds = timeUp % 60
+    msg = ":up: Ich bin online seit: *{0:.0f} Stunden, {1:.0f} Minuten und {2:.0f} Sekunden*".format(hours, minutes, seconds)
     await bot.say(msg)
 
 @bot.command(pass_context=True)
@@ -60,7 +59,6 @@ async def ping(ctx):
     '''Misst die Response Time'''
     ping = ctx.message
     pong = await bot.say(':ping_pong: Pong!')
-    await bot.send_typing(ctx.message.channel)
     delta = pong.timestamp - ping.timestamp
     delta = int(delta.total_seconds() * 1000)
     await bot.edit_message(pong, ':ping_pong: Pong! ({0} ms)'.format(delta))
