@@ -5,6 +5,7 @@ from logging.handlers import RotatingFileHandler
 import asyncio
 import random
 import time
+import platform
 
 try:
     from config import __token__, __prefix__, __game__, __adminid__, __adminrole__
@@ -16,7 +17,7 @@ except ImportError:
     __game__ = os.environ.get('DISCORD_GAME')
     __adminid__ = os.environ.get('DISCORD_ADMINID')
     __adminrole__ = os.environ.get('DISCORD_ADMINROLE')
-__version__ = '0.2.1'
+__version__ = '0.2.2'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -54,6 +55,7 @@ async def status():
     msg += 'Benutzer / Server  : %s in %s Server\n' % (users, len(bot.servers))
     msg += 'Bot Version        : %s\n' % __version__
     msg += 'Discord.py Version : %s\n' % discord.__version__
+    msg += 'Python Version     : %s\n' % platform.python_version()
     msg += 'GitHub             : https://github.com/Der-Eddy/discord_bot```'
     await bot.say(msg)
 

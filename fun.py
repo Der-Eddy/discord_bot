@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 import asyncio
+import aiohttp
 
 class fun():
     def __init__(self, bot):
@@ -39,6 +40,16 @@ class fun():
             await self.bot.say(':{0}:'.format(num))
             await asyncio.sleep(1)
         await self.bot.say(':ok: DING DING DING')
+
+    @commands.command()
+    async def neko(self):
+        '''Zufällige Katzen Bilder meow~'''
+        #http://discordpy.readthedocs.io/en/latest/faq.html#what-does-blocking-mean
+        async with aiohttp.get('http://random.cat/meow') as r:
+            if r.status == 200:
+                js = await r.json()
+                await self.bot.say(js['file'])
+
 
     @commands.command(pass_context=True)
     async def steinigt(self, ctx, *member:str):
