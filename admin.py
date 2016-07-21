@@ -51,14 +51,18 @@ class admin():
 
     @commands.command(pass_context=True)
     async def nickname(self, ctx, *name):
-        '''Ändert den Nickname vom Bot FUNZT ATM NICHT'''
+        '''Ändert den Nickname vom Bot'''
         author = ctx.message.author
         if self.checkRole(author, self.admin):
             nickname = ' '.join(name)
-            await self.bot.change_nickname(self.bot.user.id, nickname)
-            await self.bot.say(':ok: Ändere meinen Namen zu: **{0}**'.format(nickname))
+            await self.bot.change_nickname(ctx.message.server.get_member(self.bot.user.id), nickname)
+            if nickname:
+                msg = ':ok: Ändere meinen Namen zu: **{0}**'.format(nickname)
+            else:
+                msg = ':ok: Reset von meinem Nickname auf: **{0}**'.format(self.bot.user.name)
         else:
-            await self.bot.say(':no_entry: Du hast nicht die Rolle {0}!'.format(self.admin))
+            msg = ':no_entry: Du hast nicht die Rolle {0}!'.format(self.admin)
+        await self.bot.say(msg)
 
 def setup(bot):
     bot.add_cog(admin(bot))
