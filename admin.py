@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 import sys
+import asyncio
 
 try:
     from config import __token__, __prefix__, __game__, __adminid__, __adminrole__
@@ -48,6 +49,17 @@ class admin():
             await self.bot.say(':ok: Ändere das Spiel zu: Playing **{0}**'.format(gameName))
         else:
             await self.bot.say(':no_entry: Du hast nicht die Rolle {0}!'.format(self.admin))
+
+    @commands.command(pass_context=True)
+    async def purge(self, ctx, *limit):
+        '''Löscht mehere Nachrichten auf einmal'''
+        author = ctx.message.author
+        if self.checkRole(author, self.admin):
+            deleted = await self.bot.purge_from(ctx.message.channel, limit=int(limit[0]), before=ctx.message)
+            tmp = await self.bot.send_message(ctx.message.channel, ':put_litter_in_its_place: {0} Nachrichten gelöscht'.format(len(deleted)))
+            await self.bot.delete_message(ctx.message)
+            await asyncio.sleep(2)
+            await self.bot.delete_message(tmp)
 
     @commands.command(pass_context=True)
     async def nickname(self, ctx, *name):
