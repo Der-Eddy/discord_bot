@@ -17,7 +17,7 @@ Vor dem Start muss im selben Ordner wie `main.py` eine Datei namens `config.py` 
 
 Eine Auflistung aller Befehle gibt es unter `:help` (Standardpräfix)
 
-![help command](https://i.imgur.com/CMms1if.png)
+![help command](https://i.imgur.com/FmhgYmg.png)
 
 Bot Accounts
 -------------
