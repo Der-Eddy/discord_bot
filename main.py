@@ -17,7 +17,7 @@ except ImportError:
     __game__ = os.environ.get('DISCORD_GAME')
     __adminid__ = os.environ.get('DISCORD_ADMINID')
     __adminrole__ = os.environ.get('DISCORD_ADMINROLE')
-__version__ = '0.2.3'
+__version__ = '0.2.4'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)

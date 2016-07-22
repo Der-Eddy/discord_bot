@@ -43,7 +43,7 @@ class fun():
 
     @commands.command()
     async def neko(self):
-        '''Zufällige Katzen Bilder meow~'''
+        '''Zufällige Katzen Bilder nyan~'''
         #http://discordpy.readthedocs.io/en/latest/faq.html#what-does-blocking-mean
         async with aiohttp.get('http://random.cat/meow') as r:
             if r.status == 200:

@@ -55,8 +55,13 @@ class admin():
         '''Löscht mehere Nachrichten auf einmal'''
         author = ctx.message.author
         if self.checkRole(author, self.admin):
-            deleted = await self.bot.purge_from(ctx.message.channel, limit=int(limit[0]), before=ctx.message)
-            tmp = await self.bot.send_message(ctx.message.channel, ':put_litter_in_its_place: {0} Nachrichten gelöscht'.format(len(deleted)))
+            limit = int(limit[0])
+            deleted = 0
+            while limit > 1:
+                cap = min(limit, 100)
+                deleted += len(await self.bot.purge_from(ctx.message.channel, limit=cap, before=ctx.message))
+                limit -= cap
+            tmp = await self.bot.send_message(ctx.message.channel, ':put_litter_in_its_place: {0} Nachrichten gelöscht'.format(deleted))
             await self.bot.delete_message(ctx.message)
             await asyncio.sleep(2)
             await self.bot.delete_message(tmp)
