@@ -18,7 +18,7 @@ except ImportError:
     __adminid__ = os.environ.get('DISCORD_ADMINID')
     __adminrole__ = os.environ.get('DISCORD_ADMINROLE')
     __kawaiichannel__ = os.environ.get('DISCORD_KAWAIICHANNEL')
-__version__ = '0.2.6'
+__version__ = '0.2.7'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)

@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 import asyncio
 import aiohttp
+import random
 
 class fun():
     def __init__(self, bot):
@@ -50,6 +51,20 @@ class fun():
                 js = await r.json()
                 await self.bot.say(js['file'])
 
+
+    @commands.command(pass_context=True)
+    async def random(self, ctx, *arg):
+        '''Gibt eine zufällige Zahl aus'''
+        if not arg:
+            start = 0
+            end = 100
+        elif len(arg) == 1:
+            start = 0
+            end = int(arg[0])
+        elif len(arg) > 1:
+            start = int(arg[0])
+            end = int(arg[1])
+        await self.bot.say(':arrows_counterclockwise: Zufällige Zahl ({0} - {1}): {2}'.format(start, end, random.randint(start, end)))
 
     @commands.command(pass_context=True)
     async def steinigt(self, ctx, *member:str):
