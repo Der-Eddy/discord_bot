@@ -4,7 +4,7 @@ import sys
 import asyncio
 
 try:
-    from config import __token__, __prefix__, __game__, __adminid__, __adminrole__
+    from config import __token__, __prefix__, __game__, __adminid__, __adminrole__, __kawaiichannel__
 except ImportError:
     #Heorku stuff
     import os
@@ -13,6 +13,7 @@ except ImportError:
     __game__ = os.environ.get('DISCORD_GAME')
     __adminid__ = os.environ.get('DISCORD_ADMINID')
     __adminrole__ = os.environ.get('DISCORD_ADMINROLE')
+    __kawaiichannel__ = os.environ.get('DISCORD_KAWAIICHANNEL')
 
 class admin():
     '''Praktische Befehle für Administratoren'''

@@ -8,7 +8,7 @@ import time
 import platform
 
 try:
-    from config import __token__, __prefix__, __game__, __adminid__, __adminrole__
+    from config import __token__, __prefix__, __game__, __adminid__, __adminrole__, __kawaiichannel__
 except ImportError:
     #Heorku stuff
     import os
@@ -17,7 +17,8 @@ except ImportError:
     __game__ = os.environ.get('DISCORD_GAME')
     __adminid__ = os.environ.get('DISCORD_ADMINID')
     __adminrole__ = os.environ.get('DISCORD_ADMINROLE')
-__version__ = '0.2.4'
+    __kawaiichannel__ = os.environ.get('DISCORD_KAWAIICHANNEL')
+__version__ = '0.2.6'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -37,6 +38,7 @@ async def on_ready():
     await bot.change_status(discord.Game(name=__game__))
     bot.load_extension('fun')
     bot.load_extension('admin')
+    bot.load_extension('anime')
 
 @bot.command()
 async def status():
