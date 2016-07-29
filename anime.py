@@ -31,8 +31,8 @@ class anime():
             pins = await self.bot.pins_from(self.bot.get_channel(self.kawaiich))
             rnd = random.choice(pins)
             img = rnd.attachments[0]['url']
-            emoji = [':blush:', ':flushed:', ':heart_eyes:', ':heart_eyes_cat:']
-            await self.bot.say('{2} Von: {0}: {1}'.format(rnd.author.name, img, random.choice(emoji)))
+            emojis = [':blush:', ':flushed:', ':heart_eyes:', ':heart_eyes_cat:', ':heart:']
+            await self.bot.say('{2} Von: {0}: {1}'.format(rnd.author.name, img, random.choice(emojis)))
         else:
             await self.bot.say(':no_entry: Es wurde kein Channel für den Bot eingestellt! Wende dich bitte an den Bot Admin')
 

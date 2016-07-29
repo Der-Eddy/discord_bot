@@ -58,10 +58,10 @@ class fun():
     async def random(self, ctx, *arg):
         '''Gibt eine zufällige Zahl aus'''
         if not arg:
-            start = 0
+            start = 1
             end = 100
         elif len(arg) == 1:
-            start = 0
+            start = 1
             end = int(arg[0])
         elif len(arg) > 1:
             start = int(arg[0])
