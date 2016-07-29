@@ -49,7 +49,9 @@ class fun():
         async with aiohttp.get('http://random.cat/meow') as r:
             if r.status == 200:
                 js = await r.json()
-                await self.bot.say(js['file'])
+                emojis = [':cat2: ', ':cat: ', ':heart_eyes_cat: ']
+                msg = random.choice(emojis) + js['file']
+                await self.bot.say(msg)
 
 
     @commands.command(pass_context=True)
