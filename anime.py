@@ -30,7 +30,10 @@ class anime():
         if self.kawaiich:
             pins = await self.bot.pins_from(self.bot.get_channel(self.kawaiich))
             rnd = random.choice(pins)
-            img = rnd.attachments[0]['url']
+            try:
+                img = rnd.attachments[0]['url']
+            except IndexError:
+                img = rnd.content
             emojis = [':blush:', ':flushed:', ':heart_eyes:', ':heart_eyes_cat:', ':heart:']
             await self.bot.say('{2} Von: {0}: {1}'.format(rnd.author.name, img, random.choice(emojis)))
         else:
