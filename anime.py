@@ -35,7 +35,7 @@ class anime():
             except IndexError:
                 img = rnd.content
             emojis = [':blush:', ':flushed:', ':heart_eyes:', ':heart_eyes_cat:', ':heart:']
-            await self.bot.say('{2} Von: {0}: {1}'.format(rnd.author.name, img, random.choice(emojis)))
+            await self.bot.say('{2} Von: {0}: {1}'.format(rnd.author.display_name, img, random.choice(emojis)))
         else:
             await self.bot.say(':no_entry: Es wurde kein Channel für den Bot eingestellt! Wende dich bitte an den Bot Admin')
 

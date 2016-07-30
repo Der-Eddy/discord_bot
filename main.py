@@ -18,7 +18,7 @@ except ImportError:
     __adminid__ = os.environ.get('DISCORD_ADMINID')
     __adminrole__ = os.environ.get('DISCORD_ADMINROLE')
     __kawaiichannel__ = os.environ.get('DISCORD_KAWAIICHANNEL')
-__version__ = '0.2.8'
+__version__ = '0.2.9'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -26,7 +26,7 @@ handler = RotatingFileHandler(filename='discordbot.log', maxBytes=1024, encoding
 handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
 
-description = '''Kleiner Chat Bot in Python, Discord.py rockt'''
+description = '''Eddys Chat Bot in Python, Discord.py rockt'''
 bot = commands.Bot(command_prefix=__prefix__, description=description)
 
 @bot.event

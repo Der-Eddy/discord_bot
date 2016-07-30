@@ -8,6 +8,13 @@ class fun():
     def __init__(self, bot):
         self.bot = bot
 
+    def userOnline(self, memberList):
+        online = []
+        for i in memberList:
+            if i.status == discord.Status.online and i.bot == False:
+                online.append(i.mention)
+        return online
+
     @commands.command()
     async def cookie(self):
         '''Keks'''
@@ -56,17 +63,22 @@ class fun():
 
     @commands.command(pass_context=True)
     async def random(self, ctx, *arg):
-        '''Gibt eine zufällige Zahl aus'''
-        if not arg:
-            start = 1
-            end = 100
-        elif len(arg) == 1:
-            start = 1
-            end = int(arg[0])
-        elif len(arg) > 1:
-            start = int(arg[0])
-            end = int(arg[1])
-        await self.bot.say(':arrows_counterclockwise: Zufällige Zahl ({0} - {1}): {2}'.format(start, end, random.randint(start, end)))
+        '''Gibt eine zufällige Zahl oder Member aus'''
+        if ctx.invoked_subcommand is None:
+            if not arg:
+                start = 1
+                end = 100
+            elif arg[0] == 'user':
+                online = self.userOnline(ctx.message.channel.server.members)
+                await self.bot.say(':congratulations: {0}'.format(random.choice(online)))
+                return
+            elif len(arg) == 1:
+                start = 1
+                end = int(arg[0])
+            elif len(arg) > 1:
+                start = int(arg[0])
+                end = int(arg[1])
+            await self.bot.say(':arrows_counterclockwise: Zufällige Zahl ({0} - {1}): {2}'.format(start, end, random.randint(start, end)))
 
     @commands.command(pass_context=True)
     async def steinigt(self, ctx, *member:str):

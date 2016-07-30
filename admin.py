@@ -18,6 +18,7 @@ except ImportError:
 class admin():
     '''Praktische Befehle für Administratoren'''
     admin = __adminrole__
+    owner = __adminid__
 
     def __init__(self, bot):
         self.bot = bot
@@ -31,9 +32,8 @@ class admin():
 
     @commands.command(pass_context=True)
     async def shutdown(self, ctx):
-        '''Schaltet mich ab :('''
-        author = ctx.message.author
-        if self.checkRole(author, self.admin):
+        '''Schaltet mich ab :( (OWNER ONLY)'''
+        if ctx.message.author.id == self.owner:
             await self.bot.say(':ok: Bye!')
             self.bot.logout()
             sys.exit(0)
