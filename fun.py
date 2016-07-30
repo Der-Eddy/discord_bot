@@ -45,9 +45,9 @@ class fun():
         '''It's the final countdown'''
         countdown = ['five', 'four', 'three', 'two', 'one']
         for num in countdown:
-            await self.bot.say(':{0}:'.format(num))
+            await self.bot.say('**:{0}:**'.format(num))
             await asyncio.sleep(1)
-        await self.bot.say(':ok: DING DING DING')
+        await self.bot.say('**:ok:** DING DING DING')
 
     @commands.command()
     async def neko(self):
@@ -78,7 +78,7 @@ class fun():
             elif len(arg) > 1:
                 start = int(arg[0])
                 end = int(arg[1])
-            await self.bot.say(':arrows_counterclockwise: Zufällige Zahl ({0} - {1}): {2}'.format(start, end, random.randint(start, end)))
+            await self.bot.say('**:arrows_counterclockwise:** Zufällige Zahl ({0} - {1}): {2}'.format(start, end, random.randint(start, end)))
 
     @commands.command(pass_context=True)
     async def steinigt(self, ctx, *member:str):

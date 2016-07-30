@@ -9,7 +9,7 @@ import platform
 import datetime
 
 try:
-    from config import __token__, __prefix__, __game__, __adminid__, __adminrole__, __kawaiichannel__, __botlogchannel__
+    from config import __token__, __prefix__, __game__, __adminid__, __adminrole__, __modrole__, __kawaiichannel__, __botlogchannel__
 except ImportError:
     #Heorku stuff
     import os
@@ -18,9 +18,10 @@ except ImportError:
     __game__ = os.environ.get('DISCORD_GAME')
     __adminid__ = os.environ.get('DISCORD_ADMINID')
     __adminrole__ = os.environ.get('DISCORD_ADMINROLE')
+    __modrole__ = os.environ.get('DISCORD_MODROLE')
     __kawaiichannel__ = os.environ.get('DISCORD_KAWAIICHANNEL')
     __botlogchannel__ = os.environ.get('DISCORD_BOTLOGCHANNEL')
-__version__ = '0.3.4'
+__version__ = '0.4.0'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -68,14 +69,14 @@ async def on_server_remove(server):
 @bot.event
 async def on_message_delete(message):
     member = message.author
-    if not member.bot and not message.content.startswith(__prefix__) and not message.channel == bot.get_channel(__botlogchannel__): #Ignore messages from bots, commands and log channel
+    if not member.bot and not message.content.startswith(__prefix__) and not message.channel is bot.get_channel(__botlogchannel__): #Ignore messages from bots, commands and log channel
         memberExtra = '**{0} |** {1} *({2} - {3})*'.format(message.channel.mention, member, member.id, member.server)
         await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:warning:** {1} löschte die Nachricht:\n ```{2}```'.format(_currenttime(), memberExtra, message.content))
 
 @bot.event
 async def on_message_edit(before, after):
     member = before.author
-    if not member.bot and not before.content.startswith(__prefix__) and not after.edited_timestamp == None and not before.channel == bot.get_channel(__botlogchannel__): #Ignore messages from bots, commands and log channel
+    if not member.bot and not before.content.startswith(__prefix__) and not after.edited_timestamp is None and not before.channel is bot.get_channel(__botlogchannel__): #Ignore messages from bots, commands and log channel
         memberExtra = '**{0} |** {1} *({2} - {3})*'.format(before.channel.mention, member, member.id, member.server)
         beforeContent = '**Before** - {0} ({1}):```{2}```'.format(before.author, before.timestamp, before.content)
         afterContent = '**After** - {0} ({1}):```{2}```'.format(after.author, after.edited_timestamp, after.content)
@@ -102,7 +103,7 @@ async def status():
         users += len(s.members)
         if not admin: admin = s.get_member(__adminid__)
 
-    msg = ':information_source: Informationen über diesen Bot:\n'
+    msg = '**:information_source:** Informationen über diesen Bot:\n'
     msg += '```Admin              : @%s\n' % admin
     msg += 'Uptime             : {0:.0f} Stunden, {1:.0f} Minuten und {2:.0f} Sekunden\n'.format(hours, minutes, seconds)
     msg += 'Benutzer / Server  : %s in %s Server\n' % (users, len(bot.servers))
@@ -116,7 +117,7 @@ async def status():
 async def uptime():
     '''Wie lange bin ich schon online?'''
     hours, minutes, seconds = _uptime()
-    msg = ':up: Ich bin online seit: *{0:.0f} Stunden, {1:.0f} Minuten und {2:.0f} Sekunden*'.format(hours, minutes, seconds)
+    msg = '**:up:** Ich bin online seit: *{0:.0f} Stunden, {1:.0f} Minuten und {2:.0f} Sekunden*'.format(hours, minutes, seconds)
     await bot.say(msg)
 
 def _uptime():
@@ -138,20 +139,20 @@ async def test(ctx):
 async def ping(ctx):
     '''Misst die Response Time'''
     ping = ctx.message
-    pong = await bot.say(':ping_pong: Pong!')
+    pong = await bot.say('**:ping_pong:** Pong!')
     delta = pong.timestamp - ping.timestamp
     delta = int(delta.total_seconds() * 1000)
-    await bot.edit_message(pong, ':ping_pong: Pong! (%d ms)' % delta)
+    await bot.edit_message(pong, '**:ping_pong:** Pong! (%d ms)' % delta)
 
 @bot.command()
 async def github():
     '''Weil Open Source cool ist'''
-    await bot.say(':free: https://github.com/Der-Eddy/discord_bot')
+    await bot.say('**:free:** https://github.com/Der-Eddy/discord_bot')
 
 @bot.command(pass_context=True)
 async def echo(ctx, *message):
     '''Gibt ne Nachricht aus'''
-    msg = ':mega: ' + ' '.join(message)
+    msg = '**:mega:** ' + ' '.join(message)
     await bot.say(msg)
     await bot.delete_message(ctx.message)
 

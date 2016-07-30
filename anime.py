@@ -6,7 +6,7 @@ import aiohttp
 import random
 
 try:
-    from config import __token__, __prefix__, __game__, __adminid__, __adminrole__, __kawaiichannel__, __botlogchannel__
+    from config import __token__, __prefix__, __game__, __adminid__, __adminrole__, __modrole__, __kawaiichannel__, __botlogchannel__
 except ImportError:
     #Heorku stuff
     import os
@@ -15,6 +15,7 @@ except ImportError:
     __game__ = os.environ.get('DISCORD_GAME')
     __adminid__ = os.environ.get('DISCORD_ADMINID')
     __adminrole__ = os.environ.get('DISCORD_ADMINROLE')
+    __modrole__ = os.environ.get('DISCORD_MODROLE')
     __kawaiichannel__ = os.environ.get('DISCORD_KAWAIICHANNEL')
     __botlogchannel__ = os.environ.get('DISCORD_BOTLOGCHANNEL')
 
@@ -38,7 +39,7 @@ class anime():
             emojis = [':blush:', ':flushed:', ':heart_eyes:', ':heart_eyes_cat:', ':heart:']
             await self.bot.say('{2} Von: {0}: {1}'.format(rnd.author.display_name, img, random.choice(emojis)))
         else:
-            await self.bot.say(':no_entry: Es wurde kein Channel für den Bot eingestellt! Wende dich bitte an den Bot Admin')
+            await self.bot.say('**:no_entry:** Es wurde kein Channel für den Bot eingestellt! Wende dich bitte an den Bot Admin')
 
 def setup(bot):
     bot.add_cog(anime(bot))

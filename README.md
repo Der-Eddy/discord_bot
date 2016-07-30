@@ -8,7 +8,7 @@ This is mostly a german discord chat bot made with [discord.py](https://github.c
 
 Features
 -------------
-- [x] Admin commands  
+- [x] Admin & Mod commands  
 - [x] Fun commands
 - [x] Useless anime commands
 - [x] Heroku Support
@@ -26,6 +26,7 @@ Vor dem Start muss im selben Ordner wie `main.py` eine Datei namens `config.py` 
     __game__ = 'with Senpai'
     __adminid__ = 'YOUR USERID i.e. 102815825781596160'
     __adminrole__ = 'Administrator'
+    __modrole__ = 'Moderators'
     __kawaiichannel__ = '207909155556687872' #OPTIONAL specified a channel where the :kawaii commands gets this pinned messages
     __botlogchannel__ = '165175306561388545' #Channel where the bot logs EVERYTHING, also from other servers
 
