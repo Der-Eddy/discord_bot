@@ -75,7 +75,7 @@ async def on_message_delete(message):
 @bot.event
 async def on_message_edit(before, after):
     member = before.author
-    if not member.bot or not before.content.startswith(__prefix__) or after.edited_timestamp = None: #Ignore messages from bots + commands
+    if not member.bot or not before.content.startswith(__prefix__) or after.edited_timestamp == None or before.channel == bot.get_channel(__botlogchannel__): #Ignore messages from bots + commands
         memberExtra = '**{0} |** {1} *({2} - {3})*'.format(before.channel.mention, member, member.id, member.server)
         beforeContent = '**Before** - {0} ({1}):```{2}```'.format(before.author, before.timestamp, before.content)
         afterContent = '**After** - {0} ({1}):```{2}```'.format(after.author, after.edited_timestamp, after.content)
