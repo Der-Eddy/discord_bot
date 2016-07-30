@@ -6,9 +6,10 @@ import asyncio
 import random
 import time
 import platform
+import datetime
 
 try:
-    from config import __token__, __prefix__, __game__, __adminid__, __adminrole__, __kawaiichannel__
+    from config import __token__, __prefix__, __game__, __adminid__, __adminrole__, __kawaiichannel__, __botlogchannel__
 except ImportError:
     #Heorku stuff
     import os
@@ -18,7 +19,8 @@ except ImportError:
     __adminid__ = os.environ.get('DISCORD_ADMINID')
     __adminrole__ = os.environ.get('DISCORD_ADMINROLE')
     __kawaiichannel__ = os.environ.get('DISCORD_KAWAIICHANNEL')
-__version__ = '0.2.9'
+    __botlogchannel__ = os.environ.get('DISCORD_BOTLOGCHANNEL')
+__version__ = '0.3.0'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -28,6 +30,9 @@ logger.addHandler(handler)
 
 description = '''Eddys Chat Bot in Python, Discord.py rockt'''
 bot = commands.Bot(command_prefix=__prefix__, description=description)
+
+def _currenttime():
+    return datetime.datetime.now().strftime("%H:%M:%S")
 
 @bot.event
 async def on_ready():
@@ -39,6 +44,16 @@ async def on_ready():
     bot.load_extension('fun')
     bot.load_extension('admin')
     bot.load_extension('anime')
+
+@bot.event
+async def on_member_join(member):
+    memberExtra = '{0} - *{1} ({2})*'.format(member.mention, member, member.id)
+    await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` :white_check_mark: {1} tritt dem Server {2} bei'.format(_currenttime(), memberExtra, member.server))
+
+@bot.event
+async def on_member_remove(member):
+    memberExtra = '{0} - *{1} ({2})*'.format(member.mention, member, member.id)
+    await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` :x: {1} verließ den Server {2}'.format(_currenttime(), memberExtra, member.server))
 
 @bot.command()
 async def status():

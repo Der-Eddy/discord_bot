@@ -6,7 +6,7 @@ import aiohttp
 import random
 
 try:
-    from config import __token__, __prefix__, __game__, __adminid__, __adminrole__, __kawaiichannel__
+    from config import __token__, __prefix__, __game__, __adminid__, __adminrole__, __kawaiichannel__, __botlogchannel__
 except ImportError:
     #Heorku stuff
     import os
@@ -16,6 +16,7 @@ except ImportError:
     __adminid__ = os.environ.get('DISCORD_ADMINID')
     __adminrole__ = os.environ.get('DISCORD_ADMINROLE')
     __kawaiichannel__ = os.environ.get('DISCORD_KAWAIICHANNEL')
+    __botlogchannel__ = os.environ.get('DISCORD_BOTLOGCHANNEL')
 
 class anime():
     '''Alles rund um Animes'''

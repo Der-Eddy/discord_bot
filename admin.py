@@ -64,7 +64,7 @@ class admin():
                 limit -= cap
             tmp = await self.bot.send_message(ctx.message.channel, ':put_litter_in_its_place: {0} Nachrichten gelöscht'.format(deleted))
             await self.bot.delete_message(ctx.message)
-            await asyncio.sleep(2)
+            await asyncio.sleep(3)
             await self.bot.delete_message(tmp)
 
     @commands.command(pass_context=True)
