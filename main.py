@@ -68,14 +68,14 @@ async def on_server_remove(server):
 @bot.event
 async def on_message_delete(message):
     member = message.author
-    if not member.bot or not message.content.startswith(__prefix__) or message.channel == bot.get_channel(__botlogchannel__): #Ignore messages from bots, commands and log channel
+    if not member.bot and not message.content.startswith(__prefix__) and not message.channel == bot.get_channel(__botlogchannel__): #Ignore messages from bots, commands and log channel
         memberExtra = '**{0} |** {1} *({2} - {3})*'.format(message.channel.mention, member, member.id, member.server)
         await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:warning:** {1} löschte die Nachricht:\n ```{2}```'.format(_currenttime(), memberExtra, message.content))
 
 @bot.event
 async def on_message_edit(before, after):
     member = before.author
-    if not member.bot or not before.content.startswith(__prefix__) or after.edited_timestamp == None or before.channel == bot.get_channel(__botlogchannel__): #Ignore messages from bots, commands and log channel
+    if not member.bot and not before.content.startswith(__prefix__) and not after.edited_timestamp == None and not before.channel == bot.get_channel(__botlogchannel__): #Ignore messages from bots, commands and log channel
         memberExtra = '**{0} |** {1} *({2} - {3})*'.format(before.channel.mention, member, member.id, member.server)
         beforeContent = '**Before** - {0} ({1}):```{2}```'.format(before.author, before.timestamp, before.content)
         afterContent = '**After** - {0} ({1}):```{2}```'.format(after.author, after.edited_timestamp, after.content)
