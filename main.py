@@ -21,7 +21,7 @@ except ImportError:
     __modrole__ = os.environ.get('DISCORD_MODROLE')
     __kawaiichannel__ = os.environ.get('DISCORD_KAWAIICHANNEL')
     __botlogchannel__ = os.environ.get('DISCORD_BOTLOGCHANNEL')
-__version__ = '0.4.1'
+__version__ = '0.4.2'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -33,7 +33,7 @@ description = '''Eddys Chat Bot in Python, Discord.py rockt'''
 bot = commands.Bot(command_prefix=__prefix__, description=description)
 
 def _currenttime():
-    return datetime.datetime.now().strftime("%H:%M:%S")
+    return datetime.datetime.now().strftime("%H:%M:%S").tzset()
 
 @bot.event
 async def on_ready():

@@ -28,7 +28,7 @@ class admin():
         self.bot = bot
 
     def _currenttime(self):
-        return datetime.datetime.now().strftime("%H:%M:%S")
+        return datetime.datetime.now().strftime("%H:%M:%S").tzset()
 
     def checkRole(self, user, roleRec):
         ok = False
