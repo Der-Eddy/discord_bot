@@ -20,7 +20,7 @@ except ImportError:
     __adminrole__ = os.environ.get('DISCORD_ADMINROLE')
     __kawaiichannel__ = os.environ.get('DISCORD_KAWAIICHANNEL')
     __botlogchannel__ = os.environ.get('DISCORD_BOTLOGCHANNEL')
-__version__ = '0.3.1'
+__version__ = '0.3.2'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -75,7 +75,7 @@ async def on_message_delete(message):
 @bot.event
 async def on_message_edit(before, after):
     member = before.author
-    if not member.bot or not before.content.startswith(__prefix__): #Ignore messages from bots + commands
+    if not member.bot or not before.content.startswith(__prefix__) or after.edited_timestamp = None: #Ignore messages from bots + commands
         memberExtra = '**{0} |** {1} *({2} - {3})*'.format(before.channel.mention, member, member.id, member.server)
         beforeContent = '**Before** - {0} ({1}):```{2}```'.format(before.author, before.timestamp, before.content)
         afterContent = '**After** - {0} ({1}):```{2}```'.format(after.author, after.edited_timestamp, after.content)
