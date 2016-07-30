@@ -20,7 +20,7 @@ except ImportError:
     __adminrole__ = os.environ.get('DISCORD_ADMINROLE')
     __kawaiichannel__ = os.environ.get('DISCORD_KAWAIICHANNEL')
     __botlogchannel__ = os.environ.get('DISCORD_BOTLOGCHANNEL')
-__version__ = '0.3.3'
+__version__ = '0.3.4'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -68,7 +68,7 @@ async def on_server_remove(server):
 @bot.event
 async def on_message_delete(message):
     member = message.author
-    if not member.bot or not before.content.startswith(__prefix__) or message.channel == bot.get_channel(__botlogchannel__): #Ignore messages from bots, commands and log channel
+    if not member.bot or not message.content.startswith(__prefix__) or message.channel == bot.get_channel(__botlogchannel__): #Ignore messages from bots, commands and log channel
         memberExtra = '**{0} |** {1} *({2} - {3})*'.format(message.channel.mention, member, member.id, member.server)
         await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:warning:** {1} löschte die Nachricht:\n ```{2}```'.format(_currenttime(), memberExtra, message.content))
 
