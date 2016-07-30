@@ -21,7 +21,7 @@ except ImportError:
     __modrole__ = os.environ.get('DISCORD_MODROLE')
     __kawaiichannel__ = os.environ.get('DISCORD_KAWAIICHANNEL')
     __botlogchannel__ = os.environ.get('DISCORD_BOTLOGCHANNEL')
-__version__ = '0.4.0'
+__version__ = '0.4.1'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)

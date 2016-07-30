@@ -110,6 +110,7 @@ class admin():
             tmp = await self.bot.say('**:no_entry:** Du hast nicht die Rolle {0}!'.format(self.mod))
             await asyncio.sleep(5)
             await self.bot.delete_message(tmp)
+            await self.bot.delete_message(ctx.message)
 
     @commands.command(pass_context=True)
     async def ban(self, ctx, member: discord.Member = None, *reason):
@@ -132,6 +133,7 @@ class admin():
             tmp = await self.bot.say('**:no_entry:** Du hast nicht die Rolle {0}!'.format(self.mod))
             await asyncio.sleep(5)
             await self.bot.delete_message(tmp)
+            await self.bot.delete_message(ctx.message)
 
     @commands.command(pass_context=True)
     async def unban(self, ctx, user: int = None, *reason):
@@ -155,6 +157,7 @@ class admin():
             tmp = await self.bot.say('**:no_entry:** Du hast nicht die Rolle {0}!'.format(self.mod))
             await asyncio.sleep(5)
             await self.bot.delete_message(tmp)
+            await self.bot.delete_message(ctx.message)
 
     @commands.command(pass_context=True)
     async def bans(self, ctx):
@@ -173,6 +176,7 @@ class admin():
             tmp = await self.bot.say('**:no_entry:** Du hast nicht die Rolle {0}!'.format(self.mod))
             await asyncio.sleep(5)
             await self.bot.delete_message(tmp)
+            await self.bot.delete_message(ctx.message)
 
 def setup(bot):
     bot.add_cog(admin(bot))
