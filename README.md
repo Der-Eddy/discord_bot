@@ -12,7 +12,7 @@ Features
 - [x] Fun commands
 - [x] Useless anime commands
 - [x] Heroku Support
-- [ ] Moderation/Server Log
+- [x] Moderation/Server Log
 - [ ] Message on GitHub Commit
 
 

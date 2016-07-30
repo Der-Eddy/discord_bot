@@ -20,7 +20,7 @@ except ImportError:
     __adminrole__ = os.environ.get('DISCORD_ADMINROLE')
     __kawaiichannel__ = os.environ.get('DISCORD_KAWAIICHANNEL')
     __botlogchannel__ = os.environ.get('DISCORD_BOTLOGCHANNEL')
-__version__ = '0.3.0'
+__version__ = '0.3.1'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -48,12 +48,48 @@ async def on_ready():
 @bot.event
 async def on_member_join(member):
     memberExtra = '{0} - *{1} ({2})*'.format(member.mention, member, member.id)
-    await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` :white_check_mark: {1} tritt dem Server {2} bei'.format(_currenttime(), memberExtra, member.server))
+    await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:white_check_mark:** {1} tritt dem Server {2} bei'.format(_currenttime(), memberExtra, member.server))
 
 @bot.event
 async def on_member_remove(member):
     memberExtra = '{0} - *{1} ({2})*'.format(member.mention, member, member.id)
-    await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` :x: {1} verließ den Server {2}'.format(_currenttime(), memberExtra, member.server))
+    await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:x:** {1} verließ den Server {2}'.format(_currenttime(), memberExtra, member.server))
+
+@bot.event
+async def on_server_join(server):
+    serverExtra = '{0} - *Besitzer: {1} - Benutzer: {2} ({3})*'.format(server.name, server.owner, server.member_count, server.id)
+    await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:white_check_mark:** Server {1} hinzugefügt'.format(_currenttime(), serverExtra))
+
+@bot.event
+async def on_server_remove(server):
+    serverExtra = '{0} - *Besitzer: {1} - Benutzer: {2} ({3})*'.format(server.name, server.owner, server.member_count, server.id)
+    await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:x:** Server {1} entfernt'.format(_currenttime(), serverExtra))
+
+@bot.event
+async def on_message_delete(message):
+    member = message.author
+    if not member.bot or not message.content.startswith(__prefix__): #Ignore messages from bots + commands
+        memberExtra = '**{0} |** {1} *({2} - {3})*'.format(message.channel.mention, member, member.id, member.server)
+        await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:warning:** {1} löschte die Nachricht:\n ```{2}```'.format(_currenttime(), memberExtra, message.content))
+
+@bot.event
+async def on_message_edit(before, after):
+    member = before.author
+    if not member.bot or not before.content.startswith(__prefix__): #Ignore messages from bots + commands
+        memberExtra = '**{0} |** {1} *({2} - {3})*'.format(before.channel.mention, member, member.id, member.server)
+        beforeContent = '**Before** - {0} ({1}):```{2}```'.format(before.author, before.timestamp, before.content)
+        afterContent = '**After** - {0} ({1}):```{2}```'.format(after.author, after.edited_timestamp, after.content)
+        await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:information_source:** {1} änderte die Nachricht:\n {2} \n {3}'.format(_currenttime(), memberExtra, beforeContent, afterContent))
+
+@bot.event
+async def on_member_ban(member):
+    memberExtra = '{0} - *{1} ({2})*'.format(member.mention, member, member.id)
+    await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:customs:** {1} wurde gebannt auf Server {2}'.format(_currenttime(), memberExtra, member.server))
+
+@bot.event
+async def on_member_unban(member):
+    memberExtra = '{0} - *{1} ({2})*'.format(member.mention, member, member.id)
+    await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:negative_squared_cross_mark:** {1} wurde entbannt auf Server {2}'.format(_currenttime(), memberExtra, member.server))
 
 @bot.command()
 async def status():
