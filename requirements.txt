@@ -2,3 +2,4 @@ discord.py==0.11.0
 aiohttp
 websockets
 chardet
+pytz

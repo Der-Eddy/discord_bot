@@ -3,6 +3,7 @@ from discord.ext import commands
 import sys
 import asyncio
 import datetime
+from pytz import timezone
 
 try:
     from config import __token__, __prefix__, __game__, __adminid__, __adminrole__, __modrole__, __kawaiichannel__, __botlogchannel__
@@ -28,7 +29,7 @@ class admin():
         self.bot = bot
 
     def _currenttime(self):
-        return datetime.datetime.now().strftime("%H:%M:%S").tzset()
+        return datetime.datetime.now(timezone('Europe/Berlin')).strftime("%H:%M:%S")
 
     def checkRole(self, user, roleRec):
         ok = False

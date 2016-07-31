@@ -7,6 +7,7 @@ import random
 import time
 import platform
 import datetime
+from pytz import timezone
 
 try:
     from config import __token__, __prefix__, __game__, __adminid__, __adminrole__, __modrole__, __kawaiichannel__, __botlogchannel__
@@ -21,7 +22,7 @@ except ImportError:
     __modrole__ = os.environ.get('DISCORD_MODROLE')
     __kawaiichannel__ = os.environ.get('DISCORD_KAWAIICHANNEL')
     __botlogchannel__ = os.environ.get('DISCORD_BOTLOGCHANNEL')
-__version__ = '0.4.2'
+__version__ = '0.4.3'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -33,7 +34,17 @@ description = '''Eddys Chat Bot in Python, Discord.py rockt'''
 bot = commands.Bot(command_prefix=__prefix__, description=description)
 
 def _currenttime():
-    return datetime.datetime.now().strftime("%H:%M:%S").tzset()
+    return datetime.datetime.now(timezone('Europe/Berlin')).strftime("%H:%M:%S")
+
+def _getRoles(roles):
+    string = ''
+    for r in roles:
+        if not r.is_everyone:
+            string += '{}, '.format(r.name)
+    if string is '':
+        return 'None'
+    else:
+        return string[:-2]
 
 @bot.event
 async def on_ready():
@@ -81,6 +92,16 @@ async def on_message_edit(before, after):
         beforeContent = '**Before** - {0} ({1}):```{2}```'.format(before.author, before.timestamp, before.content)
         afterContent = '**After** - {0} ({1}):```{2}```'.format(after.author, after.edited_timestamp, after.content)
         await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:information_source:** {1} änderte die Nachricht:\n {2} \n {3}'.format(_currenttime(), memberExtra, beforeContent, afterContent))
+
+@bot.event
+async def on_member_update(before, after):
+    memberExtra = '**{0} |** {1} *({2} - {3})*'.format(before.mention, before, before.id, before.server)
+    if len(before.roles) is not len(after.roles):
+        await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:warning:** {1} Rollen wurden geändert:\n **Before:** `{2}`\n **After:** `{3}`'.format(_currenttime(), memberExtra, _getRoles(before.roles), _getRoles(after.roles)))
+    elif before.nick is not after.nick:
+        await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:information_source:** {1} Nickname wurde geändert:\n **Before:** `{2}`\n **After:** `{3}`'.format(_currenttime(), memberExtra, before.nick, after.nick))
+    elif before.avatar is not after.avatar:
+        await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:information_source:** {1} Avatar wurde geändert:\n **Before:** {2}\n **After:** {3}'.format(_currenttime(), memberExtra, before.avatar_url, after.avatar_url))
 
 @bot.event
 async def on_member_ban(member):
