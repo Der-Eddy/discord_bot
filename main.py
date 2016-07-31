@@ -22,7 +22,7 @@ except ImportError:
     __modrole__ = os.environ.get('DISCORD_MODROLE')
     __kawaiichannel__ = os.environ.get('DISCORD_KAWAIICHANNEL')
     __botlogchannel__ = os.environ.get('DISCORD_BOTLOGCHANNEL')
-__version__ = '0.4.3'
+__version__ = '0.4.4'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -45,6 +45,13 @@ def _getRoles(roles):
         return 'None'
     else:
         return string[:-2]
+
+def _uptime():
+    timeUp = time.time() - startTime
+    hours = timeUp / 3600
+    minutes = (timeUp / 60) % 60
+    seconds = timeUp % 60
+    return hours, minutes, seconds
 
 @bot.event
 async def on_ready():
@@ -141,13 +148,6 @@ async def uptime():
     msg = '**:up:** Ich bin online seit: *{0:.0f} Stunden, {1:.0f} Minuten und {2:.0f} Sekunden*'.format(hours, minutes, seconds)
     await bot.say(msg)
 
-def _uptime():
-    timeUp = time.time() - startTime
-    hours = timeUp / 3600
-    minutes = (timeUp / 60) % 60
-    seconds = timeUp % 60
-    return hours, minutes, seconds
-
 @bot.command(pass_context=True)
 async def test(ctx):
     '''Nur ein Test baka'''
@@ -176,6 +176,27 @@ async def echo(ctx, *message):
     msg = '**:mega:** ' + ' '.join(message)
     await bot.say(msg)
     await bot.delete_message(ctx.message)
+
+@bot.command()
+async def info(member: discord.Member = None):
+    '''Gibt Informationen über einen Benutzer aus'''
+    if member is not None:
+        msg = '**:information_source:** Informationen über %s:\n' % member
+        msg += '```General              : %s\n' % member
+        msg += 'Name                 : %s\n' % member.name
+        msg += 'Server Nickname      : %s\n' % member.display_name
+        msg += 'Discriminator        : %s\n' % member.discriminator
+        msg += 'ID                   : %s\n' % member.id
+        msg += 'Bot Account?         : %s\n' % member.bot
+        msg += 'Avatar               : %s\n' % member.avatar_url
+        msg += 'Erstellt am          : %s\n' % member.created_at
+        msg += 'Server beigetreten am: %s\n' % member.joined_at
+        msg += 'Rollenfarbe          : %s (%s)\n' % (member.colour, member.top_role)
+        msg += 'Status               : %s\n' % member.status
+        msg += 'Rollen               : %s```' % _getRoles(member.roles)
+    else:
+        msg = '**:no_entry:** Du hast keinen Benutzer angegeben!'
+    await bot.say(msg)
 
 startTime = time.time()
 bot.run(__token__)
