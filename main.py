@@ -107,7 +107,7 @@ async def on_member_update(before, after):
         await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:warning:** {1} Rollen wurden geändert:\n **Before:** `{2}`\n **After:** `{3}`'.format(_currenttime(), memberExtra, _getRoles(before.roles), _getRoles(after.roles)))
     elif before.nick is not after.nick:
         await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:information_source:** {1} Nickname wurde geändert:\n **Before:** `{2}`\n **After:** `{3}`'.format(_currenttime(), memberExtra, before.nick, after.nick))
-    elif before.avatar_url is not after.avatar_url:
+    elif before.avatar_url is not after.avatar_url and False:
         await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:information_source:** {1} Avatar wurde geändert:\n **Before:** {2}\n **After:** {3}'.format(_currenttime(), memberExtra, before.avatar_url, after.avatar_url))
 
 @bot.event
