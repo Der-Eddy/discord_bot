@@ -22,7 +22,7 @@ except ImportError:
     __modrole__ = os.environ.get('DISCORD_MODROLE')
     __kawaiichannel__ = os.environ.get('DISCORD_KAWAIICHANNEL')
     __botlogchannel__ = os.environ.get('DISCORD_BOTLOGCHANNEL')
-__version__ = '0.4.4'
+__version__ = '0.4.5'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -107,7 +107,7 @@ async def on_member_update(before, after):
         await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:warning:** {1} Rollen wurden geändert:\n **Before:** `{2}`\n **After:** `{3}`'.format(_currenttime(), memberExtra, _getRoles(before.roles), _getRoles(after.roles)))
     elif before.nick is not after.nick:
         await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:information_source:** {1} Nickname wurde geändert:\n **Before:** `{2}`\n **After:** `{3}`'.format(_currenttime(), memberExtra, before.nick, after.nick))
-    elif before.avatar is not after.avatar:
+    elif before.avatar_url is not after.avatar_url:
         await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:information_source:** {1} Avatar wurde geändert:\n **Before:** {2}\n **After:** {3}'.format(_currenttime(), memberExtra, before.avatar_url, after.avatar_url))
 
 @bot.event
