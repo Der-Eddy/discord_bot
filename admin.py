@@ -6,13 +6,12 @@ import datetime
 from pytz import timezone
 
 try:
-    from config import __token__, __prefix__, __game__, __adminid__, __adminrole__, __modrole__, __kawaiichannel__, __botlogchannel__
+    from config import __token__, __prefix__, __adminid__, __adminrole__, __modrole__, __kawaiichannel__, __botlogchannel__
 except ImportError:
     #Heorku stuff
     import os
     __token__ = os.environ.get('DISCORD_TOKEN')
     __prefix__ = os.environ.get('DISCORD_PREFIX')
-    __game__ = os.environ.get('DISCORD_GAME')
     __adminid__ = os.environ.get('DISCORD_ADMINID')
     __adminrole__ = os.environ.get('DISCORD_ADMINROLE')
     __modrole__ = os.environ.get('DISCORD_MODROLE')

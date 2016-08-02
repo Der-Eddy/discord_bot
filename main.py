@@ -8,21 +8,21 @@ import time
 import platform
 import datetime
 from pytz import timezone
+from games import __games__, __gamesTimer__
 
 try:
-    from config import __token__, __prefix__, __game__, __adminid__, __adminrole__, __modrole__, __kawaiichannel__, __botlogchannel__
+    from config import __token__, __prefix__, __adminid__, __adminrole__, __modrole__, __kawaiichannel__, __botlogchannel__
 except ImportError:
     #Heorku stuff
     import os
     __token__ = os.environ.get('DISCORD_TOKEN')
     __prefix__ = os.environ.get('DISCORD_PREFIX')
-    __game__ = os.environ.get('DISCORD_GAME')
     __adminid__ = os.environ.get('DISCORD_ADMINID')
     __adminrole__ = os.environ.get('DISCORD_ADMINROLE')
     __modrole__ = os.environ.get('DISCORD_MODROLE')
     __kawaiichannel__ = os.environ.get('DISCORD_KAWAIICHANNEL')
     __botlogchannel__ = os.environ.get('DISCORD_BOTLOGCHANNEL')
-__version__ = '0.4.5'
+__version__ = '0.4.6'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -53,16 +53,22 @@ def _uptime():
     seconds = timeUp % 60
     return hours, minutes, seconds
 
+async def _randomGame():
+    #Check games.py to change the list of "games" to be played
+    while True:
+        await bot.change_status(discord.Game(name=random.choice(__games__)))
+        await asyncio.sleep(__gamesTimer__)
+
 @bot.event
 async def on_ready():
     print('Logged in as')
     print(bot.user.name)
     print(bot.user.id)
     print('------')
-    await bot.change_status(discord.Game(name=__game__))
     bot.load_extension('fun')
     bot.load_extension('admin')
     bot.load_extension('anime')
+    asyncio.ensure_future(_randomGame())
 
 @bot.event
 async def on_member_join(member):
