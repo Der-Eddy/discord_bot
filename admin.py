@@ -57,9 +57,9 @@ class admin():
         '''Setzt einen neuen Avatar (OWNER ONLY)'''
         if ctx.message.author.id == self.ownerid:
             async with aiohttp.get(''.join(url)) as img:
-                with open('tmpAva.png', 'wb') as f:
+                with open('tempAva.png', 'wb') as f:
                         f.write(await img.read())
-            with open('tmpAva.png', 'rb') as f:
+            with open('tempAva.png', 'rb') as f:
                 await self.bot.edit_profile(avatar=f.read())
             asyncio.sleep(2)
             await self.bot.say('**:ok:** Mein neuer Avatar!\n %s' % self.bot.user.avatar_url)

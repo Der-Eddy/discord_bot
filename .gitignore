@@ -90,5 +90,6 @@ ENV/
 *.log
 config.py
 temp*
+tmp*
 tempBot.txt
 tempAva.*
