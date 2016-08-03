@@ -10,6 +10,9 @@ __games__ = [
     'HuniePop',
     'Crush Crush',
     'try :neko',
-    'try :kawaii'
+    'try :kawaii',
+    'with async',
+    'with Karen-chan',
+    'with Rara-chan'
 ]
 __gamesTimer__ = 10 * 60 #10 minutes

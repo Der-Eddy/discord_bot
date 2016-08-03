@@ -13,7 +13,8 @@ Features
 - [x] Useless anime commands
 - [x] Heroku Support
 - [x] Moderation/Server Log
-- [ ] Message on GitHub Commit
+- [x] Message on GitHub Commit
+- [ ] Voice Support
 
 
 Run & Requirements
@@ -28,6 +29,7 @@ Vor dem Start muss im selben Ordner wie `main.py` eine Datei namens `config.py` 
     __modrole__ = 'Moderators'
     __kawaiichannel__ = '207909155556687872' #OPTIONAL specified a channel where the :kawaii commands gets this pinned messages
     __botlogchannel__ = '165175306561388545' #Channel where the bot logs EVERYTHING, also from other servers
+    __github__ = 'False' #OPTIONAL logs new commits of this bot into a specific channel, sorry hardcoded!
 
 Eine Auflistung aller Befehle gibt es unter `:help` (Standardpräfix)
 
@@ -42,10 +44,11 @@ Einen Bot Account fügt man dann über diesen Link hinzu (CLIENT ID einfügen ni
 Full list of requirements
 -------------
 
-    discord.py==0.10.0
+    discord.py==0.11.0
     aiohttp
     websockets
     chardet
+    pytz
 
 License
 -------------

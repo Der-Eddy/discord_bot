@@ -89,3 +89,4 @@ ENV/
 
 *.log
 config.py
+tempBot.txt

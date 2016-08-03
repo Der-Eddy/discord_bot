@@ -6,7 +6,7 @@ import datetime
 from pytz import timezone
 
 try:
-    from config import __token__, __prefix__, __adminid__, __adminrole__, __modrole__, __kawaiichannel__, __botlogchannel__
+    from config import __token__, __prefix__, __adminid__, __adminrole__, __modrole__, __kawaiichannel__, __botlogchannel__, __github__
 except ImportError:
     #Heorku stuff
     import os
@@ -17,6 +17,7 @@ except ImportError:
     __modrole__ = os.environ.get('DISCORD_MODROLE')
     __kawaiichannel__ = os.environ.get('DISCORD_KAWAIICHANNEL')
     __botlogchannel__ = os.environ.get('DISCORD_BOTLOGCHANNEL')
+    __github__ = os.environ.get('DISCORD_GITHUB')
 
 class admin():
     '''Praktische Befehle für Administratoren und Moderatoren'''

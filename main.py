@@ -3,15 +3,17 @@ from discord.ext import commands
 import logging
 from logging.handlers import RotatingFileHandler
 import asyncio
+import aiohttp
 import random
 import time
 import platform
 import datetime
 from pytz import timezone
+from io import UnsupportedOperation
 from games import __games__, __gamesTimer__
 
 try:
-    from config import __token__, __prefix__, __adminid__, __adminrole__, __modrole__, __kawaiichannel__, __botlogchannel__
+    from config import __token__, __prefix__, __adminid__, __adminrole__, __modrole__, __kawaiichannel__, __botlogchannel__, __github__
 except ImportError:
     #Heorku stuff
     import os
@@ -22,7 +24,8 @@ except ImportError:
     __modrole__ = os.environ.get('DISCORD_MODROLE')
     __kawaiichannel__ = os.environ.get('DISCORD_KAWAIICHANNEL')
     __botlogchannel__ = os.environ.get('DISCORD_BOTLOGCHANNEL')
-__version__ = '0.4.6'
+    __github__ = os.environ.get('DISCORD_GITHUB')
+__version__ = '0.5.0'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -59,6 +62,25 @@ async def _randomGame():
         await bot.change_status(discord.Game(name=random.choice(__games__)))
         await asyncio.sleep(__gamesTimer__)
 
+async def _githubLog():
+    #Logs new commits to a hardcoded channel
+    if __github__ == 'True':
+        devChannel = bot.get_channel('165156137476292608')
+        authorAndRepo = 'Der-Eddy/discord_bot'
+        url = 'https://api.github.com/repos/%s/commits' % authorAndRepo
+        while True:
+            with open('tempBot.txt', 'a+') as temp:
+                temp.seek(0)
+                oldHash = temp.read()
+            async with aiohttp.get(url) as resp:
+                r = await resp.json()
+            if not oldHash == r[0]['sha']:
+                with open('tempBot.txt', 'w+') as temp:
+                    temp.write(r[0]['sha'])
+                msg = ':cool: Ein neuer Commit für **{0}**!\n **Author:** `{1}`\n **At:** `{2}`\n **Commit:** `#{3}` - {4}\n **Commit Message:** ```{5}```'.format(authorAndRepo, r[0]['commit']['author']['name'], r[0]['commit']['author']['date'], r[0]['sha'][:7], r[0]['html_url'], r[0]['commit']['message'])
+                await bot.send_message(devChannel, msg)
+            await asyncio.sleep(60)
+
 @bot.event
 async def on_ready():
     print('Logged in as')
@@ -69,6 +91,7 @@ async def on_ready():
     bot.load_extension('admin')
     bot.load_extension('anime')
     asyncio.ensure_future(_randomGame())
+    asyncio.ensure_future(_githubLog())
 
 @bot.event
 async def on_member_join(member):
