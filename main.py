@@ -25,7 +25,7 @@ except ImportError:
     __kawaiichannel__ = os.environ.get('DISCORD_KAWAIICHANNEL')
     __botlogchannel__ = os.environ.get('DISCORD_BOTLOGCHANNEL')
     __github__ = os.environ.get('DISCORD_GITHUB')
-__version__ = '0.5.0'
+__version__ = '0.5.1'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -77,7 +77,7 @@ async def _githubLog():
             if not oldHash == r[0]['sha']:
                 with open('tempBot.txt', 'w+') as temp:
                     temp.write(r[0]['sha'])
-                msg = ':cool: Ein neuer Commit für **{0}**!\n **Author:** `{1}`\n **At:** `{2}`\n **Commit:** `#{3}` - {4}\n **Commit Message:** ```{5}```'.format(authorAndRepo, r[0]['commit']['author']['name'], r[0]['commit']['author']['date'], r[0]['sha'][:7], r[0]['html_url'], r[0]['commit']['message'])
+                msg = ':cool: Ein neuer Commit für **{0}**!\n **Author:** `{1}`\n **Date:** `{2}`\n **Commit:** `#{3}` - {4}\n **Commit Message:** ```{5}```'.format(authorAndRepo, r[0]['commit']['author']['name'], r[0]['commit']['author']['date'], r[0]['sha'][:7], r[0]['html_url'], r[0]['commit']['message'])
                 await bot.send_message(devChannel, msg)
             await asyncio.sleep(60)
 

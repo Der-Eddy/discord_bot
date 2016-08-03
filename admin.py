@@ -3,6 +3,7 @@ from discord.ext import commands
 import sys
 import asyncio
 import datetime
+import aiohttp
 from pytz import timezone
 
 try:
@@ -23,10 +24,13 @@ class admin():
     '''Praktische Befehle für Administratoren und Moderatoren'''
     admin = __adminrole__
     mod = __modrole__
-    owner = __adminid__
+    ownerid = __adminid__
+    owner = ''
 
     def __init__(self, bot):
         self.bot = bot
+        for s in self.bot.servers:
+            if not self.owner: self.owner = s.get_member(__adminid__)
 
     def _currenttime(self):
         return datetime.datetime.now(timezone('Europe/Berlin')).strftime("%H:%M:%S")
@@ -41,12 +45,26 @@ class admin():
     @commands.command(pass_context=True)
     async def shutdown(self, ctx):
         '''Schaltet mich ab :( (OWNER ONLY)'''
-        if ctx.message.author.id == self.owner:
+        if ctx.message.author.id == self.ownerid:
             await self.bot.say('**:ok:** Bye!')
             self.bot.logout()
             sys.exit(0)
         else:
-            await self.bot.say('**:no_entry:** Du hast nicht die Rolle {0}!'.format(self.admin))
+            await self.bot.say('**:no_entry:** Du bist nicht {0}!'.format(self.owner))
+
+    @commands.command(pass_context=True)
+    async def avatar(self, ctx, url: str):
+        '''Setzt einen neuen Avatar (OWNER ONLY)'''
+        if ctx.message.author.id == self.ownerid:
+            async with aiohttp.get(''.join(url)) as img:
+                with open('tmpAva.png', 'wb') as f:
+                        f.write(await img.read())
+            with open('tmpAva.png', 'rb') as f:
+                await self.bot.edit_profile(avatar=f.read())
+            asyncio.sleep(2)
+            await self.bot.say('**:ok:** Mein neuer Avatar!\n %s' % self.bot.user.avatar_url)
+        else:
+            await self.bot.say('**:no_entry:** Du bist nicht {0}!'.format(self.owner))
 
     @commands.command(pass_context=True)
     async def game(self, ctx, *game):
