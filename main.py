@@ -25,7 +25,7 @@ except ImportError:
     __kawaiichannel__ = os.environ.get('DISCORD_KAWAIICHANNEL')
     __botlogchannel__ = os.environ.get('DISCORD_BOTLOGCHANNEL')
     __github__ = os.environ.get('DISCORD_GITHUB')
-__version__ = '0.5.1'
+__version__ = '0.5.2'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)

@@ -1,4 +1,5 @@
-Discord Bot
+![Avatar](https://i.imgur.com/5hjWNei.png)
+![Slogan](https://i.imgur.com/vfEgGLU.png)
 =====================
 
 [![Python3](https://img.shields.io/badge/python-3.5-blue.svg)](https://github.com/Der-Eddy/discord_bot)
@@ -17,6 +18,11 @@ Features
 - [ ] Voice Support
 
 
+Eine Auflistung aller Befehle gibt es unter `:help` (Standardpräfix)
+
+![help command](https://i.imgur.com/gXxYAlA.png)
+
+
 Run & Requirements
 -------------
 Ihr benötigt mindestens Python 3.5 + [discord.py](https://github.com/Rapptz/discord.py) für diesen Bot und einen Discord Bot Account (siehe weiter unten).
@@ -31,9 +37,7 @@ Vor dem Start muss im selben Ordner wie `main.py` eine Datei namens `config.py` 
     __botlogchannel__ = '165175306561388545' #Channel where the bot logs EVERYTHING, also from other servers
     __github__ = 'False' #OPTIONAL logs new commits of this bot into a specific channel, sorry hardcoded!
 
-Eine Auflistung aller Befehle gibt es unter `:help` (Standardpräfix)
-
-![help command](https://i.imgur.com/tadNfHP.png)
+Zusätzlich wird `pytz` aus [PyPI](https://pypi.python.org/pypi/pytz/2016.6.1) benötigt.
 
 Bot Accounts
 -------------

@@ -95,17 +95,29 @@ class admin():
 
     @commands.command(pass_context=True)
     async def nickname(self, ctx, *name):
-        '''Ändert den Nickname vom Bot (ADMIN ONLY)'''
+        '''Ändert den Server Nickname vom Bot (ADMIN ONLY)'''
         author = ctx.message.author
         if self.checkRole(author, self.admin):
             nickname = ' '.join(name)
             await self.bot.change_nickname(ctx.message.server.get_member(self.bot.user.id), nickname)
             if nickname:
-                msg = ':ok: Ändere meinen Namen zu: **{0}**'.format(nickname)
+                msg = ':ok: Ändere meinen Server Nickname zu: **{0}**'.format(nickname)
             else:
-                msg = ':ok: Reset von meinem Nickname auf: **{0}**'.format(self.bot.user.name)
+                msg = ':ok: Reset von meinem Server Nickname auf: **{0}**'.format(self.bot.user.name)
         else:
             msg = '**:no_entry:** Du hast nicht die Rolle {0}!'.format(self.admin)
+        await self.bot.say(msg)
+
+    @commands.command(pass_context=True)
+    async def name(self, ctx, *name):
+        '''Ändert den globalen Namen vom Bot (OWNER ONLY)'''
+        author = ctx.message.author
+        if ctx.message.author.id == self.ownerid:
+            name = ' '.join(name)
+            await self.bot.edit_profile(username=name)
+            msg = ':ok: Ändere meinen Namen zu: **{0}**'.format(name)
+        else:
+            msg = '**:no_entry:** Du bist nicht {0}!'.format(self.owner)
         await self.bot.say(msg)
 
     @commands.command(pass_context=True)
