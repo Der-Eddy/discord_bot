@@ -1,4 +1,4 @@
-![Avatar](https://i.imgur.com/5hjWNei.png)
+![Avatar](img/ava.png)
 ![Slogan](https://i.imgur.com/vfEgGLU.png)
 =====================
 

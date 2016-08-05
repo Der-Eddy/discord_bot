@@ -25,7 +25,7 @@ except ImportError:
     __kawaiichannel__ = os.environ.get('DISCORD_KAWAIICHANNEL')
     __botlogchannel__ = os.environ.get('DISCORD_BOTLOGCHANNEL')
     __github__ = os.environ.get('DISCORD_GITHUB')
-__version__ = '0.5.2'
+__version__ = '0.5.3'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -198,6 +198,17 @@ async def ping(ctx):
 async def github():
     '''Weil Open Source cool ist'''
     await bot.say('**:free:** https://github.com/Der-Eddy/discord_bot')
+
+@bot.command(pass_context=True)
+async def about(ctx):
+    '''Info über mich'''
+    msg = '**:information_source: Shinobu Oshino**\n'
+    msg += '```Shinobu Oshino gehört wohl zu den mysteriösesten Charakteren in Bakemonogatari. Sie war bis vorletzten Frühling ein hochangesehener, adeliger, skrupelloser Vampir, der weit über 500 Jahre alt ist. Gnadenlos griff sie Menschen an und massakrierte sie nach Belieben. Auch Koyomi Araragi wurde von ihr attackiert und schwer verwundet. Nur durch das Eingreifen des Exorzisten Meme Oshino konnte Kiss-shot Acerola-orion Heart-under-blade, wie sie damals bekannt war, bezwungen werden. Dabei verlor sie jedoch all ihre Erinnerungen und wurde von einer attraktiven, erwachsenen Frau in einen unschuldigen Mädchenkörper verwandelt.\n\n'
+    msg += 'Seitdem lebt sie zusammen mit Meme in einem verlassenen Gebäude und wurde von ihm aufgenommen. Er gab ihr auch ihren Namen Shinobu. Wann immer man Shinobu sehen sollte, sitzt sie nur mit traurigem Gesicht in einer Ecke und träumt vor sich hin. Sie spricht nicht und wirkt auch sonst meistens sehr abwesend. Einzig und allein zu Koyomi scheint sie ein freundschaftliches Verhältnis zu haben. Das Vampirblut in ihr verlangt immer noch nach Opfern und da sich Koyomi in gewisser Art und Weise schuldig fühlt, stellt er sich regelmäßig als Nahrungsquelle für Shinobu zur Verfügung.\n\n'
+    msg += 'Quelle: http://www.anisearch.de/character/6598,shinobu-oshino/```\n\n'
+    msg += 'Dieser Bot ist außerdem **:free:**, Open-Source, in Python und mit Hilfe von discord.py geschrieben! `https://github.com/Der-Eddy/discord_bot`'
+    with open('img/ava.png', 'rb') as f:
+        await bot.send_file(ctx.message.channel, f, content=msg)
 
 @bot.command(pass_context=True)
 async def echo(ctx, *message):
