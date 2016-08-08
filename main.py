@@ -27,7 +27,7 @@ except ImportError:
     __botlogchannel__ = os.environ.get('DISCORD_BOTLOGCHANNEL')
     __github__ = os.environ.get('DISCORD_GITHUB')
     __greetmsg__ = os.environ.get('DISCORD_GREETMSG')
-__version__ = '0.5.4'
+__version__ = '0.5.5'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -101,7 +101,8 @@ async def on_member_join(member):
         memberExtra = '{0} - *{1} ({2})*'.format(member.mention, member, member.id)
         await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:white_check_mark:** {1} tritt dem Server {2} bei'.format(_currenttime(), memberExtra, member.server))
         if __greetmsg__ == 'True':
-            await bot.send_message(member.server.default_channel, 'Willkommen {0} auf Der-Eddys Discord Server! Für weitere Informationen, wie unsere nsfw Channel, besuche unseren <#165973433086115840> Channel.'.format(member.mention))
+            emojis = [':wave:', ':congratulations:', ':wink:', ':new:', ':cool:', 'white_check_mark:']
+            await bot.send_message(member.server.default_channel, '{0} Willkommen {1} auf Der-Eddys Discord Server! Für weitere Informationen, wie unsere nsfw Channel :underage: , besuche unseren <#165973433086115840> Channel.'.format(random.choice(emojis), member.mention))
 
 @bot.event
 async def on_member_remove(member):
@@ -215,7 +216,7 @@ async def github():
 @bot.command(pass_context=True)
 async def about(ctx):
     '''Info über mich'''
-    msg = '**:information_source: Shinobu Oshino**\n'
+    msg = '**:information_source: Shinobu Oshino (500 Jahre alt)**\n'
     msg += '```Shinobu Oshino gehört wohl zu den mysteriösesten Charakteren in Bakemonogatari. Sie war bis vorletzten Frühling ein hochangesehener, adeliger, skrupelloser Vampir, der weit über 500 Jahre alt ist. Gnadenlos griff sie Menschen an und massakrierte sie nach Belieben. Auch Koyomi Araragi wurde von ihr attackiert und schwer verwundet. Nur durch das Eingreifen des Exorzisten Meme Oshino konnte Kiss-shot Acerola-orion Heart-under-blade, wie sie damals bekannt war, bezwungen werden. Dabei verlor sie jedoch all ihre Erinnerungen und wurde von einer attraktiven, erwachsenen Frau in einen unschuldigen Mädchenkörper verwandelt.\n\n'
     msg += 'Seitdem lebt sie zusammen mit Meme in einem verlassenen Gebäude und wurde von ihm aufgenommen. Er gab ihr auch ihren Namen Shinobu. Wann immer man Shinobu sehen sollte, sitzt sie nur mit traurigem Gesicht in einer Ecke und träumt vor sich hin. Sie spricht nicht und wirkt auch sonst meistens sehr abwesend. Einzig und allein zu Koyomi scheint sie ein freundschaftliches Verhältnis zu haben. Das Vampirblut in ihr verlangt immer noch nach Opfern und da sich Koyomi in gewisser Art und Weise schuldig fühlt, stellt er sich regelmäßig als Nahrungsquelle für Shinobu zur Verfügung.\n\n'
     msg += 'Quelle: http://www.anisearch.de/character/6598,shinobu-oshino/```\n\n'

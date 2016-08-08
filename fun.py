@@ -16,11 +16,6 @@ class fun():
         return online
 
     @commands.command()
-    async def cookie(self):
-        '''Keks'''
-        await self.bot.say(':cookie:')
-
-    @commands.command()
     async def praise(self):
         '''Praise the Sun'''
         await self.bot.say('https://i.imgur.com/K8ySn3e.gif')
