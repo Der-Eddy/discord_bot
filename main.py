@@ -13,19 +13,21 @@ from io import UnsupportedOperation
 from games import __games__, __gamesTimer__
 
 try:
-    from config import __token__, __prefix__, __adminid__, __adminrole__, __modrole__, __kawaiichannel__, __botlogchannel__, __github__
+    from config import __token__, __prefix__, __adminid__, __adminrole__, __modrole__, __kawaiichannel__, __botlogchannel__, __github__, __botserverid__, __greetmsg__
 except ImportError:
     #Heorku stuff
     import os
     __token__ = os.environ.get('DISCORD_TOKEN')
     __prefix__ = os.environ.get('DISCORD_PREFIX')
+    __botserverid__ = os.environ.get('DISCORD_BOTSERVERID')
     __adminid__ = os.environ.get('DISCORD_ADMINID')
     __adminrole__ = os.environ.get('DISCORD_ADMINROLE')
     __modrole__ = os.environ.get('DISCORD_MODROLE')
     __kawaiichannel__ = os.environ.get('DISCORD_KAWAIICHANNEL')
     __botlogchannel__ = os.environ.get('DISCORD_BOTLOGCHANNEL')
     __github__ = os.environ.get('DISCORD_GITHUB')
-__version__ = '0.5.3'
+    __greetmsg__ = os.environ.get('DISCORD_GREETMSG')
+__version__ = '0.5.4'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -74,7 +76,7 @@ async def _githubLog():
                 oldHash = temp.read()
             async with aiohttp.get(url) as resp:
                 r = await resp.json()
-            if not oldHash == r[0]['sha']:
+            if not oldHash == r[0]['sha'] and r[0]['sha'] != '':
                 with open('tempBot.txt', 'w+') as temp:
                     temp.write(r[0]['sha'])
                 msg = ':cool: Ein neuer Commit für **{0}**!\n **Author:** `{1}`\n **Date:** `{2}`\n **Commit:** `#{3}` - {4}\n **Commit Message:** ```{5}```'.format(authorAndRepo, r[0]['commit']['author']['name'], r[0]['commit']['author']['date'], r[0]['sha'][:7], r[0]['html_url'], r[0]['commit']['message'])
@@ -95,59 +97,70 @@ async def on_ready():
 
 @bot.event
 async def on_member_join(member):
-    memberExtra = '{0} - *{1} ({2})*'.format(member.mention, member, member.id)
-    await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:white_check_mark:** {1} tritt dem Server {2} bei'.format(_currenttime(), memberExtra, member.server))
+    if member.server.id == __botserverid__:
+        memberExtra = '{0} - *{1} ({2})*'.format(member.mention, member, member.id)
+        await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:white_check_mark:** {1} tritt dem Server {2} bei'.format(_currenttime(), memberExtra, member.server))
+        if __greetmsg__ == 'True':
+            await bot.send_message(member.server.default_channel, 'Willkommen {0} auf Der-Eddys Discord Server! Für weitere Informationen, wie unsere nsfw Channel, besuche unseren <#165973433086115840> Channel.'.format(member.mention))
 
 @bot.event
 async def on_member_remove(member):
-    memberExtra = '{0} - *{1} ({2})*'.format(member.mention, member, member.id)
-    await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:x:** {1} verließ den Server {2}'.format(_currenttime(), memberExtra, member.server))
+    if member.server.id == __botserverid__:
+        memberExtra = '{0} - *{1} ({2})*'.format(member.mention, member, member.id)
+        await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:x:** {1} verließ den Server {2}'.format(_currenttime(), memberExtra, member.server))
 
 @bot.event
 async def on_server_join(server):
-    serverExtra = '{0} - *Besitzer: {1} - Benutzer: {2} ({3})*'.format(server.name, server.owner, server.member_count, server.id)
-    await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:white_check_mark:** Server {1} hinzugefügt'.format(_currenttime(), serverExtra))
+    if server.id == __botserverid__:
+        serverExtra = '{0} - *Besitzer: {1} - Benutzer: {2} ({3})*'.format(server.name, server.owner, server.member_count, server.id)
+        await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:white_check_mark:** Server {1} hinzugefügt'.format(_currenttime(), serverExtra))
 
 @bot.event
 async def on_server_remove(server):
-    serverExtra = '{0} - *Besitzer: {1} - Benutzer: {2} ({3})*'.format(server.name, server.owner, server.member_count, server.id)
-    await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:x:** Server {1} entfernt'.format(_currenttime(), serverExtra))
+    if server.id == __botserverid__:
+        serverExtra = '{0} - *Besitzer: {1} - Benutzer: {2} ({3})*'.format(server.name, server.owner, server.member_count, server.id)
+        await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:x:** Server {1} entfernt'.format(_currenttime(), serverExtra))
 
 @bot.event
 async def on_message_delete(message):
     member = message.author
-    if not member.bot and not message.content.startswith(__prefix__) and not message.channel is bot.get_channel(__botlogchannel__): #Ignore messages from bots, commands and log channel
-        memberExtra = '**{0} |** {1} *({2} - {3})*'.format(message.channel.mention, member, member.id, member.server)
-        await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:warning:** {1} löschte die Nachricht:\n ```{2}```'.format(_currenttime(), memberExtra, message.content))
+    if member.server.id == __botserverid__:
+        if not member.bot and not message.content.startswith(__prefix__) and not message.channel is bot.get_channel(__botlogchannel__): #Ignore messages from bots, commands and log channel
+            memberExtra = '**{0} |** {1} *({2} - {3})*'.format(message.channel.mention, member, member.id, member.server)
+            await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:warning:** {1} löschte die Nachricht:\n ```{2}```'.format(_currenttime(), memberExtra, message.content))
 
 @bot.event
 async def on_message_edit(before, after):
     member = before.author
-    if not member.bot and not before.content.startswith(__prefix__) and not after.edited_timestamp is None and not before.channel is bot.get_channel(__botlogchannel__): #Ignore messages from bots, commands and log channel
-        memberExtra = '**{0} |** {1} *({2} - {3})*'.format(before.channel.mention, member, member.id, member.server)
-        beforeContent = '**Before** - {0} ({1}):```{2}```'.format(before.author, before.timestamp, before.content)
-        afterContent = '**After** - {0} ({1}):```{2}```'.format(after.author, after.edited_timestamp, after.content)
-        await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:information_source:** {1} änderte die Nachricht:\n {2} \n {3}'.format(_currenttime(), memberExtra, beforeContent, afterContent))
+    if member.server.id == __botserverid__:
+        if not member.bot and not before.content.startswith(__prefix__) and not after.edited_timestamp is None and not before.channel is bot.get_channel(__botlogchannel__): #Ignore messages from bots, commands and log channel
+            memberExtra = '**{0} |** {1} *({2} - {3})*'.format(before.channel.mention, member, member.id, member.server)
+            beforeContent = '**Before** - {0} ({1}):```{2}```'.format(before.author, before.timestamp, before.content)
+            afterContent = '**After** - {0} ({1}):```{2}```'.format(after.author, after.edited_timestamp, after.content)
+            await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:information_source:** {1} änderte die Nachricht:\n {2} \n {3}'.format(_currenttime(), memberExtra, beforeContent, afterContent))
 
 @bot.event
 async def on_member_update(before, after):
-    memberExtra = '**{0} |** {1} *({2} - {3})*'.format(before.mention, before, before.id, before.server)
-    if len(before.roles) is not len(after.roles):
-        await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:warning:** {1} Rollen wurden geändert:\n **Before:** `{2}`\n **After:** `{3}`'.format(_currenttime(), memberExtra, _getRoles(before.roles), _getRoles(after.roles)))
-    elif before.nick is not after.nick:
-        await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:information_source:** {1} Nickname wurde geändert:\n **Before:** `{2}`\n **After:** `{3}`'.format(_currenttime(), memberExtra, before.nick, after.nick))
-    elif before.avatar_url is not after.avatar_url and False:
-        await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:information_source:** {1} Avatar wurde geändert:\n **Before:** {2}\n **After:** {3}'.format(_currenttime(), memberExtra, before.avatar_url, after.avatar_url))
+    if before.server.id == __botserverid__:
+        memberExtra = '**{0} |** {1} *({2} - {3})*'.format(before.mention, before, before.id, before.server)
+        if len(before.roles) is not len(after.roles):
+            await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:warning:** {1} Rollen wurden geändert:\n **Before:** `{2}`\n **After:** `{3}`'.format(_currenttime(), memberExtra, _getRoles(before.roles), _getRoles(after.roles)))
+        elif before.nick is not after.nick:
+            await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:information_source:** {1} Nickname wurde geändert:\n **Before:** `{2}`\n **After:** `{3}`'.format(_currenttime(), memberExtra, before.nick, after.nick))
+        elif before.avatar_url is not after.avatar_url and False:
+            await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:information_source:** {1} Avatar wurde geändert:\n **Before:** {2}\n **After:** {3}'.format(_currenttime(), memberExtra, before.avatar_url, after.avatar_url))
 
 @bot.event
 async def on_member_ban(member):
-    memberExtra = '{0} - *{1} ({2})*'.format(member.mention, member, member.id)
-    await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:customs:** {1} wurde gebannt auf Server {2}'.format(_currenttime(), memberExtra, member.server))
+    if member.server.id == __botserverid__:
+        memberExtra = '{0} - *{1} ({2})*'.format(member.mention, member, member.id)
+        await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:customs:** {1} wurde gebannt auf Server {2}'.format(_currenttime(), memberExtra, member.server))
 
 @bot.event
 async def on_member_unban(member):
-    memberExtra = '{0} - *{1} ({2})*'.format(member.mention, member, member.id)
-    await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:negative_squared_cross_mark:** {1} wurde entbannt auf Server {2}'.format(_currenttime(), memberExtra, member.server))
+    if member.server.id == __botserverid__:
+        memberExtra = '{0} - *{1} ({2})*'.format(member.mention, member, member.id)
+        await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:negative_squared_cross_mark:** {1} wurde entbannt auf Server {2}'.format(_currenttime(), memberExtra, member.server))
 
 @bot.command()
 async def status():
