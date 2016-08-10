@@ -13,7 +13,7 @@ from io import UnsupportedOperation
 from games import __games__, __gamesTimer__
 
 try:
-    from config import __token__, __prefix__, __adminid__, __adminrole__, __modrole__, __kawaiichannel__, __botlogchannel__, __github__, __botserverid__, __greetmsg__
+    from config import __token__, __prefix__, __adminid__, __adminrole__, __modrole__, __kawaiichannel__, __botlogchannel__, __github__, __botserverid__, __greetmsg__, __selfassignrole__
 except ImportError:
     #Heorku stuff
     import os
@@ -27,7 +27,8 @@ except ImportError:
     __botlogchannel__ = os.environ.get('DISCORD_BOTLOGCHANNEL')
     __github__ = os.environ.get('DISCORD_GITHUB')
     __greetmsg__ = os.environ.get('DISCORD_GREETMSG')
-__version__ = '0.5.5'
+    __selfassignrole__ = os.environ.get('DISCORD_SELFASSIGNROLE')
+__version__ = '0.5.6'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -77,6 +78,7 @@ async def _githubLog():
             async with aiohttp.get(url) as resp:
                 r = await resp.json()
             if not oldHash == r[0]['sha'] and r[0]['sha'] != '':
+                print('Old: "{}" - New: "{}"'.format(oldHash, r[0]['sha'])) #Temporarily
                 with open('tempBot.txt', 'w+') as temp:
                     temp.write(r[0]['sha'])
                 msg = ':cool: Ein neuer Commit für **{0}**!\n **Author:** `{1}`\n **Date:** `{2}`\n **Commit:** `#{3}` - {4}\n **Commit Message:** ```{5}```'.format(authorAndRepo, r[0]['commit']['author']['name'], r[0]['commit']['author']['date'], r[0]['sha'][:7], r[0]['html_url'], r[0]['commit']['message'])

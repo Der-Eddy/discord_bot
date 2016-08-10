@@ -7,7 +7,7 @@ import aiohttp
 from pytz import timezone
 
 try:
-    from config import __token__, __prefix__, __adminid__, __adminrole__, __modrole__, __kawaiichannel__, __botlogchannel__, __github__, __botserverid__, __greetmsg__
+    from config import __token__, __prefix__, __adminid__, __adminrole__, __modrole__, __kawaiichannel__, __botlogchannel__, __github__, __botserverid__, __greetmsg__, __selfassignrole__
 except ImportError:
     #Heorku stuff
     import os
@@ -21,6 +21,7 @@ except ImportError:
     __botlogchannel__ = os.environ.get('DISCORD_BOTLOGCHANNEL')
     __github__ = os.environ.get('DISCORD_GITHUB')
     __greetmsg__ = os.environ.get('DISCORD_GREETMSG')
+    __selfassignrole__ = os.environ.get('DISCORD_SELFASSIGNROLE')
 
 class admin():
     '''Praktische Befehle für Administratoren und Moderatoren'''
