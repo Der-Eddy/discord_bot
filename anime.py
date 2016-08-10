@@ -56,13 +56,13 @@ class anime():
                     await self.bot.remove_roles(member, role)
                 except:
                     pass
-                tmp = await self.bot.say(':x: Rolle *{0}* wurde entfernt'.format(role))
+                tmp = await self.bot.say(':x: Rolle **{0}** wurde entfernt'.format(role))
             else:
                 try:
                     await self.bot.add_roles(member, role)
                 except:
                     pass
-                tmp = await self.bot.say(':white_check_mark: Rolle *{0}* wurde hinzugefügt'.format(role))
+                tmp = await self.bot.say(':white_check_mark: Rolle **{0}** wurde hinzugefügt'.format(role))
         else:
             tmp = await self.bot.say('**:no_entry:** Es wurde keine Rolle für den Bot eingestellt! Wende dich bitte an den Bot Admin')
         await asyncio.sleep(10)

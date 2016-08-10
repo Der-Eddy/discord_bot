@@ -28,7 +28,7 @@ except ImportError:
     __github__ = os.environ.get('DISCORD_GITHUB')
     __greetmsg__ = os.environ.get('DISCORD_GREETMSG')
     __selfassignrole__ = os.environ.get('DISCORD_SELFASSIGNROLE')
-__version__ = '0.5.6'
+__version__ = '0.5.7'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -236,6 +236,14 @@ async def echo(ctx, *message):
 @bot.command()
 async def info(member: discord.Member = None):
     '''Gibt Informationen über einen Benutzer aus'''
+
+    if member.top_role.is_everyone:
+        topRole = 'everyone aka None'
+        topRoleColour = '#000000'
+    else:
+        topRole = member.top_role
+        topRoleColour = member.top_role.colour
+
     if member is not None:
         msg = '**:information_source:** Informationen über %s:\n' % member
         msg += '```General              : %s\n' % member
@@ -247,7 +255,7 @@ async def info(member: discord.Member = None):
         msg += 'Avatar               : %s\n' % member.avatar_url
         msg += 'Erstellt am          : %s\n' % member.created_at
         msg += 'Server beigetreten am: %s\n' % member.joined_at
-        msg += 'Rollenfarbe          : %s (%s)\n' % (member.colour, member.top_role)
+        msg += 'Rollenfarbe          : %s (%s)\n' % (topRoleColour, topRole)
         msg += 'Status               : %s\n' % member.status
         msg += 'Rollen               : %s```' % _getRoles(member.roles)
     else:
