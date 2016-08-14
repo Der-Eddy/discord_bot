@@ -82,7 +82,9 @@ class anime():
                     con.commit()
                     await self.bot.say(':ok: Command **{}** hinzugefügt!'.format(arg[0].lower()))
             elif command == 'del':
-                pass
+                c.execute('DELETE FROM "reactions" WHERE "id" in (?)', (int(arg[0]), ))
+                con.commit()
+                await self.bot.say(':put_litter_in_its_place: ID #{} gelöscht!'.format(arg[0].lower()))
             elif command == 'list':
                 lst = c.execute('SELECT * FROM "reactions"')
                 msg = ''

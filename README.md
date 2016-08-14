@@ -15,8 +15,8 @@ Features
 - [x] Heroku Support
 - [x] Moderation/Server Log
 - [x] Message on GitHub Commit
+- [x] Reaction images
 - [ ] Upload to Imgur
-- [ ] Voice Support
 
 
 Eine Auflistung aller Befehle gibt es unter `:help` (Standardpräfix)
