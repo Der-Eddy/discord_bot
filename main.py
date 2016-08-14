@@ -8,6 +8,7 @@ import random
 import time
 import platform
 import datetime
+import sqlite3
 from pytz import timezone
 from io import UnsupportedOperation
 from games import __games__, __gamesTimer__
@@ -28,7 +29,7 @@ except ImportError:
     __github__ = os.environ.get('DISCORD_GITHUB')
     __greetmsg__ = os.environ.get('DISCORD_GREETMSG')
     __selfassignrole__ = os.environ.get('DISCORD_SELFASSIGNROLE')
-__version__ = '0.5.7'
+__version__ = '0.6.0'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -58,6 +59,18 @@ def _uptime():
     minutes = (timeUp / 60) % 60
     seconds = timeUp % 60
     return hours, minutes, seconds
+
+def _setupDatabase(db):
+    with sqlite3.connect(db) as con:
+        c = con.cursor()
+        c.execute('''CREATE TABLE IF NOT EXISTS `reactions` (
+                    	`id`	INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+                    	`command`	TEXT NOT NULL,
+                    	`url`	TEXT NOT NULL UNIQUE,
+                    	`author`	TEXT
+                    );''')
+        con.commit()
+        c.close()
 
 async def _randomGame():
     #Check games.py to change the list of "games" to be played
@@ -96,6 +109,7 @@ async def on_ready():
     bot.load_extension('anime')
     asyncio.ensure_future(_randomGame())
     asyncio.ensure_future(_githubLog())
+    _setupDatabase('reaction.db')
 
 @bot.event
 async def on_member_join(member):

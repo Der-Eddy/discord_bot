@@ -6,7 +6,6 @@
 [![GitHub license](https://img.shields.io/badge/license-Unlicense-blue.svg)](https://raw.githubusercontent.com/Der-Eddy/discord_bot/master/LICENSE)
 
 This is mostly a german discord chat bot made with [discord.py](https://github.com/Rapptz/discord.py).  
-Looking for another cool discord bot? You may want to checkout [Karen-chan](https://github.com/sn0w/Karen) made with `discord.js`.  
 
 Features
 -------------

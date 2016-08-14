@@ -4,6 +4,7 @@ import sys
 import asyncio
 import aiohttp
 import random
+import sqlite3
 
 try:
     from config import __token__, __prefix__, __adminid__, __adminrole__, __modrole__, __kawaiichannel__, __botlogchannel__, __github__, __botserverid__, __greetmsg__, __selfassignrole__
@@ -26,6 +27,7 @@ class anime():
     '''Alles rund um Animes'''
     kawaiich = __kawaiichannel__
     nsfwRole = __selfassignrole__
+    db = 'reaction.db'
 
     def __init__(self, bot):
         self.bot = bot
@@ -68,6 +70,32 @@ class anime():
         await asyncio.sleep(10)
         await self.bot.delete_message(tmp)
         await self.bot.delete_message(ctx.message)
+
+    @commands.command(pass_context=True)
+    async def reaction(self, ctx, command: str, *arg):
+        '''Fügt reaction Bilder hinzu oder gibt diese aus'''
+        with sqlite3.connect(self.db) as con:
+            c = con.cursor()
+            if command == 'add':
+                if len(arg) > 1:
+                    c.execute('INSERT INTO "reactions" ("command","url","author") VALUES (?, ?, ?)', (arg[0].lower(), arg[1], str(ctx.message.author)))
+                    con.commit()
+                    await self.bot.say(':ok: Command **{}** hinzugefügt!'.format(arg[0].lower()))
+            elif command == 'del':
+                pass
+            elif command == 'list':
+                lst = c.execute('SELECT * FROM "reactions"')
+                msg = ''
+                for i in lst:
+                    msg += '**ID:** {:>3} | **Command:** {:>10} | **URL:** `{}` | **Author:** {}\n'.format(i[0], i[1], i[2], i[3])
+                await self.bot.say(msg)
+            else:
+                lst = c.execute('SELECT * FROM "reactions" WHERE "command" LIKE (?)', (command,))
+                reaction = random.choice(lst.fetchall())
+                emojis = [':blush:', ':flushed:', ':heart_eyes:', ':heart_eyes_cat:', ':heart:']
+                msg = '{} {} *(Von {} | ID: {})*'.format(random.choice(emojis), reaction[2], reaction[3], reaction[0])
+                await self.bot.say(msg)
+            c.close()
 
     @commands.command(pass_context=True)
     async def imgur(self, ctx, amount: int = None):
