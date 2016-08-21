@@ -80,8 +80,8 @@ class anime():
         await self.bot.delete_message(ctx.message)
 
     @commands.command(pass_context=True)
-    async def reaction(self, ctx, command: str, *arg):
-        '''Fügt reaction Bilder hinzu oder gibt diese aus'''
+    async def reactionold(self, ctx, command: str, *arg):
+        '''Fügt reaction Bilder hinzu oder gibt diese aus OBSOLOTE USE THE NEW COMMAND'''
         with sqlite3.connect(self.db) as con:
             c = con.cursor()
             if command == 'add':
@@ -113,7 +113,7 @@ class anime():
     @commands.command(pass_context=True)
     async def imgur(self, ctx, amount: int = None):
         '''Lädt eine bestimmte Anzahl der letzten hochgeladenen Bilder im Channel bei Imgur hoch'''
-        pass
+        await self.bot.say(':new: Befehl in Arbeit!')
 
 def setup(bot):
     bot.add_cog(anime(bot))

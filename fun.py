@@ -3,6 +3,7 @@ from discord.ext import commands
 import asyncio
 import aiohttp
 import random
+import urllib.parse
 
 class fun():
     def __init__(self, bot):
@@ -79,6 +80,20 @@ class fun():
     async def steinigt(self, ctx, *member:str):
         '''Monty Python'''
         await self.bot.say(member + '\nhttps://media.giphy.com/media/l41lGAcThnMc29u2Q/giphy.gif')
+
+    @commands.command(pass_context=True)
+    async def reaction(self, ctx, searchstring: str):
+        '''Listet reaction pics von giphy.com'''
+        searchstring = urllib.parse.quote_plus(searchstring)
+        apikey = 'dc6zaTOxFJmzC'
+        async with aiohttp.get('https://api.giphy.com/v1/gifs/search?q={}&api_key={}'.format(searchstring, apikey)) as r:
+            if r.status == 200:
+                js = await r.json()
+                randomint = random.randint(0, js['pagination']['count'] - 1)
+                #doesn't work well with random reactions :|
+                #emojis = [':cat2: ', ':cat: ', ':heart_eyes_cat: ']
+                msg = js['data'][randomint]['url']
+                await self.bot.say(msg)
 
 def setup(bot):
     bot.add_cog(fun(bot))
