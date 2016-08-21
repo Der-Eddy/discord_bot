@@ -82,11 +82,15 @@ class fun():
         await self.bot.say(member + '\nhttps://media.giphy.com/media/l41lGAcThnMc29u2Q/giphy.gif')
 
     @commands.command(pass_context=True)
-    async def reaction(self, ctx, searchstring: str):
+    async def reaction(self, ctx, *searchterm: str):
         '''Listet reaction pics von giphy.com'''
-        searchstring = urllib.parse.quote_plus(searchstring)
+        searchstring = urllib.parse.quote_plus(' '.join(searchterm))
         apikey = 'dc6zaTOxFJmzC'
-        async with aiohttp.get('https://api.giphy.com/v1/gifs/search?q={}&api_key={}'.format(searchstring, apikey)) as r:
+        if 'nsfw' in ctx.message.channel.name:
+            rating = 'r'
+        else:
+            rating = 'pg-13'
+        async with aiohttp.get('https://api.giphy.com/v1/gifs/search?q={}&api_key={}&limit=5&rating={}'.format(searchstring, apikey, rating)) as r:
             if r.status == 200:
                 js = await r.json()
                 randomint = random.randint(0, js['pagination']['count'] - 1)

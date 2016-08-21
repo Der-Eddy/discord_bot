@@ -15,7 +15,7 @@ Features
 - [x] Heroku Support
 - [x] Moderation/Server Log
 - [x] Message on GitHub Commit
-- [x] Reaction images
+- [x] Reaction images (Giphy.com + own database)
 - [ ] Upload to Imgur
 
 
