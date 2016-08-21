@@ -29,7 +29,7 @@ except ImportError:
     __github__ = os.environ.get('DISCORD_GITHUB')
     __greetmsg__ = os.environ.get('DISCORD_GREETMSG')
     __selfassignrole__ = os.environ.get('DISCORD_SELFASSIGNROLE')
-__version__ = '0.6.1'
+__version__ = '0.6.2'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -105,7 +105,7 @@ async def on_ready():
     print(bot.user.id)
     print('------')
     bot.load_extension('fun')
-    bot.load_extension('admin')
+    bot.load_extension('mod')
     bot.load_extension('anime')
     asyncio.ensure_future(_randomGame())
     asyncio.ensure_future(_githubLog())

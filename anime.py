@@ -27,17 +27,18 @@ class anime():
     '''Alles rund um Animes'''
     kawaiich = __kawaiichannel__
     nsfwRole = __selfassignrole__
+    mod = __modrole__
     db = 'reaction.db'
 
     def __init__(self, bot):
         self.bot = bot
 
     def checkRole(self, user, roleRec):
-            ok = False
-            for all in list(user.roles):
-                if all.name == roleRec:
-                    ok = True
-    return ok
+        ok = False
+        for all in list(user.roles):
+            if all.name == roleRec:
+                ok = True
+        return ok
 
     @commands.command(pass_context=True)
     async def kawaii(self, ctx):
@@ -91,12 +92,10 @@ class anime():
             elif command == 'del':
                 if self.checkRole(ctx.message.author, self.mod):
                     c.execute('DELETE FROM "reactions" WHERE "id" in (?)', (int(arg[0]), ))
-                    con.commit()
-                    await self.bot.say(':put_litter_in_its_place: ID #{} gelöscht!'.format(arg[0].lower()))
                 else:
                     c.execute('DELETE FROM "reactions" WHERE "id" in (?) AND "author" IN (?)', (int(arg[0]), str(ctx.message.author)))
-                    con.commit()
-                    await self.bot.say(':put_litter_in_its_place: ID #{} gelöscht!'.format(arg[0].lower()))
+                con.commit()
+                await self.bot.say(':put_litter_in_its_place: ID #{} gelöscht!'.format(arg[0].lower()))
             elif command == 'list':
                 lst = c.execute('SELECT * FROM "reactions"')
                 msg = ''
