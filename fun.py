@@ -57,7 +57,7 @@ class fun():
                 await self.bot.say(msg)
 
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, aliases=['rand'])
     async def random(self, ctx, *arg):
         '''Gibt eine zufällige Zahl oder Member aus'''
         if ctx.invoked_subcommand is None:
@@ -81,16 +81,17 @@ class fun():
         '''Monty Python'''
         await self.bot.say(member + '\nhttps://media.giphy.com/media/l41lGAcThnMc29u2Q/giphy.gif')
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, aliases=['r', 'giphy'])
     async def reaction(self, ctx, *searchterm: str):
         '''Listet reaction pics von giphy.com'''
         searchstring = urllib.parse.quote_plus(' '.join(searchterm))
         apikey = 'dc6zaTOxFJmzC'
+        limit = 4
         if 'nsfw' in ctx.message.channel.name:
             rating = 'r'
         else:
             rating = 'pg-13'
-        async with aiohttp.get('https://api.giphy.com/v1/gifs/search?q={}&api_key={}&limit=5&rating={}'.format(searchstring, apikey, rating)) as r:
+        async with aiohttp.get('https://api.giphy.com/v1/gifs/search?q={}&api_key={}&limit={}&rating={}'.format(searchstring, apikey, limit, rating)) as r:
             if r.status == 200:
                 js = await r.json()
                 randomint = random.randint(0, js['pagination']['count'] - 1)

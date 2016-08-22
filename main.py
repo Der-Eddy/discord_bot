@@ -29,7 +29,7 @@ except ImportError:
     __github__ = os.environ.get('DISCORD_GITHUB')
     __greetmsg__ = os.environ.get('DISCORD_GREETMSG')
     __selfassignrole__ = os.environ.get('DISCORD_SELFASSIGNROLE')
-__version__ = '0.6.4'
+__version__ = '0.6.5'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -179,7 +179,7 @@ async def on_member_unban(member):
         memberExtra = '{0} - *{1} ({2})*'.format(member.mention, member, member.id)
         await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:negative_squared_cross_mark:** {1} wurde entbannt auf Server {2}'.format(_currenttime(), memberExtra, member.server))
 
-@bot.command()
+@bot.command(aliases=['s'])
 async def status():
     '''Infos über den Bot'''
     hours, minutes, seconds = _uptime()
@@ -215,7 +215,7 @@ async def test(ctx):
     else:
         await bot.say('Ich putze hier nur')
 
-@bot.command(pass_context=True)
+@bot.command(pass_context=True, aliases=['p'])
 async def ping(ctx):
     '''Misst die Response Time'''
     ping = ctx.message
@@ -229,7 +229,7 @@ async def github():
     '''Weil Open Source cool ist'''
     await bot.say('**:free:** https://github.com/Der-Eddy/discord_bot')
 
-@bot.command(pass_context=True)
+@bot.command(pass_context=True, aliases=['info'])
 async def about(ctx):
     '''Info über mich'''
     msg = '**:information_source: Shinobu Oshino (500 Jahre alt)**\n'
@@ -248,7 +248,7 @@ async def echo(ctx, *message):
     await bot.delete_message(ctx.message)
 
 @bot.command()
-async def info(member: discord.Member = None):
+async def whois(member: discord.Member = None):
     '''Gibt Informationen über einen Benutzer aus'''
 
     if member.top_role.is_everyone:

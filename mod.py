@@ -80,7 +80,7 @@ class admin():
         else:
             await self.bot.say('**:no_entry:** Du hast nicht die Rolle {0}!'.format(self.admin))
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, aliases=['prune'])
     async def purge(self, ctx, *limit):
         '''Löscht mehere Nachrichten auf einmal (ADMIN ONLY)'''
         author = ctx.message.author
@@ -123,7 +123,7 @@ class admin():
             msg = '**:no_entry:** Du bist nicht {0}!'.format(self.owner)
         await self.bot.say(msg)
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, aliases=['k'])
     async def kick(self, ctx, member: discord.Member = None, *reason):
         '''Kickt ein Mitglied mit einer Begründung (MOD ONLY)'''
         author = ctx.message.author
@@ -146,7 +146,7 @@ class admin():
             await self.bot.delete_message(tmp)
             await self.bot.delete_message(ctx.message)
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, aliases=['b'])
     async def ban(self, ctx, member: discord.Member = None, *reason):
         '''Bannt ein Mitglied mit einer Begründung (MOD ONLY)'''
         author = ctx.message.author
