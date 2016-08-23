@@ -9,6 +9,7 @@ import time
 import platform
 import datetime
 import sqlite3
+import xml.etree.ElementTree as ET
 from pytz import timezone
 from io import UnsupportedOperation
 from games import __games__, __gamesTimer__
@@ -29,7 +30,7 @@ except ImportError:
     __github__ = os.environ.get('DISCORD_GITHUB')
     __greetmsg__ = os.environ.get('DISCORD_GREETMSG')
     __selfassignrole__ = os.environ.get('DISCORD_SELFASSIGNROLE')
-__version__ = '0.6.5'
+__version__ = '0.6.6'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -91,7 +92,6 @@ async def _githubLog():
             async with aiohttp.get(url) as resp:
                 r = await resp.json()
             if not oldHash == r[0]['sha'] and r[0]['sha'] != '':
-                print('Old: "{}" - New: "{}"'.format(oldHash, r[0]['sha'])) #Temporarily
                 with open('tempBot.txt', 'w+') as temp:
                     temp.write(r[0]['sha'])
                 msg = ':cool: Ein neuer Commit für **{0}**!\n **Author:** `{1}`\n **Date:** `{2}`\n **Commit:** `#{3}` - {4}\n **Commit Message:** ```{5}```'.format(authorAndRepo, r[0]['commit']['author']['name'], r[0]['commit']['author']['date'], r[0]['sha'][:7], r[0]['html_url'], r[0]['commit']['message'])
@@ -142,7 +142,7 @@ async def on_server_remove(server):
 async def on_message_delete(message):
     member = message.author
     if member.server.id == __botserverid__:
-        if not member.bot and not message.content.startswith(__prefix__) and not message.channel is bot.get_channel(__botlogchannel__): #Ignore messages from bots, commands and log channel
+        if not member.bot and not message.content.startswith(__prefix__) and not message.channel is bot.get_channel(__botlogchannel__): #Ignore messages from bots, commands and log channel, my test bot also uses the ; prefix
             memberExtra = '**{0} |** {1} *({2} - {3})*'.format(message.channel.mention, member, member.id, member.server)
             await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:warning:** {1} löschte die Nachricht:\n ```{2}```'.format(_currenttime(), memberExtra, message.content))
 
@@ -150,7 +150,7 @@ async def on_message_delete(message):
 async def on_message_edit(before, after):
     member = before.author
     if member.server.id == __botserverid__:
-        if not member.bot and not before.content.startswith(__prefix__) and not after.edited_timestamp is None and not before.channel is bot.get_channel(__botlogchannel__): #Ignore messages from bots, commands and log channel
+        if not member.bot and not before.content.startswith(__prefix__) and not before.content.startswith(';') and not after.edited_timestamp is None and not before.channel is bot.get_channel(__botlogchannel__): #Ignore messages from bots, commands and log channel
             memberExtra = '**{0} |** {1} *({2} - {3})*'.format(before.channel.mention, member, member.id, member.server)
             beforeContent = '**Before** - {0} ({1}):```{2}```'.format(before.author, before.timestamp, before.content)
             afterContent = '**After** - {0} ({1}):```{2}```'.format(after.author, after.edited_timestamp, after.content)
@@ -252,7 +252,7 @@ async def whois(member: discord.Member = None):
     '''Gibt Informationen über einen Benutzer aus'''
 
     if member.top_role.is_everyone:
-        topRole = 'everyone aka None'
+        topRole = 'everyone aka None' #to prevent @everyone spam
         topRoleColour = '#000000'
     else:
         topRole = member.top_role
@@ -275,6 +275,28 @@ async def whois(member: discord.Member = None):
     else:
         msg = '**:no_entry:** Du hast keinen Benutzer angegeben!'
     await bot.say(msg)
+
+@bot.command(aliases=['epvp'])
+async def epvpis(*user: str):
+    '''Sucht nach einem Benutzernamen auf Elitepvpers'''
+    user = ' '.join(user)
+    url = 'https://www.elitepvpers.com/forum/ajax.php?do=usersearch'
+    payload = {
+        'do': 'usersearch',
+        'fragment': user
+    }
+    async with aiohttp.post(url, data=payload) as r:
+        if r.status == 200:
+            root = ET.fromstring(await r.text())
+            if len(root) > 0:
+                msg = ':ok: Ich konnte {} Accounts finden!\n```'.format(len(root))
+                for i in root:
+                    userURL = 'https://www.elitepvpers.com/forum/member.php?u=' + i.attrib['userid']
+                    msg += '{} | {}\n'.format(i.text, userURL)
+                msg += '```'
+            else:
+                msg = ':no_entry: Ich konnte keine Epvp Accounts finden :sweat:'
+            await bot.say(msg)
 
 startTime = time.time()
 bot.run(__token__)
