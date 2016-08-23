@@ -24,7 +24,7 @@ More Details can be found at our [Trello Board](https://trello.com/b/Kh8nfuBE/di
 
 Eine Auflistung aller Befehle gibt es unter `:help` (Standardpräfix)
 
-![help command](https://i.imgur.com/pWCnnky.png)
+![help command](https://i.imgur.com/5lyZEZh.png)
 
 
 Run & Requirements
