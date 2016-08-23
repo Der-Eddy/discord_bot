@@ -30,7 +30,7 @@ except ImportError:
     __github__ = os.environ.get('DISCORD_GITHUB')
     __greetmsg__ = os.environ.get('DISCORD_GREETMSG')
     __selfassignrole__ = os.environ.get('DISCORD_SELFASSIGNROLE')
-__version__ = '0.6.6'
+__version__ = '0.6.7'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -224,19 +224,15 @@ async def ping(ctx):
     delta = int(delta.total_seconds() * 1000)
     await bot.edit_message(pong, '**:ping_pong:** Pong! (%d ms)' % delta)
 
-@bot.command()
-async def github():
-    '''Weil Open Source cool ist'''
-    await bot.say('**:free:** https://github.com/Der-Eddy/discord_bot')
-
-@bot.command(pass_context=True, aliases=['info'])
+@bot.command(pass_context=True, aliases=['info', 'github', 'trello'])
 async def about(ctx):
     '''Info über mich'''
     msg = '**:information_source: Shinobu Oshino (500 Jahre alt)**\n'
     msg += '```Shinobu Oshino gehört wohl zu den mysteriösesten Charakteren in Bakemonogatari. Sie war bis vorletzten Frühling ein hochangesehener, adeliger, skrupelloser Vampir, der weit über 500 Jahre alt ist. Gnadenlos griff sie Menschen an und massakrierte sie nach Belieben. Auch Koyomi Araragi wurde von ihr attackiert und schwer verwundet. Nur durch das Eingreifen des Exorzisten Meme Oshino konnte Kiss-shot Acerola-orion Heart-under-blade, wie sie damals bekannt war, bezwungen werden. Dabei verlor sie jedoch all ihre Erinnerungen und wurde von einer attraktiven, erwachsenen Frau in einen unschuldigen Mädchenkörper verwandelt.\n\n'
     msg += 'Seitdem lebt sie zusammen mit Meme in einem verlassenen Gebäude und wurde von ihm aufgenommen. Er gab ihr auch ihren Namen Shinobu. Wann immer man Shinobu sehen sollte, sitzt sie nur mit traurigem Gesicht in einer Ecke und träumt vor sich hin. Sie spricht nicht und wirkt auch sonst meistens sehr abwesend. Einzig und allein zu Koyomi scheint sie ein freundschaftliches Verhältnis zu haben. Das Vampirblut in ihr verlangt immer noch nach Opfern und da sich Koyomi in gewisser Art und Weise schuldig fühlt, stellt er sich regelmäßig als Nahrungsquelle für Shinobu zur Verfügung.\n\n'
     msg += 'Quelle: http://www.anisearch.de/character/6598,shinobu-oshino/```\n\n'
-    msg += 'Dieser Bot ist außerdem **:free:**, Open-Source, in Python und mit Hilfe von discord.py geschrieben! `https://github.com/Der-Eddy/discord_bot`'
+    msg += 'Dieser Bot ist außerdem **:free:**, Open-Source, in Python und mit Hilfe von discord.py geschrieben! <https://github.com/Der-Eddy/discord_bot>\n'
+    msg += 'Neueste Neuerungen immer zuerst auf unserem Trello Board! <https://trello.com/b/Kh8nfuBE/discord-bot-shinobu-chan>'
     with open('img/ava.png', 'rb') as f:
         await bot.send_file(ctx.message.channel, f, content=msg)
 

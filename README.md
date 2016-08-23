@@ -4,6 +4,7 @@
 
 [![Python3](https://img.shields.io/badge/python-3.5-blue.svg)](https://github.com/Der-Eddy/discord_bot)
 [![GitHub license](https://img.shields.io/badge/license-Unlicense-blue.svg)](https://raw.githubusercontent.com/Der-Eddy/discord_bot/master/LICENSE)
+[![GitHub license](https://img.shields.io/badge/Management-Trello%20Board-blue.svg)](https://trello.com/b/Kh8nfuBE/discord-bot-shinobu-chan)
 
 This is mostly a german discord chat bot made with [discord.py](https://github.com/Rapptz/discord.py).  
 
@@ -17,6 +18,8 @@ Features
 - [x] Message on GitHub Commit
 - [x] Reaction images (Giphy.com + own database)
 - [ ] Upload to Imgur
+
+More Details can be found at our [Trello Board](https://trello.com/b/Kh8nfuBE/discord-bot-shinobu-chan)!
 
 
 Eine Auflistung aller Befehle gibt es unter `:help` (Standardpräfix)
