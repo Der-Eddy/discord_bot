@@ -171,7 +171,9 @@ class admin():
 
     @commands.command(pass_context=True)
     async def unban(self, ctx, user: int = None, *reason):
-        '''Entbannt ein Mitglied mit einer Begründung (MOD ONLY)'''
+        '''Entbannt ein Mitglied mit einer Begründung (MOD ONLY)
+        Es muss die Benutzer-ID angegeben werden, Name + Discriminator reicht nichts
+        '''
         author = ctx.message.author
         user = discord.User(id=user)
         if self.checkRole(author, self.mod):

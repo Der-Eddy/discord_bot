@@ -30,7 +30,7 @@ except ImportError:
     __github__ = os.environ.get('DISCORD_GITHUB')
     __greetmsg__ = os.environ.get('DISCORD_GREETMSG')
     __selfassignrole__ = os.environ.get('DISCORD_SELFASSIGNROLE')
-__version__ = '0.6.7'
+__version__ = '0.6.8'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -53,13 +53,6 @@ def _getRoles(roles):
         return 'None'
     else:
         return string[:-2]
-
-def _uptime():
-    timeUp = time.time() - startTime
-    hours = timeUp / 3600
-    minutes = (timeUp / 60) % 60
-    seconds = timeUp % 60
-    return hours, minutes, seconds
 
 def _setupDatabase(db):
     with sqlite3.connect(db) as con:
@@ -179,10 +172,13 @@ async def on_member_unban(member):
         memberExtra = '{0} - *{1} ({2})*'.format(member.mention, member, member.id)
         await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:negative_squared_cross_mark:** {1} wurde entbannt auf Server {2}'.format(_currenttime(), memberExtra, member.server))
 
-@bot.command(aliases=['s'])
+@bot.command(aliases=['s', 'uptime', 'up'])
 async def status():
     '''Infos über den Bot'''
-    hours, minutes, seconds = _uptime()
+    timeUp = time.time() - startTime
+    hours = timeUp / 3600
+    minutes = (timeUp / 60) % 60
+    seconds = timeUp % 60
 
     admin = ''
     users = 0
@@ -199,21 +195,6 @@ async def status():
     msg += 'Python Version     : %s\n' % platform.python_version()
     msg += 'GitHub             : https://github.com/Der-Eddy/discord_bot```'
     await bot.say(msg)
-
-@bot.command()
-async def uptime():
-    '''Wie lange bin ich schon online?'''
-    hours, minutes, seconds = _uptime()
-    msg = '**:up:** Ich bin online seit: *{0:.0f} Stunden, {1:.0f} Minuten und {2:.0f} Sekunden*'.format(hours, minutes, seconds)
-    await bot.say(msg)
-
-@bot.command(pass_context=True)
-async def test(ctx):
-    '''Nur ein Test baka'''
-    if ctx.message.author.id == config.__adminid__:
-        await bot.say('Ja Meister?')
-    else:
-        await bot.say('Ich putze hier nur')
 
 @bot.command(pass_context=True, aliases=['p'])
 async def ping(ctx):

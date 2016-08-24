@@ -79,9 +79,25 @@ class anime():
         await self.bot.delete_message(tmp)
         await self.bot.delete_message(ctx.message)
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, enabled=False)
     async def reactionold(self, ctx, command: str, *arg):
-        '''Fügt reaction Bilder hinzu oder gibt diese aus OBSOLOTE USE THE NEW COMMAND'''
+        '''OBSOLOTE Fügt reaction Bilder hinzu oder gibt diese aus
+
+        Benutzung:
+        -----------
+
+        :reaction COMMAND
+            Gibt ein zufälliges Bild unter dem command aus
+
+        :reaction add COMMAND BILDURL
+            Fügt das jeweilige Bild zum jeweiligen command hinzu
+
+        :reaction del ID
+            Löscht den Eintrag mit der jeweiligen ID, nur für Modaratoren und Ersteller des Eintrags
+
+        :reaction list
+            Gibt die volle Liste an commands und jeweiligen Links
+        '''
         with sqlite3.connect(self.db) as con:
             c = con.cursor()
             if command == 'add':

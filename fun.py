@@ -59,7 +59,23 @@ class fun():
 
     @commands.command(pass_context=True, aliases=['rand'])
     async def random(self, ctx, *arg):
-        '''Gibt eine zufällige Zahl oder Member aus'''
+        '''Gibt eine zufällige Zahl oder Member aus
+
+        Benutzung:
+        -----------
+
+        :random
+            Gibt eine zufällige Zahl zwischen 1 und 100 aus
+
+        :random 6
+            Gibt eine zufällige Zahl zwischen 1 und 6 aus
+
+        :random 10 20
+            Gibt eine zufällige Zahl zwischen 10 und 20 aus
+
+        :random user
+            Gibt einen zufällige Benutzer der gerade online ist aus
+        '''
         if ctx.invoked_subcommand is None:
             if not arg:
                 start = 1
@@ -83,7 +99,9 @@ class fun():
 
     @commands.command(pass_context=True, aliases=['r', 'giphy'])
     async def reaction(self, ctx, *searchterm: str):
-        '''Listet reaction pics von giphy.com'''
+        '''Listet reaction Bilder von giphy.com
+        Erlaubt r-rating Bilder in Channel die 'nsfw' beinhalten
+        '''
         searchstring = urllib.parse.quote_plus(' '.join(searchterm))
         apikey = 'dc6zaTOxFJmzC'
         limit = 4
