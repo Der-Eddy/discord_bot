@@ -30,7 +30,7 @@ except ImportError:
     __github__ = os.environ.get('DISCORD_GITHUB')
     __greetmsg__ = os.environ.get('DISCORD_GREETMSG')
     __selfassignrole__ = os.environ.get('DISCORD_SELFASSIGNROLE')
-__version__ = '0.6.8'
+__version__ = '0.6.9'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -226,7 +226,13 @@ async def echo(ctx, *message):
 
 @bot.command()
 async def whois(member: discord.Member = None):
-    '''Gibt Informationen über einen Benutzer aus'''
+    '''Gibt Informationen über einen Benutzer aus
+
+    Beispiel:
+    -----------
+
+    :whois @Der-Eddy#6508
+    '''
 
     if member.top_role.is_everyone:
         topRole = 'everyone aka None' #to prevent @everyone spam
@@ -255,7 +261,13 @@ async def whois(member: discord.Member = None):
 
 @bot.command(aliases=['epvp'])
 async def epvpis(*user: str):
-    '''Sucht nach einem Benutzernamen auf Elitepvpers'''
+    '''Sucht nach einem Benutzernamen auf Elitepvpers
+
+    Beispiel:
+    -----------
+
+    :epvpis Der-Eddy
+    '''
     user = ' '.join(user)
     url = 'https://www.elitepvpers.com/forum/ajax.php?do=usersearch'
     payload = {

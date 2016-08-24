@@ -79,7 +79,7 @@ class anime():
         await self.bot.delete_message(tmp)
         await self.bot.delete_message(ctx.message)
 
-    @commands.command(pass_context=True, enabled=False)
+    @commands.command(pass_context=True, enabled=False, hidden=True)
     async def reactionold(self, ctx, command: str, *arg):
         '''OBSOLOTE Fügt reaction Bilder hinzu oder gibt diese aus
 

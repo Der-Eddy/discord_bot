@@ -82,7 +82,13 @@ class admin():
 
     @commands.command(pass_context=True, aliases=['prune'])
     async def purge(self, ctx, *limit):
-        '''Löscht mehere Nachrichten auf einmal (ADMIN ONLY)'''
+        '''Löscht mehere Nachrichten auf einmal (ADMIN ONLY)
+
+        Beispiel:
+        -----------
+
+        :purge 100
+        '''
         author = ctx.message.author
         if self.checkRole(author, self.admin):
             limit = int(limit[0])
@@ -125,7 +131,13 @@ class admin():
 
     @commands.command(pass_context=True, aliases=['k'])
     async def kick(self, ctx, member: discord.Member = None, *reason):
-        '''Kickt ein Mitglied mit einer Begründung (MOD ONLY)'''
+        '''Kickt ein Mitglied mit einer Begründung (MOD ONLY)
+
+        Beispiel:
+        -----------
+
+        :kick @Der-Eddy#6508
+        '''
         author = ctx.message.author
         if self.checkRole(author, self.mod):
             if member is not None:
@@ -148,7 +160,13 @@ class admin():
 
     @commands.command(pass_context=True, aliases=['b'])
     async def ban(self, ctx, member: discord.Member = None, *reason):
-        '''Bannt ein Mitglied mit einer Begründung (MOD ONLY)'''
+        '''Bannt ein Mitglied mit einer Begründung (MOD ONLY)
+
+        Beispiel:
+        -----------
+
+        :ban @Der-Eddy#6508
+        '''
         author = ctx.message.author
         if self.checkRole(author, self.mod):
             if member is not None:
@@ -173,6 +191,11 @@ class admin():
     async def unban(self, ctx, user: int = None, *reason):
         '''Entbannt ein Mitglied mit einer Begründung (MOD ONLY)
         Es muss die Benutzer-ID angegeben werden, Name + Discriminator reicht nichts
+
+        Beispiel:
+        -----------
+
+        :unban 102815825781596160
         '''
         author = ctx.message.author
         user = discord.User(id=user)

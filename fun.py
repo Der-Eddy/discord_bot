@@ -101,6 +101,11 @@ class fun():
     async def reaction(self, ctx, *searchterm: str):
         '''Listet reaction Bilder von giphy.com
         Erlaubt r-rating Bilder in Channel die 'nsfw' beinhalten
+
+        Beispiel:
+        -----------
+
+        :reaction ghibli
         '''
         searchstring = urllib.parse.quote_plus(' '.join(searchterm))
         apikey = 'dc6zaTOxFJmzC'
