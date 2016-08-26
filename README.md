@@ -86,4 +86,4 @@ License
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 
-Versions below 0.6.8 used the Unlicense <http://unlicense.org> license.
+Versions prior to 0.6.8 used the Unlicense <http://unlicense.org> license.

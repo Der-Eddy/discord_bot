@@ -110,7 +110,7 @@ async def on_member_join(member):
         memberExtra = '{0} - *{1} ({2})*'.format(member.mention, member, member.id)
         await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:white_check_mark:** {1} tritt dem Server {2} bei'.format(_currenttime(), memberExtra, member.server))
         if __greetmsg__ == 'True':
-            emojis = [':wave:', ':congratulations:', ':wink:', ':new:', ':cool:', 'white_check_mark:']
+            emojis = [':wave:', ':congratulations:', ':wink:', ':new:', ':cool:', ':white_check_mark:', ':tada:']
             await bot.send_message(member.server.default_channel, '{0} Willkommen {1} auf Der-Eddys Discord Server! Für weitere Informationen, wie unsere nsfw Channel :underage: , besuche unseren <#165973433086115840> Channel.'.format(random.choice(emojis), member.mention))
 
 @bot.event
