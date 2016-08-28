@@ -126,6 +126,20 @@ class anime():
                 await self.bot.say(msg)
             c.close()
 
+    @commands.command(aliases=['wave'])
+    async def hello(self):
+        '''Nonsense gifs zum Hallo sagen'''
+        gifs = ['https://cdn.discordapp.com/attachments/102817255661772800/219512763607678976/large_1.gif',
+                'https://cdn.discordapp.com/attachments/102817255661772800/219512898563735552/large.gif',
+                'https://cdn.discordapp.com/attachments/102817255661772800/219518948251664384/WgQWD.gif',
+                'https://cdn.discordapp.com/attachments/102817255661772800/219518717426532352/tumblr_lnttzfSUM41qgcvsy.gif',
+                'https://cdn.discordapp.com/attachments/102817255661772800/219519191290478592/tumblr_mf76erIF6s1qj96p1o1_500.gif',
+                'https://cdn.discordapp.com/attachments/102817255661772800/219519729604231168/giphy_3.gif',
+                'https://cdn.discordapp.com/attachments/102817255661772800/219519737971867649/63953d32c650703cded875ac601e765778ce90d0_hq.gif',
+                'https://cdn.discordapp.com/attachments/102817255661772800/219519738781368321/17201a4342e901e5f1bc2a03ad487219c0434c22_hq.gif']
+        msg = ':wave: {}'.format(random.choice(gifs))
+        await self.bot.say(msg)
+
     @commands.command(pass_context=True)
     async def imgur(self, ctx, amount: int = None):
         '''Lädt eine bestimmte Anzahl der letzten hochgeladenen Bilder im Channel bei Imgur hoch'''
