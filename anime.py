@@ -140,7 +140,7 @@ class anime():
         msg = ':wave: {}'.format(random.choice(gifs))
         await self.bot.say(msg)
 
-    @commands.command(aliases=['neppu', 'topnep'])
+    @commands.command(aliases=['nepu', 'topnep'])
     async def nep(self):
         '''Can't stop the Nep'''
         neps = ['https://cdn.discordapp.com/attachments/102817255661772800/219530759881359360/community_image_1421846157.gif',
