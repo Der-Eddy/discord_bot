@@ -30,7 +30,7 @@ except ImportError:
     __github__ = os.environ.get('DISCORD_GITHUB')
     __greetmsg__ = os.environ.get('DISCORD_GREETMSG')
     __selfassignrole__ = os.environ.get('DISCORD_SELFASSIGNROLE')
-__version__ = '0.6.12'
+__version__ = '0.6.13'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -121,15 +121,13 @@ async def on_member_remove(member):
 
 @bot.event
 async def on_server_join(server):
-    if server.id == __botserverid__:
-        serverExtra = '{0} - *Besitzer: {1} - Benutzer: {2} ({3})*'.format(server.name, server.owner, server.member_count, server.id)
-        await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:white_check_mark:** Server {1} hinzugefügt'.format(_currenttime(), serverExtra))
+    serverExtra = '{0} - *Besitzer: {1} - Benutzer: {2} ({3})*'.format(server.name, server.owner, server.member_count, server.id)
+    await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:white_check_mark:** Server {1} hinzugefügt'.format(_currenttime(), serverExtra))
 
 @bot.event
 async def on_server_remove(server):
-    if server.id == __botserverid__:
-        serverExtra = '{0} - *Besitzer: {1} - Benutzer: {2} ({3})*'.format(server.name, server.owner, server.member_count, server.id)
-        await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:x:** Server {1} entfernt'.format(_currenttime(), serverExtra))
+    serverExtra = '{0} - *Besitzer: {1} - Benutzer: {2} ({3})*'.format(server.name, server.owner, server.member_count, server.id)
+    await bot.send_message(bot.get_channel(__botlogchannel__), '`[{0}]` **:x:** Server {1} entfernt'.format(_currenttime(), serverExtra))
 
 @bot.event
 async def on_message_delete(message):
