@@ -58,24 +58,27 @@ class anime():
     @commands.command(pass_context=True)
     async def nsfw(self, ctx):
         '''Vergibt die Rolle um auf die NSFW Channel zugreifen zu können'''
-        if self.nsfwRole:
-            member = ctx.message.author
-            role = discord.utils.get(ctx.message.server.roles, name=self.nsfwRole)
-            if role in member.roles:
-                try:
-                    await self.bot.remove_roles(member, role)
-                except:
-                    pass
-                tmp = await self.bot.say(':x: Rolle **{0}** wurde entfernt'.format(role))
+        if ctx.message.server == self.bot.get_server(__botserverid__):
+            if self.nsfwRole:
+                member = ctx.message.author
+                role = discord.utils.get(ctx.message.server.roles, name=self.nsfwRole)
+                if role in member.roles:
+                    try:
+                        await self.bot.remove_roles(member, role)
+                    except:
+                        pass
+                    tmp = await self.bot.say(':x: Rolle **{0}** wurde entfernt'.format(role))
+                else:
+                    try:
+                        await self.bot.add_roles(member, role)
+                    except:
+                        pass
+                    tmp = await self.bot.say(':white_check_mark: Rolle **{0}** wurde hinzugefügt'.format(role))
             else:
-                try:
-                    await self.bot.add_roles(member, role)
-                except:
-                    pass
-                tmp = await self.bot.say(':white_check_mark: Rolle **{0}** wurde hinzugefügt'.format(role))
+                tmp = await self.bot.say('**:no_entry:** Es wurde keine Rolle für den Bot eingestellt! Wende dich bitte an den Bot Admin')
         else:
-            tmp = await self.bot.say('**:no_entry:** Es wurde keine Rolle für den Bot eingestellt! Wende dich bitte an den Bot Admin')
-        await asyncio.sleep(10)
+            tmp = await self.bot.say('**:no_entry:** Dieser Befehl funktioniert nur auf dem Server von <@{}>!'.format(__adminid__))
+        await asyncio.sleep(15)
         await self.bot.delete_message(tmp)
         await self.bot.delete_message(ctx.message)
 
@@ -126,7 +129,7 @@ class anime():
                 await self.bot.say(msg)
             c.close()
 
-    @commands.command(aliases=['wave'])
+    @commands.command(aliases=['wave', 'hi', 'ohaiyo'])
     async def hello(self):
         '''Nonsense gifs zum Hallo sagen'''
         gifs = ['https://cdn.discordapp.com/attachments/102817255661772800/219512763607678976/large_1.gif',

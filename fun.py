@@ -134,7 +134,7 @@ class fun():
                 'https://i.imgur.com/vOVwq5o.jpg',
                 'https://i.imgur.com/Ki12X4j.jpg',
                 'https://media.giphy.com/media/b1o4elYH8Tqjm/giphy.gif']
-        msg = 'CHOO CHOO {}'.format(random.choice(hypu))
+        msg = ':train2: CHOO CHOO {}'.format(random.choice(hypu))
         await self.bot.say(msg)
 
 def setup(bot):

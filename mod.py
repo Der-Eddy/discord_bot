@@ -91,7 +91,10 @@ class admin():
         '''
         author = ctx.message.author
         if self.checkRole(author, self.admin):
-            limit = int(limit[0])
+            try:
+                limit = int(limit[0])
+            except IndexError:
+                limit = 10000
             deleted = 0
             while limit > 1:
                 cap = min(limit, 100)
@@ -99,7 +102,7 @@ class admin():
                 limit -= cap
             tmp = await self.bot.send_message(ctx.message.channel, '**:put_litter_in_its_place:** {0} Nachrichten gelöscht'.format(deleted))
             await self.bot.delete_message(ctx.message)
-            await asyncio.sleep(3)
+            await asyncio.sleep(10)
             await self.bot.delete_message(tmp)
 
     @commands.command(pass_context=True)
@@ -150,11 +153,11 @@ class admin():
                 await self.bot.kick(member)
             else:
                 tmp = await self.bot.say('**:no_entry:** Du musst einen Benutzer spezifizieren!')
-                await asyncio.sleep(5)
+                await asyncio.sleep(10)
                 await self.bot.delete_message(tmp)
         else:
             tmp = await self.bot.say('**:no_entry:** Du hast nicht die Rolle {0}!'.format(self.mod))
-            await asyncio.sleep(5)
+            await asyncio.sleep(10)
             await self.bot.delete_message(tmp)
             await self.bot.delete_message(ctx.message)
 
@@ -179,11 +182,11 @@ class admin():
                 await self.bot.ban(member)
             else:
                 tmp = await self.bot.say('**:no_entry:** Du musst einen Benutzer spezifizieren!')
-                await asyncio.sleep(5)
+                await asyncio.sleep(10)
                 await self.bot.delete_message(tmp)
         else:
             tmp = await self.bot.say('**:no_entry:** Du hast nicht die Rolle {0}!'.format(self.mod))
-            await asyncio.sleep(5)
+            await asyncio.sleep(10)
             await self.bot.delete_message(tmp)
             await self.bot.delete_message(ctx.message)
 
@@ -210,11 +213,11 @@ class admin():
                 await self.bot.unban(ctx.message.server, user)
             else:
                 tmp = await self.bot.say('**:no_entry:** Du musst einen Benutzer spezifizieren!')
-                await asyncio.sleep(5)
+                await asyncio.sleep(10)
                 await self.bot.delete_message(tmp)
         else:
             tmp = await self.bot.say('**:no_entry:** Du hast nicht die Rolle {0}!'.format(self.mod))
-            await asyncio.sleep(5)
+            await asyncio.sleep(10)
             await self.bot.delete_message(tmp)
             await self.bot.delete_message(ctx.message)
 
@@ -233,7 +236,7 @@ class admin():
                 await self.bot.say('**:negative_squared_cross_mark:** Es gibt keine gebannten Nutzer!')
         else:
             tmp = await self.bot.say('**:no_entry:** Du hast nicht die Rolle {0}!'.format(self.mod))
-            await asyncio.sleep(5)
+            await asyncio.sleep(10)
             await self.bot.delete_message(tmp)
             await self.bot.delete_message(ctx.message)
 
