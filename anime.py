@@ -166,6 +166,26 @@ class anime():
         await self.bot.say(msg)
 
     @commands.command(pass_context=True)
+    async def pat(self, ctx, member: discord.Member = None):
+        '''/r/headpats Pat Pat Pat :3'''
+        if member is not None:
+            gifs = ['https://gfycat.com/PoisedWindingCaecilian',
+                    'https://cdn.awwni.me/sou1.jpg',
+                    'https://i.imgur.com/Nzxa95W.gifv',
+                    'https://cdn.awwni.me/sk0x.png',
+                    'https://i.imgur.com/N0UIRkk.png',
+                    'https://puu.sh/kz9Bi/8db6286d67.gif',
+                    'https://cdn.awwni.me/r915.jpg',
+                    'https://i.imgur.com/VRViMGf.gifv',
+                    'https://i.imgur.com/73dNfOk.gifv',
+                    'https://i.imgur.com/UXAKjRc.jpg',
+                    'https://i.imgur.com/dzlDuNs.jpg',
+                    'https://i.imgur.com/hPR7SOt.gif',
+                    'https://i.imgur.com/IqGRUu4.gif']
+            msg = '{} tätschelt dich {} :3 \n{}'.format(ctx.message.author.mention, member.mention, random.choice(gifs))
+            await self.bot.say(msg)
+
+    @commands.command(pass_context=True)
     async def imgur(self, ctx, amount: int = None):
         '''Lädt eine bestimmte Anzahl der letzten hochgeladenen Bilder im Channel bei Imgur hoch'''
         await self.bot.say(':new: Befehl in Arbeit!')
