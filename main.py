@@ -30,7 +30,7 @@ except ImportError:
     __github__ = os.environ.get('DISCORD_GITHUB')
     __greetmsg__ = os.environ.get('DISCORD_GREETMSG')
     __selfassignrole__ = os.environ.get('DISCORD_SELFASSIGNROLE')
-__version__ = '0.6.13'
+__version__ = '0.6.14'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -103,6 +103,15 @@ async def on_ready():
     asyncio.ensure_future(_randomGame())
     asyncio.ensure_future(_githubLog())
     _setupDatabase('reaction.db')
+
+@bot.event
+async def on_error(event, *args, **kwargs):
+    if True: #easy switch for testing purposes
+        msg = '**Event:**```{}```\n**Args:**```{}```\n**Kwargs:**```{}```'.format(event, args, kwargs)
+        owner = ''
+        for s in bot.servers:
+            if not owner: owner = s.get_member(__adminid__)
+        await bot.send_message(owner, msg)
 
 @bot.event
 async def on_member_join(member):
