@@ -7,7 +7,7 @@ import random
 import sqlite3
 
 try:
-    from config import __token__, __prefix__, __adminid__, __adminrole__, __modrole__, __kawaiichannel__, __botlogchannel__, __github__, __botserverid__, __greetmsg__, __selfassignrole__
+    from config import __token__, __prefix__, __adminid__, __kawaiichannel__, __botlogchannel__, __github__, __botserverid__, __greetmsg__, __selfassignrole__
 except ImportError:
     #Heorku stuff
     import os
@@ -15,8 +15,6 @@ except ImportError:
     __prefix__ = os.environ.get('DISCORD_PREFIX')
     __botserverid__ = os.environ.get('DISCORD_BOTSERVERID')
     __adminid__ = os.environ.get('DISCORD_ADMINID')
-    __adminrole__ = os.environ.get('DISCORD_ADMINROLE')
-    __modrole__ = os.environ.get('DISCORD_MODROLE')
     __kawaiichannel__ = os.environ.get('DISCORD_KAWAIICHANNEL')
     __botlogchannel__ = os.environ.get('DISCORD_BOTLOGCHANNEL')
     __github__ = os.environ.get('DISCORD_GITHUB')

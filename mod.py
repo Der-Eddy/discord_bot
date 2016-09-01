@@ -7,7 +7,7 @@ import aiohttp
 from pytz import timezone
 
 try:
-    from config import __token__, __prefix__, __adminid__, __adminrole__, __modrole__, __kawaiichannel__, __botlogchannel__, __github__, __botserverid__, __greetmsg__, __selfassignrole__
+    from config import __token__, __prefix__, __adminid__, __kawaiichannel__, __botlogchannel__, __github__, __botserverid__, __greetmsg__, __selfassignrole__
 except ImportError:
     #Heorku stuff
     import os
@@ -15,8 +15,6 @@ except ImportError:
     __prefix__ = os.environ.get('DISCORD_PREFIX')
     __botserverid__ = os.environ.get('DISCORD_BOTSERVERID')
     __adminid__ = os.environ.get('DISCORD_ADMINID')
-    __adminrole__ = os.environ.get('DISCORD_ADMINROLE')
-    __modrole__ = os.environ.get('DISCORD_MODROLE')
     __kawaiichannel__ = os.environ.get('DISCORD_KAWAIICHANNEL')
     __botlogchannel__ = os.environ.get('DISCORD_BOTLOGCHANNEL')
     __github__ = os.environ.get('DISCORD_GITHUB')
@@ -25,8 +23,6 @@ except ImportError:
 
 class admin():
     '''Praktische Befehle für Administratoren und Moderatoren'''
-    admin = __adminrole__
-    mod = __modrole__
     ownerid = __adminid__
     owner = ''
 
@@ -38,12 +34,11 @@ class admin():
     def _currenttime(self):
         return datetime.datetime.now(timezone('Europe/Berlin')).strftime("%H:%M:%S")
 
-    def checkRole(self, user, roleRec):
-        ok = False
-        for all in list(user.roles):
-            if all.name == roleRec:
-                ok = True
-        return ok
+    @commands.command(pass_context=True)
+    async def permissions(self, ctx):
+        '''Schaltet mich ab :( (OWNER ONLY)'''
+        msg = ctx.message.channel.permissions_for(ctx.message.author).administrator
+        await self.bot.say(msg)
 
     @commands.command(pass_context=True)
     async def shutdown(self, ctx):
@@ -72,13 +67,12 @@ class admin():
     @commands.command(pass_context=True)
     async def game(self, ctx, *game):
         '''Ändert das derzeit spielende Spiel (ADMIN ONLY)'''
-        author = ctx.message.author
-        if self.checkRole(author, self.admin):
+        if ctx.message.channel.permissions_for(ctx.message.author).administrator:
             gameName = ' '.join(game)
             await self.bot.change_status(game=discord.Game(name=gameName))
             await self.bot.say('**:ok:** Ändere das Spiel zu: Playing **{0}**'.format(gameName))
         else:
-            await self.bot.say('**:no_entry:** Du hast nicht die Rolle {0}!'.format(self.admin))
+            await self.bot.say('**:no_entry:** Du hast keine Admin Rechte!')
 
     @commands.command(pass_context=True, aliases=['prune'])
     async def purge(self, ctx, *limit):
@@ -89,27 +83,27 @@ class admin():
 
         :purge 100
         '''
-        author = ctx.message.author
-        if self.checkRole(author, self.admin):
+        if ctx.message.channel.permissions_for(ctx.message.author).administrator:
             try:
                 limit = int(limit[0])
             except IndexError:
-                limit = 10000
+                limit = 1
             deleted = 0
             while limit > 1:
                 cap = min(limit, 100)
                 deleted += len(await self.bot.purge_from(ctx.message.channel, limit=cap, before=ctx.message))
                 limit -= cap
             tmp = await self.bot.send_message(ctx.message.channel, '**:put_litter_in_its_place:** {0} Nachrichten gelöscht'.format(deleted))
-            await self.bot.delete_message(ctx.message)
-            await asyncio.sleep(10)
-            await self.bot.delete_message(tmp)
+        else:
+            tmp = await self.bot.say('**:no_entry:** Du hast keine Admin Rechte!')
+        await self.bot.delete_message(ctx.message)
+        await asyncio.sleep(15)
+        await self.bot.delete_message(tmp)
 
     @commands.command(pass_context=True)
     async def nickname(self, ctx, *name):
         '''Ändert den Server Nickname vom Bot (ADMIN ONLY)'''
-        author = ctx.message.author
-        if self.checkRole(author, self.admin):
+        if ctx.message.channel.permissions_for(ctx.message.author).administrator:
             nickname = ' '.join(name)
             await self.bot.change_nickname(ctx.message.server.get_member(self.bot.user.id), nickname)
             if nickname:
@@ -117,7 +111,7 @@ class admin():
             else:
                 msg = ':ok: Reset von meinem Server Nickname auf: **{0}**'.format(self.bot.user.name)
         else:
-            msg = '**:no_entry:** Du hast nicht die Rolle {0}!'.format(self.admin)
+            msg = '**:no_entry:** Du hast keine Admin Rechte!'
         await self.bot.say(msg)
 
     @commands.command(pass_context=True)
@@ -141,8 +135,7 @@ class admin():
 
         :kick @Der-Eddy#6508
         '''
-        author = ctx.message.author
-        if self.checkRole(author, self.mod):
+        if ctx.message.channel.permissions_for(ctx.message.author).kick_members:
             if member is not None:
                 if reason:
                     reason = ' '.join(reason)
@@ -153,11 +146,11 @@ class admin():
                 await self.bot.kick(member)
             else:
                 tmp = await self.bot.say('**:no_entry:** Du musst einen Benutzer spezifizieren!')
-                await asyncio.sleep(10)
+                await asyncio.sleep(15)
                 await self.bot.delete_message(tmp)
         else:
-            tmp = await self.bot.say('**:no_entry:** Du hast nicht die Rolle {0}!'.format(self.mod))
-            await asyncio.sleep(10)
+            tmp = await self.bot.say('**:no_entry:** Du hast keine Berechtigung zum kicken von anderen Mitgliedern!')
+            await asyncio.sleep(15)
             await self.bot.delete_message(tmp)
             await self.bot.delete_message(ctx.message)
 
@@ -170,8 +163,7 @@ class admin():
 
         :ban @Der-Eddy#6508
         '''
-        author = ctx.message.author
-        if self.checkRole(author, self.mod):
+        if ctx.message.channel.permissions_for(ctx.message.author).ban_members:
             if member is not None:
                 if reason:
                     reason = ' '.join(reason)
@@ -182,11 +174,11 @@ class admin():
                 await self.bot.ban(member)
             else:
                 tmp = await self.bot.say('**:no_entry:** Du musst einen Benutzer spezifizieren!')
-                await asyncio.sleep(10)
+                await asyncio.sleep(15)
                 await self.bot.delete_message(tmp)
         else:
-            tmp = await self.bot.say('**:no_entry:** Du hast nicht die Rolle {0}!'.format(self.mod))
-            await asyncio.sleep(10)
+            tmp = await self.bot.say('**:no_entry:** Du hast keine Berechtigung zum bannen von anderen Mitgliedern!')
+            await asyncio.sleep(15)
             await self.bot.delete_message(tmp)
             await self.bot.delete_message(ctx.message)
 
@@ -200,9 +192,8 @@ class admin():
 
         :unban 102815825781596160
         '''
-        author = ctx.message.author
         user = discord.User(id=user)
-        if self.checkRole(author, self.mod):
+        if ctx.message.channel.permissions_for(ctx.message.author).ban_members:
             if user is not None:
                 if reason:
                     reason = ' '.join(reason)
@@ -213,19 +204,18 @@ class admin():
                 await self.bot.unban(ctx.message.server, user)
             else:
                 tmp = await self.bot.say('**:no_entry:** Du musst einen Benutzer spezifizieren!')
-                await asyncio.sleep(10)
+                await asyncio.sleep(15)
                 await self.bot.delete_message(tmp)
         else:
-            tmp = await self.bot.say('**:no_entry:** Du hast nicht die Rolle {0}!'.format(self.mod))
-            await asyncio.sleep(10)
+            tmp = await self.bot.say('**:no_entry:** Du hast keine Berechtigung zum bannen von anderen Mitgliedern!')
+            await asyncio.sleep(15)
             await self.bot.delete_message(tmp)
             await self.bot.delete_message(ctx.message)
 
     @commands.command(pass_context=True)
     async def bans(self, ctx):
         '''Listet aktuell gebannte User auf (MOD ONLY)'''
-        author = ctx.message.author
-        if self.checkRole(author, self.mod):
+        if ctx.message.channel.permissions_for(ctx.message.author).kick_members: #Beabsichtigt
             user = await self.bot.get_bans(ctx.message.server)
             if len(user) > 0:
                 msg = ''
@@ -235,8 +225,8 @@ class admin():
             else:
                 await self.bot.say('**:negative_squared_cross_mark:** Es gibt keine gebannten Nutzer!')
         else:
-            tmp = await self.bot.say('**:no_entry:** Du hast nicht die Rolle {0}!'.format(self.mod))
-            await asyncio.sleep(10)
+            tmp = await self.bot.say('**:no_entry:** Du hast keine Berechtigung zum kicken von anderen Mitgliedern!')
+            await asyncio.sleep(15)
             await self.bot.delete_message(tmp)
             await self.bot.delete_message(ctx.message)
 
