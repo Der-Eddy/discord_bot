@@ -17,11 +17,6 @@ class fun():
         return online
 
     @commands.command()
-    async def praise(self):
-        '''Praise the Sun'''
-        await self.bot.say('https://i.imgur.com/K8ySn3e.gif')
-
-    @commands.command()
     async def java(self):
         '''Weil Java != Javscript'''
         await self.bot.say(':interrobang: Meintest du jQuery, Javascript oder Node.js? https://abload.de/img/2016-05-102130191kzpu.png')
@@ -67,6 +62,9 @@ class fun():
         :random
             Gibt eine zufällige Zahl zwischen 1 und 100 aus
 
+        :random coin
+            Wirft eine Münze (Kopf oder Zahl)
+
         :random 6
             Gibt eine zufällige Zahl zwischen 1 und 6 aus
 
@@ -80,6 +78,10 @@ class fun():
             if not arg:
                 start = 1
                 end = 100
+            elif arg[0] == 'flip' or arg[0] == 'coin':
+                coin = ['Kopf', 'Zahl']
+                await self.bot.say(':arrows_counterclockwise: {0}'.format(random.choice(coin)))
+                return
             elif arg[0] == 'user':
                 online = self.userOnline(ctx.message.channel.server.members)
                 await self.bot.say(':congratulations: {0}'.format(random.choice(online)))

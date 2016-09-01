@@ -78,7 +78,7 @@ class anime():
                 tmp = await self.bot.say('**:no_entry:** Es wurde keine Rolle für den Bot eingestellt! Wende dich bitte an den Bot Admin')
         else:
             tmp = await self.bot.say('**:no_entry:** Dieser Befehl funktioniert nur auf dem Server von <@{}>!'.format(__adminid__))
-        await asyncio.sleep(15)
+        await asyncio.sleep(2 * 60)
         await self.bot.delete_message(tmp)
         await self.bot.delete_message(ctx.message)
 
