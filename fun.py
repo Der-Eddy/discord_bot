@@ -13,7 +13,7 @@ class fun():
         online = []
         for i in memberList:
             if i.status == discord.Status.online and i.bot == False:
-                online.append(i.mention)
+                online.append(i)
         return online
 
     @commands.command()
@@ -84,7 +84,12 @@ class fun():
                 return
             elif arg[0] == 'user':
                 online = self.userOnline(ctx.message.channel.server.members)
-                await self.bot.say(':congratulations: {0}'.format(random.choice(online)))
+                randomuser = random.choice(online)
+                if ctx.message.channel.permissions_for(ctx.message.author).mention_everyone:
+                    user = randomuser.mention
+                else:
+                    user = randomuser.display_name
+                await self.bot.say(':congratulations: {0}'.format(user))
                 return
             elif len(arg) == 1:
                 start = 1

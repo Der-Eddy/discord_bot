@@ -28,7 +28,7 @@ except ImportError:
     __github__ = os.environ.get('DISCORD_GITHUB')
     __greetmsg__ = os.environ.get('DISCORD_GREETMSG')
     __selfassignrole__ = os.environ.get('DISCORD_SELFASSIGNROLE')
-__version__ = '0.7.0'
+__version__ = '0.7.1'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -104,7 +104,7 @@ async def on_ready():
 
 @bot.event
 async def on_error(event, *args, **kwargs):
-    if True: #easy switch for testing purposes
+    if True and event is not None: #easy switch for testing purposes
         msg = '**Event:**```{}```\n**Args:**```{}```\n**Kwargs:**```{}```'.format(event, args, kwargs)
         owner = ''
         for s in bot.servers:
