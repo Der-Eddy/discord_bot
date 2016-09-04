@@ -35,12 +35,6 @@ class admin():
         return datetime.datetime.now(timezone('Europe/Berlin')).strftime("%H:%M:%S")
 
     @commands.command(pass_context=True)
-    async def permissions(self, ctx):
-        '''Schaltet mich ab :( (OWNER ONLY)'''
-        msg = ctx.message.channel.permissions_for(ctx.message.author).administrator
-        await self.bot.say(msg)
-
-    @commands.command(pass_context=True)
     async def shutdown(self, ctx):
         '''Schaltet mich ab :( (OWNER ONLY)'''
         if ctx.message.author.id == self.ownerid:
@@ -66,13 +60,13 @@ class admin():
 
     @commands.command(pass_context=True)
     async def game(self, ctx, *game):
-        '''Ändert das derzeit spielende Spiel (ADMIN ONLY)'''
-        if ctx.message.channel.permissions_for(ctx.message.author).administrator:
+        '''Ändert das derzeit spielende Spiel (OWNER ONLY)'''
+        if ctx.message.author.id == self.ownerid:
             gameName = ' '.join(game)
             await self.bot.change_status(game=discord.Game(name=gameName))
             await self.bot.say('**:ok:** Ändere das Spiel zu: Playing **{0}**'.format(gameName))
         else:
-            await self.bot.say('**:no_entry:** Du hast keine Admin Rechte!')
+            await self.bot.say('**:no_entry:** Du bist nicht {0}!'.format(self.owner))
 
     @commands.command(pass_context=True, aliases=['prune'])
     async def purge(self, ctx, *limit):
@@ -103,7 +97,7 @@ class admin():
     @commands.command(pass_context=True)
     async def nickname(self, ctx, *name):
         '''Ändert den Server Nickname vom Bot (ADMIN ONLY)'''
-        if ctx.message.channel.permissions_for(ctx.message.author).administrator:
+        if ctx.message.channel.permissions_for(ctx.message.author).administrator or ctx.message.author.id == self.ownerid:
             nickname = ' '.join(name)
             await self.bot.change_nickname(ctx.message.server.get_member(self.bot.user.id), nickname)
             if nickname:

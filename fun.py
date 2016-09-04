@@ -16,7 +16,7 @@ class fun():
                 online.append(i)
         return online
 
-    @commands.command()
+    @commands.command(aliases=['javascript', 'nodejs'])
     async def java(self):
         '''Weil Java != Javscript'''
         await self.bot.say(':interrobang: Meintest du jQuery, Javascript oder Node.js? https://abload.de/img/2016-05-102130191kzpu.png')
@@ -40,7 +40,7 @@ class fun():
             await asyncio.sleep(1)
         await self.bot.say('**:ok:** DING DING DING')
 
-    @commands.command()
+    @commands.command(aliases=['cat', 'randomcat'])
     async def neko(self):
         '''Zufällige Katzen Bilder nyan~'''
         #http://discordpy.readthedocs.io/en/latest/faq.html#what-does-blocking-mean
