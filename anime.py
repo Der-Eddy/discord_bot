@@ -25,7 +25,6 @@ class anime():
     '''Alles rund um Animes'''
     kawaiich = __kawaiichannel__
     nsfwRole = __selfassignrole__
-    mod = __modrole__
     db = 'reaction.db'
 
     def __init__(self, bot):
