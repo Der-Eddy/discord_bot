@@ -28,7 +28,7 @@ except ImportError:
     __github__ = os.environ.get('DISCORD_GITHUB')
     __greetmsg__ = os.environ.get('DISCORD_GREETMSG')
     __selfassignrole__ = os.environ.get('DISCORD_SELFASSIGNROLE')
-__version__ = '0.7.3'
+__version__ = '0.7.4'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -228,6 +228,13 @@ async def echo(ctx, *message):
     msg = '**:mega:** ' + ' '.join(message)
     await bot.say(msg)
     await bot.delete_message(ctx.message)
+
+@bot.command()
+async def invite():
+    '''Verschickt einen Invite für den Server des Bot Autors'''
+    permInvite = 'https://discord.gg/kPMbPDc'
+    msg = '**:cool:** ' + permInvite
+    await bot.say(msg)
 
 @bot.command()
 async def whois(member: discord.Member = None):

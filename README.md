@@ -5,6 +5,7 @@
 [![Python3](https://img.shields.io/badge/python-3.5-blue.svg)](https://github.com/Der-Eddy/discord_bot)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/Der-Eddy/discord_bot/master/LICENSE)
 [![Trello Board](https://img.shields.io/badge/Management-Trello%20Board-blue.svg)](https://trello.com/b/Kh8nfuBE/discord-bot-shinobu-chan)
+[![Discord Server](https://img.shields.io/badge/Support-Discord%20Server-blue.svg)](https://discord.gg/kPMbPDc)
 
 This is mostly a german discord chat bot made with [discord.py](https://github.com/Rapptz/discord.py).  
 
@@ -47,11 +48,18 @@ Vor dem Start muss im selben Ordner wie `main.py` eine Datei namens `config.py` 
 
 Zusätzlich wird `pytz` aus [PyPI](https://pypi.python.org/pypi/pytz/2016.6.1) benötigt.
 
+
+Support
+-------------
+Gibts auf meinem Discord Server: `https://discord.gg/kPMbPDc`
+
+
 Bot Accounts
 -------------
 Allgemeine Infos zu Discord Bot Accounts gibt es bei [discordapp.com/developers/](https://discordapp.com/developers/applications/me).  
 Einen Bot Account fügt man dann über diesen Link hinzu (CLIENT ID einfügen nicht vergessen):  
 `https://discordapp.com/oauth2/authorize?client_id=CLIENTID&scope=bot&permissions=0`
+
 
 Full list of requirements
 -------------
@@ -61,6 +69,7 @@ Full list of requirements
     websockets
     chardet
     pytz
+
 
 License
 -------------
