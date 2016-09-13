@@ -28,7 +28,7 @@ except ImportError:
     __github__ = os.environ.get('DISCORD_GITHUB')
     __greetmsg__ = os.environ.get('DISCORD_GREETMSG')
     __selfassignrole__ = os.environ.get('DISCORD_SELFASSIGNROLE')
-__version__ = '0.7.4'
+__version__ = '0.7.5'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -187,14 +187,17 @@ async def status():
 
     admin = ''
     users = 0
+    channel = 0
     for s in bot.servers:
         users += len(s.members)
+        channel += len(s.channels)
         if not admin: admin = s.get_member(__adminid__)
 
     msg = '**:information_source:** Informationen über diesen Bot:\n'
     msg += '```Admin              : @%s\n' % admin
     msg += 'Uptime             : {0:.0f} Stunden, {1:.0f} Minuten und {2:.0f} Sekunden\n'.format(hours, minutes, seconds)
     msg += 'Benutzer / Server  : %s in %s Server\n' % (users, len(bot.servers))
+    msg += 'Watched Channel    : %s Channel\n' % channel
     msg += 'Bot Version        : %s\n' % __version__
     msg += 'Discord.py Version : %s\n' % discord.__version__
     msg += 'Python Version     : %s\n' % platform.python_version()
@@ -293,7 +296,7 @@ async def epvpis(*user: str):
                 msg = ':ok: Ich konnte {} Accounts finden!\n```'.format(len(root))
                 for i in root:
                     userURL = 'https://www.elitepvpers.com/forum/member.php?u=' + i.attrib['userid']
-                    msg += '{} | {}\n'.format(i.text, userURL)
+                    msg += '{:15} | {}\n'.format(i.text, userURL)
                 msg += '```'
             else:
                 msg = ':no_entry: Ich konnte keine Epvp Accounts finden :sweat:'
