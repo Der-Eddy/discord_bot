@@ -144,5 +144,30 @@ class fun():
         msg = ':train2: CHOO CHOO {}'.format(random.choice(hypu))
         await self.bot.say(msg)
 
+    @commands.command(pass_context=True)
+    async def xkcd(self, ctx,  *searchterm: str):
+        '''Zeigt den letzten oder zufääligen XKCD Comic
+
+        Beispiel:
+        -----------
+
+        :xkcd
+
+        :xkcd random
+        '''
+        apiUrl = 'https://xkcd.com{}info.0.json'
+        async with aiohttp.get(apiUrl.format('/')) as r:
+            if r.status == 200:
+                js = await r.json()
+                if ''.join(searchterm) == 'random':
+                    randomComic = random.randint(0, js['num'])
+                    async with aiohttp.get(apiUrl.format('/' + str(randomComic) + '/')) as r:
+                        if r.status == 200:
+                            js = await r.json()
+                comicUrl = 'https://xkcd.com/{}/'.format(js['num'])
+                date = '{}.{}.{}'.format(js['day'], js['month'], js['year'])
+                msg = '**{}**\n{}\nAlt Text:```{}```XKCD Link: <{}> ({})'.format(js['safe_title'], js['img'], js['alt'], comicUrl, date)
+                await self.bot.say(msg)
+
 def setup(bot):
     bot.add_cog(fun(bot))
