@@ -25,7 +25,7 @@ More Details can be found at our [Trello Board](https://trello.com/b/Kh8nfuBE/di
 
 Eine Auflistung aller Befehle gibt es unter `:help` (Standardpräfix)
 
-![help command](https://i.imgur.com/5lyZEZh.png)
+![help command](https://i.imgur.com/37DE4NU.png)
 
 
 Run & Requirements
@@ -64,7 +64,7 @@ Einen Bot Account fügt man dann über diesen Link hinzu (CLIENT ID einfügen ni
 Full list of requirements
 -------------
 
-    discord.py==0.11.0
+    discord.py==0.13.0
     aiohttp
     websockets
     chardet

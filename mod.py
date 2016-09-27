@@ -63,7 +63,7 @@ class admin():
         '''Ändert das derzeit spielende Spiel (OWNER ONLY)'''
         if ctx.message.author.id == self.ownerid:
             gameName = ' '.join(game)
-            await self.bot.change_status(game=discord.Game(name=gameName))
+            await self.bot.change_presence(game=discord.Game(name=gameName))
             await self.bot.say('**:ok:** Ändere das Spiel zu: Playing **{0}**'.format(gameName))
         else:
             await self.bot.say('**:no_entry:** Du bist nicht {0}!'.format(self.owner))

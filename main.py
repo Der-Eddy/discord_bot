@@ -28,7 +28,7 @@ except ImportError:
     __github__ = os.environ.get('DISCORD_GITHUB')
     __greetmsg__ = os.environ.get('DISCORD_GREETMSG')
     __selfassignrole__ = os.environ.get('DISCORD_SELFASSIGNROLE')
-__version__ = '0.7.6'
+__version__ = '0.7.7'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -67,7 +67,7 @@ def _setupDatabase(db):
 async def _randomGame():
     #Check games.py to change the list of "games" to be played
     while True:
-        await bot.change_status(discord.Game(name=random.choice(__games__)))
+        await bot.change_presence(game=discord.Game(name=random.choice(__games__)))
         await asyncio.sleep(__gamesTimer__)
 
 async def _githubLog():
