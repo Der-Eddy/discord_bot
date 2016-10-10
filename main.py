@@ -28,7 +28,7 @@ except ImportError:
     __github__ = os.environ.get('DISCORD_GITHUB')
     __greetmsg__ = os.environ.get('DISCORD_GREETMSG')
     __selfassignrole__ = os.environ.get('DISCORD_SELFASSIGNROLE')
-__version__ = '0.7.8'
+__version__ = '0.7.9'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -72,6 +72,7 @@ async def _randomGame():
 
 async def _githubLog():
     #Logs new commits to a hardcoded channel
+    #Currently disabled since Webhooks are comming
     if __github__ == 'True':
         devChannel = bot.get_channel('165156137476292608')
         authorAndRepo = 'Der-Eddy/discord_bot'
@@ -105,7 +106,7 @@ async def on_ready():
 @bot.event
 async def on_error(event, *args, **kwargs):
     if True and event and args: #easy switch for testing purposes
-        msg = '**Event:**```{}```\n**Args:**```{}```\n**Kwargs:**```{}```'.format(event, args, kwargs)
+        msg = '**Event:**```{}```\n**Args:**```{}```\n**Kwargs:**```{}```'.format(event, ' - '.join(args), ' - '.join(kwargs))
         owner = ''
         for s in bot.servers:
             if not owner: owner = s.get_member(__adminid__)
