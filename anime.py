@@ -159,7 +159,12 @@ class anime():
                 'https://cdn.discordapp.com/attachments/102817255661772800/219537181440475146/tumblr_mya4mdVhDv1rmk3cyo1_500.gif',
                 'https://i.imgur.com/4xnJN9x.png',
                 'https://i.imgur.com/bunWIWD.jpg']
-        msg = 'topnep {}'.format(random.choice(neps))
+        nepnep = ['topnep',
+                  'Can\'t pep the nep',
+                  'Flat is justice',
+                  'nep nep nep nep nep nep nep nep nep nep nep',
+                  'Nepgear > your waifu']
+        msg = '{} {}'.format(random.choice(nepnep), random.choice(neps))
         await self.bot.say(msg)
 
     @commands.command(pass_context=True)

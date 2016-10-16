@@ -28,7 +28,7 @@ except ImportError:
     __github__ = os.environ.get('DISCORD_GITHUB')
     __greetmsg__ = os.environ.get('DISCORD_GREETMSG')
     __selfassignrole__ = os.environ.get('DISCORD_SELFASSIGNROLE')
-__version__ = '0.7.9'
+__version__ = '0.7.10'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
