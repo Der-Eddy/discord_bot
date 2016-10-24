@@ -29,7 +29,7 @@ except ImportError:
     __github__ = os.environ.get('DISCORD_GITHUB')
     __greetmsg__ = os.environ.get('DISCORD_GREETMSG')
     __selfassignrole__ = os.environ.get('DISCORD_SELFASSIGNROLE')
-__version__ = '0.7.11'
+__version__ = '0.7.12'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -246,7 +246,11 @@ async def log(ctx, *limit:int):
     with open(logFile, 'w', encoding='UTF-8') as f:
         f.write('Archivierte Nachrichten vom Channel: {} am {}\n'.format(ctx.message.channel, ctx.message.timestamp.strftime('%d.%m.%Y %H:%M:%S')))
         async for message in bot.logs_from(ctx.message.channel, limit=limit, before=ctx.message):
-            f.write('{} {!s:20s}: {}\n'.format(message.timestamp.strftime('%d.%m.%Y %H:%M:%S'), message.author, message.clean_content))
+            try:
+                attachment = '[Angehängte Datei: {}]'.format(message.attachments[0]['url'])
+            except IndexError:
+                attachment = ''
+            f.write('{} {!s:20s}: {} {}\n'.format(message.timestamp.strftime('%d.%m.%Y %H:%M:%S'), message.author, message.clean_content, attachment))
             counter += 1
     msg = ':ok: {} Nachrichten wurden archiviert!'.format(counter)
     with open(logFile, 'rb') as f:
