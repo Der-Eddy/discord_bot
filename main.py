@@ -9,6 +9,7 @@ import time
 import platform
 import datetime
 import sqlite3
+import os
 import xml.etree.ElementTree as ET
 from pytz import timezone
 from io import UnsupportedOperation
@@ -28,7 +29,7 @@ except ImportError:
     __github__ = os.environ.get('DISCORD_GITHUB')
     __greetmsg__ = os.environ.get('DISCORD_GREETMSG')
     __selfassignrole__ = os.environ.get('DISCORD_SELFASSIGNROLE')
-__version__ = '0.7.10'
+__version__ = '0.7.11'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -195,14 +196,15 @@ async def status():
         if not admin: admin = s.get_member(__adminid__)
 
     msg = '**:information_source:** Informationen über diesen Bot:\n'
-    msg += '```Admin              : @%s\n' % admin
-    msg += 'Uptime             : {0:.0f} Stunden, {1:.0f} Minuten und {2:.0f} Sekunden\n'.format(hours, minutes, seconds)
-    msg += 'Benutzer / Server  : %s in %s Server\n' % (users, len(bot.servers))
-    msg += 'Watched Channel    : %s Channel\n' % channel
-    msg += 'Bot Version        : %s\n' % __version__
-    msg += 'Discord.py Version : %s\n' % discord.__version__
-    msg += 'Python Version     : %s\n' % platform.python_version()
-    msg += 'GitHub             : https://github.com/Der-Eddy/discord_bot```'
+    msg += '```Admin                : @%s\n' % admin
+    msg += 'Uptime               : {0:.0f} Stunden, {1:.0f} Minuten und {2:.0f} Sekunden\n'.format(hours, minutes, seconds)
+    msg += 'Benutzer / Server    : %s in %s Server\n' % (users, len(bot.servers))
+    msg += 'Beobachtete Channel  : %s Channel\n' % channel
+    msg += 'Beobachtete Messages : %s Messages\n' % len(bot.messages)
+    msg += 'Bot Version          : %s\n' % __version__
+    msg += 'Discord.py Version   : %s\n' % discord.__version__
+    msg += 'Python Version       : %s\n' % platform.python_version()
+    msg += 'GitHub               : https://github.com/Der-Eddy/discord_bot```'
     await bot.say(msg)
 
 @bot.command(pass_context=True, aliases=['p'])
@@ -225,6 +227,31 @@ async def about(ctx):
     msg += 'Neueste Neuerungen immer zuerst auf unserem Trello Board! <https://trello.com/b/Kh8nfuBE/discord-bot-shinobu-chan>'
     with open('img/ava.png', 'rb') as f:
         await bot.send_file(ctx.message.channel, f, content=msg)
+
+@bot.command(pass_context=True, aliases=['archive'])
+async def log(ctx, *limit:int):
+    '''Archiviert den Log des derzeitigen Channels und läd diesen auf gist hoch
+
+    Beispiel:
+    -----------
+
+    :log 100
+    '''
+    try:
+        limit = int(limit[0])
+    except IndexError:
+        limit = 1000
+    logFile = '{}.log'.format(ctx.message.channel)
+    counter = 0
+    with open(logFile, 'w', encoding='UTF-8') as f:
+        f.write('Archivierte Nachrichten vom Channel: {} am {}\n'.format(ctx.message.channel, ctx.message.timestamp.strftime('%d.%m.%Y %H:%M:%S')))
+        async for message in bot.logs_from(ctx.message.channel, limit=limit, before=ctx.message):
+            f.write('{} {!s:20s}: {}\n'.format(message.timestamp.strftime('%d.%m.%Y %H:%M:%S'), message.author, message.clean_content))
+            counter += 1
+    msg = ':ok: {} Nachrichten wurden archiviert!'.format(counter)
+    with open(logFile, 'rb') as f:
+        await bot.send_file(ctx.message.channel, f, content=msg)
+    os.remove(logFile)
 
 @bot.command(pass_context=True)
 async def echo(ctx, *message):
