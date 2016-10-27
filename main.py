@@ -13,6 +13,7 @@ import os
 import xml.etree.ElementTree as ET
 from pytz import timezone
 from io import UnsupportedOperation
+from collections import Counter
 from games import __games__, __gamesTimer__
 
 try:
@@ -29,7 +30,7 @@ except ImportError:
     __github__ = os.environ.get('DISCORD_GITHUB')
     __greetmsg__ = os.environ.get('DISCORD_GREETMSG')
     __selfassignrole__ = os.environ.get('DISCORD_SELFASSIGNROLE')
-__version__ = '0.7.12'
+__version__ = '0.7.13'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -100,10 +101,30 @@ async def on_ready():
     bot.load_extension('fun')
     bot.load_extension('mod')
     bot.load_extension('anime')
+    bot.commands_used = Counter()
     asyncio.ensure_future(_randomGame())
     #asyncio.ensure_future(_githubLog())
     _setupDatabase('reaction.db')
 
+@bot.event
+async def on_command(command, ctx):
+    bot.commands_used[command.name] += 1
+    print(bot.commands_used)
+    msg = ctx.message
+    if msg.channel.is_private:
+        destination = 'Private Message'
+    else:
+        destination = '#{0.channel.name} ({0.server.name})'.format(msg)
+    logging.info('{0.timestamp}: {0.author.name} in {1}: {0.content}'.format(msg, destination))
+
+@bot.event
+async def on_message(message):
+    if message.author.bot:
+        return
+    await bot.process_commands(message)
+
+'''
+Commented out for the moment
 @bot.event
 async def on_error(event, *args, **kwargs):
     if True and event and args: #easy switch for testing purposes
@@ -112,6 +133,7 @@ async def on_error(event, *args, **kwargs):
         for s in bot.servers:
             if not owner: owner = s.get_member(__adminid__)
         await bot.send_message(owner, msg)
+'''
 
 @bot.event
 async def on_member_join(member):
@@ -201,10 +223,23 @@ async def status():
     msg += 'Benutzer / Server    : %s in %s Server\n' % (users, len(bot.servers))
     msg += 'Beobachtete Channel  : %s Channel\n' % channel
     msg += 'Beobachtete Messages : %s Messages\n' % len(bot.messages)
+    msg += 'Ausgeführte Commands : %s Commands\n' % sum(bot.commands_used.values())
     msg += 'Bot Version          : %s\n' % __version__
     msg += 'Discord.py Version   : %s\n' % discord.__version__
     msg += 'Python Version       : %s\n' % platform.python_version()
     msg += 'GitHub               : https://github.com/Der-Eddy/discord_bot```'
+    await bot.say(msg)
+
+@bot.command()
+async def commands():
+    '''Zeigt an wie oft welcher Command benutzt wurde seit dem letzten Startup'''
+    msg = ':chart: Liste der ausgeführten Befehle (seit letztem Startup)\n'
+    msg += 'Insgesamt: {}\n'.format(sum(bot.commands_used.values()))
+    msg += '```{!s:15s}: {!s:>4s}\n'.format('Name', 'Anzahl')
+    chart = sorted(bot.commands_used.items(), key=lambda t: t[1], reverse=True)
+    for name, amount in chart:
+        msg += '{!s:15s}: {!s:>4s}\n'.format(name, amount)
+    msg += '```'
     await bot.say(msg)
 
 @bot.command(pass_context=True, aliases=['p'])
@@ -334,5 +369,6 @@ async def epvpis(*user: str):
                 msg = ':no_entry: Ich konnte keine Epvp Accounts finden :sweat:'
             await bot.say(msg)
 
-startTime = time.time()
-bot.run(__token__)
+if __name__ == '__main__':
+    startTime = time.time()
+    bot.run(__token__)
