@@ -8,7 +8,6 @@ import random
 import time
 import platform
 import datetime
-import sqlite3
 import os
 import xml.etree.ElementTree as ET
 from pytz import timezone
@@ -30,7 +29,8 @@ except ImportError:
     __github__ = os.environ.get('DISCORD_GITHUB')
     __greetmsg__ = os.environ.get('DISCORD_GREETMSG')
     __selfassignrole__ = os.environ.get('DISCORD_SELFASSIGNROLE')
-__version__ = '0.7.13'
+__version__ = '0.7.14'
+__cogs__ = ['mod', 'fun', 'anime']
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -38,7 +38,7 @@ handler = RotatingFileHandler(filename='discordbot.log', maxBytes=1024, encoding
 handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
 
-description = '''Eddys Chat Bot in Python, Discord.py rockt'''
+description = '''Der-Eddys deutscher Discord Bot, programmiert mit Discord.py'''
 bot = commands.Bot(command_prefix=__prefix__, description=description)
 
 def _currenttime():
@@ -54,43 +54,11 @@ def _getRoles(roles):
     else:
         return string[:-2]
 
-def _setupDatabase(db):
-    with sqlite3.connect(db) as con:
-        c = con.cursor()
-        c.execute('''CREATE TABLE IF NOT EXISTS `reactions` (
-                    	`id`	INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
-                    	`command`	TEXT NOT NULL,
-                    	`url`	TEXT NOT NULL UNIQUE,
-                    	`author`	TEXT
-                    );''')
-        con.commit()
-        c.close()
-
 async def _randomGame():
     #Check games.py to change the list of "games" to be played
     while True:
         await bot.change_presence(game=discord.Game(name=random.choice(__games__)))
         await asyncio.sleep(__gamesTimer__)
-
-async def _githubLog():
-    #Logs new commits to a hardcoded channel
-    #Currently disabled since Webhooks are comming
-    if __github__ == 'True':
-        devChannel = bot.get_channel('165156137476292608')
-        authorAndRepo = 'Der-Eddy/discord_bot'
-        url = 'https://api.github.com/repos/%s/commits' % authorAndRepo
-        while True:
-            with open('tempBot.txt', 'a+') as temp:
-                temp.seek(0)
-                oldHash = temp.read()
-            async with aiohttp.get(url) as resp:
-                r = await resp.json()
-            if not oldHash == r[0]['sha'] and r[0]['sha'] != '':
-                with open('tempBot.txt', 'w+') as temp:
-                    temp.write(r[0]['sha'])
-                msg = ':cool: Ein neuer Commit für **{0}**!\n **Author:** `{1}`\n **Date:** `{2}`\n **Commit:** `#{3}` - {4}\n **Commit Message:** ```{5}```'.format(authorAndRepo, r[0]['commit']['author']['name'], r[0]['commit']['author']['date'], r[0]['sha'][:7], r[0]['html_url'], r[0]['commit']['message'])
-                await bot.send_message(devChannel, msg)
-            await asyncio.sleep(60)
 
 @bot.event
 async def on_ready():
@@ -98,13 +66,13 @@ async def on_ready():
     print(bot.user.name)
     print(bot.user.id)
     print('------')
-    bot.load_extension('fun')
-    bot.load_extension('mod')
-    bot.load_extension('anime')
+    for cog in __cogs__:
+        try:
+            bot.load_extension(cog)
+        except Exception:
+            print('Couldn\'t load cog {}'.format(cog))
     bot.commands_used = Counter()
     asyncio.ensure_future(_randomGame())
-    #asyncio.ensure_future(_githubLog())
-    _setupDatabase('reaction.db')
 
 @bot.event
 async def on_command(command, ctx):
@@ -122,18 +90,6 @@ async def on_message(message):
     if message.author.bot:
         return
     await bot.process_commands(message)
-
-'''
-Commented out for the moment
-@bot.event
-async def on_error(event, *args, **kwargs):
-    if True and event and args: #easy switch for testing purposes
-        msg = '**Event:**```{}```\n**Args:**```{}```\n**Kwargs:**```{}```'.format(event, ' - '.join(args), ' - '.join(kwargs))
-        owner = ''
-        for s in bot.servers:
-            if not owner: owner = s.get_member(__adminid__)
-        await bot.send_message(owner, msg)
-'''
 
 @bot.event
 async def on_member_join(member):
@@ -235,7 +191,8 @@ async def commands():
     '''Zeigt an wie oft welcher Command benutzt wurde seit dem letzten Startup'''
     msg = ':chart: Liste der ausgeführten Befehle (seit letztem Startup)\n'
     msg += 'Insgesamt: {}\n'.format(sum(bot.commands_used.values()))
-    msg += '```{!s:15s}: {!s:>4s}\n'.format('Name', 'Anzahl')
+    msg += '```js\n'
+    msg += '{!s:15s}: {!s:>4s}\n'.format('Name', 'Anzahl')
     chart = sorted(bot.commands_used.items(), key=lambda t: t[1], reverse=True)
     for name, amount in chart:
         msg += '{!s:15s}: {!s:>4s}\n'.format(name, amount)

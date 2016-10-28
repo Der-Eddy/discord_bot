@@ -17,7 +17,8 @@ Features
 - [x] Heroku Support
 - [x] Moderation/Server Log
 - [x] Message on GitHub Commit
-- [x] Reaction images (Giphy.com + own database)
+- [x] Reaction images (Giphy.com)
+- [x] Logging of channel messages into a file
 - [ ] Upload to Imgur
 
 More Details can be found at our [Trello Board](https://trello.com/b/Kh8nfuBE/discord-bot-shinobu-chan)!

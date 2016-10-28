@@ -4,7 +4,6 @@ import sys
 import asyncio
 import aiohttp
 import random
-import sqlite3
 
 try:
     from config import __token__, __prefix__, __adminid__, __kawaiichannel__, __botlogchannel__, __github__, __botserverid__, __greetmsg__, __selfassignrole__
@@ -78,53 +77,6 @@ class anime():
         await asyncio.sleep(2 * 60)
         await self.bot.delete_message(tmp)
         await self.bot.delete_message(ctx.message)
-
-    @commands.command(pass_context=True, enabled=False, hidden=True)
-    async def reactionold(self, ctx, command: str, *arg):
-        '''OBSOLOTE Fügt reaction Bilder hinzu oder gibt diese aus
-
-        Benutzung:
-        -----------
-
-        :reaction COMMAND
-            Gibt ein zufälliges Bild unter dem command aus
-
-        :reaction add COMMAND BILDURL
-            Fügt das jeweilige Bild zum jeweiligen command hinzu
-
-        :reaction del ID
-            Löscht den Eintrag mit der jeweiligen ID, nur für Modaratoren und Ersteller des Eintrags
-
-        :reaction list
-            Gibt die volle Liste an commands und jeweiligen Links
-        '''
-        with sqlite3.connect(self.db) as con:
-            c = con.cursor()
-            if command == 'add':
-                if len(arg) > 1:
-                    c.execute('INSERT INTO "reactions" ("command","url","author") VALUES (?, ?, ?)', (arg[0].lower(), arg[1], str(ctx.message.author)))
-                    con.commit()
-                    await self.bot.say(':ok: Command **{}** hinzugefügt!'.format(arg[0].lower()))
-            elif command == 'del':
-                if self.checkRole(ctx.message.author, self.mod):
-                    c.execute('DELETE FROM "reactions" WHERE "id" in (?)', (int(arg[0]), ))
-                else:
-                    c.execute('DELETE FROM "reactions" WHERE "id" in (?) AND "author" IN (?)', (int(arg[0]), str(ctx.message.author)))
-                con.commit()
-                await self.bot.say(':put_litter_in_its_place: ID #{} gelöscht!'.format(arg[0].lower()))
-            elif command == 'list':
-                lst = c.execute('SELECT * FROM "reactions"')
-                msg = ''
-                for i in lst:
-                    msg += '**ID:** {:>3} | **Command:** {:>10} | **URL:** `{}` | **Author:** {}\n'.format(i[0], i[1], i[2], i[3])
-                await self.bot.say(msg)
-            else:
-                lst = c.execute('SELECT * FROM "reactions" WHERE "command" LIKE (?)', (command,))
-                reaction = random.choice(lst.fetchall())
-                emojis = [':blush:', ':flushed:', ':heart_eyes:', ':heart_eyes_cat:', ':heart:']
-                msg = '{} {} *(Von {} | ID: {})*'.format(random.choice(emojis), reaction[2], reaction[3], reaction[0])
-                await self.bot.say(msg)
-            c.close()
 
     @commands.command(aliases=['wave', 'hi', 'ohaiyo'])
     async def hello(self):
