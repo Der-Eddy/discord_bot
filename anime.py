@@ -4,27 +4,12 @@ import sys
 import asyncio
 import aiohttp
 import random
-
-try:
-    from config import __token__, __prefix__, __adminid__, __kawaiichannel__, __botlogchannel__, __github__, __botserverid__, __greetmsg__, __selfassignrole__
-except ImportError:
-    #Heorku stuff
-    import os
-    __token__ = os.environ.get('DISCORD_TOKEN')
-    __prefix__ = os.environ.get('DISCORD_PREFIX')
-    __botserverid__ = os.environ.get('DISCORD_BOTSERVERID')
-    __adminid__ = os.environ.get('DISCORD_ADMINID')
-    __kawaiichannel__ = os.environ.get('DISCORD_KAWAIICHANNEL')
-    __botlogchannel__ = os.environ.get('DISCORD_BOTLOGCHANNEL')
-    __github__ = os.environ.get('DISCORD_GITHUB')
-    __greetmsg__ = os.environ.get('DISCORD_GREETMSG')
-    __selfassignrole__ = os.environ.get('DISCORD_SELFASSIGNROLE')
+import loadconfig
 
 class anime():
     '''Alles rund um Animes'''
-    kawaiich = __kawaiichannel__
-    nsfwRole = __selfassignrole__
-    db = 'reaction.db'
+    kawaiich = loadconfig.__kawaiichannel__
+    nsfwRole = loadconfig.__selfassignrole__
 
     def __init__(self, bot):
         self.bot = bot
@@ -54,7 +39,7 @@ class anime():
     @commands.command(pass_context=True)
     async def nsfw(self, ctx):
         '''Vergibt die Rolle um auf die NSFW Channel zugreifen zu können'''
-        if ctx.message.server == self.bot.get_server(__botserverid__):
+        if ctx.message.server == self.bot.get_server(loadconfig.__botserverid__):
             if self.nsfwRole:
                 member = ctx.message.author
                 role = discord.utils.get(ctx.message.server.roles, name=self.nsfwRole)
@@ -73,7 +58,7 @@ class anime():
             else:
                 tmp = await self.bot.say('**:no_entry:** Es wurde keine Rolle für den Bot eingestellt! Wende dich bitte an den Bot Admin')
         else:
-            tmp = await self.bot.say('**:no_entry:** Dieser Befehl funktioniert nur auf dem Server von <@{}>!'.format(__adminid__))
+            tmp = await self.bot.say('**:no_entry:** This command will only works on the server of <@{}>!'.format(__adminid__))
         await asyncio.sleep(2 * 60)
         await self.bot.delete_message(tmp)
         await self.bot.delete_message(ctx.message)

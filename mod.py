@@ -5,36 +5,22 @@ import asyncio
 import datetime
 import aiohttp
 from pytz import timezone
+import loadconfig
 
-try:
-    from config import __token__, __prefix__, __adminid__, __kawaiichannel__, __botlogchannel__, __github__, __botserverid__, __greetmsg__, __selfassignrole__
-except ImportError:
-    #Heorku stuff
-    import os
-    __token__ = os.environ.get('DISCORD_TOKEN')
-    __prefix__ = os.environ.get('DISCORD_PREFIX')
-    __botserverid__ = os.environ.get('DISCORD_BOTSERVERID')
-    __adminid__ = os.environ.get('DISCORD_ADMINID')
-    __kawaiichannel__ = os.environ.get('DISCORD_KAWAIICHANNEL')
-    __botlogchannel__ = os.environ.get('DISCORD_BOTLOGCHANNEL')
-    __github__ = os.environ.get('DISCORD_GITHUB')
-    __greetmsg__ = os.environ.get('DISCORD_GREETMSG')
-    __selfassignrole__ = os.environ.get('DISCORD_SELFASSIGNROLE')
-
-class admin():
+class mod():
     '''Praktische Befehle für Administratoren und Moderatoren'''
-    ownerid = __adminid__
+    ownerid = loadconfig.__adminid__
     owner = ''
 
     def __init__(self, bot):
         self.bot = bot
         for s in self.bot.servers:
-            if not self.owner: self.owner = s.get_member(__adminid__)
+            if not self.owner: self.owner = s.get_member(loadconfig.__adminid__)
 
     def _currenttime(self):
         return datetime.datetime.now(timezone('Europe/Berlin')).strftime("%H:%M:%S")
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, aliases=['quit'])
     async def shutdown(self, ctx):
         '''Schaltet mich ab :( (OWNER ONLY)'''
         if ctx.message.author.id == self.ownerid:
@@ -136,7 +122,7 @@ class admin():
                 else:
                     reason = 'None'
                 memberExtra = '{0} - *{1} ({2})*'.format(member.mention, member, member.id)
-                await self.bot.send_message(self.bot.get_channel(__botlogchannel__), '`[{0}]` **:passport_control:** {1} wurde gekickt vom Server {2} von {3}\n **Begründung:**```{4}```'.format(self._currenttime(), memberExtra, member.server, ctx.message.author, reason))
+                await self.bot.send_message(self.bot.get_channel(loadconfig.__botlogchannel__), '`[{0}]` **:passport_control:** {1} wurde gekickt vom Server {2} von {3}\n **Begründung:**```{4}```'.format(self._currenttime(), memberExtra, member.server, ctx.message.author, reason))
                 await self.bot.kick(member)
             else:
                 tmp = await self.bot.say('**:no_entry:** Du musst einen Benutzer spezifizieren!')
@@ -164,7 +150,7 @@ class admin():
                 else:
                     reason = 'None'
                 memberExtra = '{0} - *{1} ({2})*'.format(member.mention, member, member.id)
-                await self.bot.send_message(self.bot.get_channel(__botlogchannel__), '`[{0}]` **:customs:** {1} wurde gebannt vom Server {2} von {3}\n **Begründung:**```{4}```'.format(self._currenttime(), memberExtra, member.server, ctx.message.author, reason))
+                await self.bot.send_message(self.bot.get_channel(loadconfig.__botlogchannel__), '`[{0}]` **:customs:** {1} wurde gebannt vom Server {2} von {3}\n **Begründung:**```{4}```'.format(self._currenttime(), memberExtra, member.server, ctx.message.author, reason))
                 await self.bot.ban(member)
             else:
                 tmp = await self.bot.say('**:no_entry:** Du musst einen Benutzer spezifizieren!')
@@ -194,7 +180,7 @@ class admin():
                 else:
                     reason = 'None'
                 memberExtra = '{0} - *{1} ({2})*'.format(user.mention, user, user.id)
-                await self.bot.send_message(self.bot.get_channel(__botlogchannel__), '`[{0}]` **:negative_squared_cross_mark:** {1} wurde entbannt vom Server {2} von {3}\n **Begründung:**```{4}```'.format(self._currenttime(), memberExtra, ctx.message.server, ctx.message.author, reason))
+                await self.bot.send_message(self.bot.get_channel(loadconfig.__botlogchannel__), '`[{0}]` **:negative_squared_cross_mark:** {1} wurde entbannt vom Server {2} von {3}\n **Begründung:**```{4}```'.format(self._currenttime(), memberExtra, ctx.message.server, ctx.message.author, reason))
                 await self.bot.unban(ctx.message.server, user)
             else:
                 tmp = await self.bot.say('**:no_entry:** Du musst einen Benutzer spezifizieren!')
@@ -225,4 +211,4 @@ class admin():
             await self.bot.delete_message(ctx.message)
 
 def setup(bot):
-    bot.add_cog(admin(bot))
+    bot.add_cog(mod(bot))
