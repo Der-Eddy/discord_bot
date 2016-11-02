@@ -15,8 +15,12 @@ from io import UnsupportedOperation
 from collections import Counter
 import loadconfig
 
-__version__ = '0.8.0'
-__cogs__ = ['mod', 'fun', 'anime']
+__version__ = '0.8.1'
+__cogs__ = [
+    'cogs.mod',
+    'cogs.fun',
+    'cogs.anime'
+    ]
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
