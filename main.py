@@ -1,21 +1,23 @@
-import discord
-from discord.ext import commands
 import logging
 from logging.handlers import RotatingFileHandler
-import asyncio
-import aiohttp
 import random
 import time
 import platform
 import datetime
 import os
+import sys
 import xml.etree.ElementTree as ET
 from pytz import timezone
 from io import UnsupportedOperation
 from collections import Counter
+import asyncio
+import aiohttp
+import discord
+from discord.ext import commands
 import loadconfig
+import checks
 
-__version__ = '0.8.1'
+__version__ = '0.8.2'
 __cogs__ = [
     'cogs.mod',
     'cogs.fun',
@@ -189,6 +191,7 @@ async def commands():
     await bot.say(msg)
 
 @bot.command(pass_context=True, aliases=['p'])
+@checks.has_permissions('ban_members')
 async def ping(ctx):
     '''Misst die Response Time'''
     ping = ctx.message
@@ -314,6 +317,16 @@ async def epvpis(*user: str):
             else:
                 msg = ':no_entry: Ich konnte keine Epvp Accounts finden :sweat:'
             await bot.say(msg)
+
+@bot.command(pass_context=True, hidden=True, aliases=['quit_backup'])
+async def shutdown_backup(ctx):
+    '''Fallback if mod cog couldn't load'''
+    if ctx.message.author.id == loadconfig.__adminid__:
+        await bot.say('**:ok:** Bye!')
+        bot.logout()
+        sys.exit(0)
+    else:
+        await bot.say('**:no_entry:** Du bist nicht mein Bot Besitzer!')
 
 if __name__ == '__main__':
     startTime = time.time()

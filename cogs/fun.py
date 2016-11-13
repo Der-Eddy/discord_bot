@@ -1,9 +1,9 @@
-import discord
-from discord.ext import commands
-import asyncio
-import aiohttp
 import random
 import urllib.parse
+import asyncio
+import aiohttp
+import discord
+from discord.ext import commands
 
 class fun():
     def __init__(self, bot):

@@ -1,9 +1,9 @@
-import discord
-from discord.ext import commands
 import sys
+import random
 import asyncio
 import aiohttp
-import random
+import discord
+from discord.ext import commands
 import loadconfig
 
 class anime():
