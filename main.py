@@ -16,7 +16,7 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '0.8.4'
+__version__ = '0.8.5'
 __cogs__ = [
     'cogs.mod',
     'cogs.fun',
@@ -325,7 +325,7 @@ async def emoji(ctx, emojiname: str):
 
     :emoji Emilia
     '''
-    emoji = discord.utils.get(bot.get_all_emojis(), name=emojiname)
+    emoji = discord.utils.find(lambda e: e.name.lower() == emojiname.lower(), bot.get_all_emojis())
     if emoji:
         tempEmojiFile = 'tempEmoji.png'
         async with aiohttp.get(emoji.url) as img:
