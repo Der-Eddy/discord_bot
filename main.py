@@ -16,7 +16,7 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '0.8.3'
+__version__ = '0.8.4'
 __cogs__ = [
     'cogs.mod',
     'cogs.fun',
@@ -332,7 +332,7 @@ async def emoji(ctx, emojiname: str):
             with open(tempEmojiFile, 'wb') as f:
                 f.write(await img.read())
         with open(tempEmojiFile, 'rb') as f:
-            await bot.send_file(ctx.message.channel, f, content=emojiname)
+            await bot.send_file(ctx.message.channel, f)
         os.remove(tempEmojiFile)
     else:
         await bot.say(':x: Konnte das angegebene Emoji leider nicht finden :(')
