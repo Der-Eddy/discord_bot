@@ -62,10 +62,15 @@ Einen Bot Account fügt man dann über diesen Link hinzu (CLIENT ID einfügen ni
 `https://discordapp.com/oauth2/authorize?client_id=CLIENTID&scope=bot&permissions=0`
 
 
+Troubleshooting
+-------------
+Sollte z.B. aus irgendeinem Grund die mod.py cog nicht geladen werden, kann der Bot vom Bot Besitzer über `:shutdown_backup` heruntergefahren werden.
+Weitere Tipps folgen
+
 Full list of requirements
 -------------
 
-    discord.py==0.13.0
+    discord.py==0.14.3
     aiohttp
     websockets
     chardet

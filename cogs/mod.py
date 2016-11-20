@@ -25,19 +25,21 @@ class mod():
         self.bot.logout()
         sys.exit(0)
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, hidden=True)
     @checks.is_bot_owner()
     async def avatar(self, ctx, url: str):
         '''Setzt einen neuen Avatar (BOT OWNER ONLY)'''
+        tempAvaFile = 'tempAva.png'
         async with aiohttp.get(''.join(url)) as img:
-            with open('tempAva.png', 'wb') as f:
+            with open(tempAvaFile, 'wb') as f:
                 f.write(await img.read())
-        with open('tempAva.png', 'rb') as f:
+        with open(tempAvaFile, 'rb') as f:
             await self.bot.edit_profile(avatar=f.read())
+        os.remove(tempAvaFile)
         asyncio.sleep(2)
         await self.bot.say('**:ok:** Mein neuer Avatar!\n %s' % self.bot.user.avatar_url)
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, hidden=True)
     @checks.is_bot_owner()
     async def game(self, ctx, *game):
         '''Ändert das derzeit spielende Spiel (BOT OWNER ONLY)'''
@@ -81,7 +83,7 @@ class mod():
             msg = ':ok: Reset von meinem Server Nickname auf: **{0}**'.format(self.bot.user.name)
         await self.bot.say(msg)
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, hidden=True)
     @checks.is_bot_owner()
     async def name(self, ctx, *name):
         '''Ändert den globalen Namen vom Bot (BOT OWNER ONLY)'''
@@ -173,6 +175,20 @@ class mod():
             await self.bot.say(msg)
         else:
             await self.bot.say('**:negative_squared_cross_mark:** Es gibt keine gebannten Nutzer!')
+
+    @commands.command(pass_context=True, disabled=True)
+    @checks.is_bot_owner()
+    async def removereactions(self, ctx, messageid : str):
+        '''Entfernt alle Emojis von einer Nachricht (MOD ONLY)
+
+        Beispiel:
+        -----------
+
+        :removereactions 247386709505867776
+        '''
+        return # In Work
+        message = discord.utils.get(ctx.message.server.channel, id=int(messageid))
+        await self.bot.remove_reaction(message)
 
 def setup(bot):
     bot.add_cog(mod(bot))

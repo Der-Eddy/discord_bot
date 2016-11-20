@@ -15,9 +15,8 @@ import aiohttp
 import discord
 from discord.ext import commands
 import loadconfig
-import checks
 
-__version__ = '0.8.2'
+__version__ = '0.8.3'
 __cogs__ = [
     'cogs.mod',
     'cogs.fun',
@@ -191,7 +190,6 @@ async def commands():
     await bot.say(msg)
 
 @bot.command(pass_context=True, aliases=['p'])
-@checks.has_permissions('ban_members')
 async def ping(ctx):
     '''Misst die Response Time'''
     ping = ctx.message
@@ -317,6 +315,27 @@ async def epvpis(*user: str):
             else:
                 msg = ':no_entry: Ich konnte keine Epvp Accounts finden :sweat:'
             await bot.say(msg)
+
+@bot.command(pass_context=True, aliases=['e'])
+async def emoji(ctx, emojiname: str):
+    '''Gibt eine vergrößerte Version eines angegebenen Emojis zurück
+
+    Beispiel:
+    -----------
+
+    :emoji Emilia
+    '''
+    emoji = discord.utils.get(bot.get_all_emojis(), name=emojiname)
+    if emoji:
+        tempEmojiFile = 'tempEmoji.png'
+        async with aiohttp.get(emoji.url) as img:
+            with open(tempEmojiFile, 'wb') as f:
+                f.write(await img.read())
+        with open(tempEmojiFile, 'rb') as f:
+            await bot.send_file(ctx.message.channel, f, content=emojiname)
+        os.remove(tempEmojiFile)
+    else:
+        await bot.say(':x: Konnte das angegebene Emoji leider nicht finden :(')
 
 @bot.command(pass_context=True, hidden=True, aliases=['quit_backup'])
 async def shutdown_backup(ctx):
