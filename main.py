@@ -11,9 +11,10 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '0.9.0'
+__version__ = '0.9.1'
 __cogs__ = [
     'cogs.mod',
+    'cogs.admin',
     'cogs.fun',
     'cogs.anime',
     'cogs.utility'

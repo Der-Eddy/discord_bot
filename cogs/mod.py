@@ -25,28 +25,6 @@ class mod():
         self.bot.logout()
         sys.exit(0)
 
-    @commands.command(pass_context=True, hidden=True)
-    @checks.is_bot_owner()
-    async def avatar(self, ctx, url: str):
-        '''Setzt einen neuen Avatar (BOT OWNER ONLY)'''
-        tempAvaFile = 'tempAva.png'
-        async with aiohttp.get(''.join(url)) as img:
-            with open(tempAvaFile, 'wb') as f:
-                f.write(await img.read())
-        with open(tempAvaFile, 'rb') as f:
-            await self.bot.edit_profile(avatar=f.read())
-        os.remove(tempAvaFile)
-        asyncio.sleep(2)
-        await self.bot.say('**:ok:** Mein neuer Avatar!\n %s' % self.bot.user.avatar_url)
-
-    @commands.command(pass_context=True, hidden=True)
-    @checks.is_bot_owner()
-    async def game(self, ctx, *game):
-        '''Ändert das derzeit spielende Spiel (BOT OWNER ONLY)'''
-        gameName = ' '.join(game)
-        await self.bot.change_presence(game=discord.Game(name=gameName))
-        await self.bot.say('**:ok:** Ändere das Spiel zu: Playing **{0}**'.format(gameName))
-
     @commands.command(pass_context=True, aliases=['prune'])
     @checks.has_permissions('ban_members') # Security Reasons
     async def purge(self, ctx, *limit):
@@ -81,15 +59,6 @@ class mod():
             msg = ':ok: Ändere meinen Server Nickname zu: **{0}**'.format(nickname)
         else:
             msg = ':ok: Reset von meinem Server Nickname auf: **{0}**'.format(self.bot.user.name)
-        await self.bot.say(msg)
-
-    @commands.command(pass_context=True, hidden=True)
-    @checks.is_bot_owner()
-    async def name(self, ctx, *name):
-        '''Ändert den globalen Namen vom Bot (BOT OWNER ONLY)'''
-        name = ' '.join(name)
-        await self.bot.edit_profile(username=name)
-        msg = ':ok: Ändere meinen Namen zu: **{0}**'.format(name)
         await self.bot.say(msg)
 
     @commands.command(pass_context=True, aliases=['k'])
@@ -176,7 +145,7 @@ class mod():
         else:
             await self.bot.say('**:negative_squared_cross_mark:** Es gibt keine gebannten Nutzer!')
 
-    @commands.command(pass_context=True, disabled=True)
+    @commands.command(pass_context=True, disabled=True, hidden=True)
     @checks.is_bot_owner()
     async def removereactions(self, ctx, messageid : str):
         '''Entfernt alle Emojis von einer Nachricht (MOD ONLY)
