@@ -2,25 +2,21 @@ import logging
 from logging.handlers import RotatingFileHandler
 import random
 import time
-import platform
 import datetime
-import os
 import sys
-import xml.etree.ElementTree as ET
-from pytz import timezone
-from io import UnsupportedOperation
-from collections import Counter
 import asyncio
-import aiohttp
+from collections import Counter
+from pytz import timezone
 import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '0.8.5'
+__version__ = '0.9.0'
 __cogs__ = [
     'cogs.mod',
     'cogs.fun',
-    'cogs.anime'
+    'cogs.anime',
+    'cogs.utility'
     ]
 
 logger = logging.getLogger('discord')
@@ -34,16 +30,6 @@ bot = commands.Bot(command_prefix=loadconfig.__prefix__, description=description
 
 def _currenttime():
     return datetime.datetime.now(timezone('Europe/Berlin')).strftime("%H:%M:%S")
-
-def _getRoles(roles):
-    string = ''
-    for r in roles:
-        if not r.is_everyone:
-            string += '{}, '.format(r.name)
-    if string is '':
-        return 'None'
-    else:
-        return string[:-2]
 
 async def _randomGame():
     #Check games.py to change the list of "games" to be played
@@ -63,6 +49,8 @@ async def on_ready():
         except Exception:
             print('Couldn\'t load cog {}'.format(cog))
     bot.commands_used = Counter()
+    bot.startTime = time.time()
+    bot.botVersion = __version__
     asyncio.ensure_future(_randomGame())
 
 @bot.event
@@ -147,196 +135,6 @@ async def on_member_unban(member):
         memberExtra = '{0} - *{1} ({2})*'.format(member.mention, member, member.id)
         await bot.send_message(bot.get_channel(loadconfig.__botlogchannel__), '`[{0}]` **:negative_squared_cross_mark:** {1} wurde entbannt auf Server {2}'.format(_currenttime(), memberExtra, member.server))
 
-@bot.command(aliases=['s', 'uptime', 'up'])
-async def status():
-    '''Infos über den Bot'''
-    timeUp = time.time() - startTime
-    hours = timeUp / 3600
-    minutes = (timeUp / 60) % 60
-    seconds = timeUp % 60
-
-    admin = ''
-    users = 0
-    channel = 0
-    for s in bot.servers:
-        users += len(s.members)
-        channel += len(s.channels)
-        if not admin: admin = s.get_member(loadconfig.__adminid__)
-
-    msg = '**:information_source:** Informationen über diesen Bot:\n'
-    msg += '```Admin                : @%s\n' % admin
-    msg += 'Uptime               : {0:.0f} Stunden, {1:.0f} Minuten und {2:.0f} Sekunden\n'.format(hours, minutes, seconds)
-    msg += 'Benutzer / Server    : %s in %s Server\n' % (users, len(bot.servers))
-    msg += 'Beobachtete Channel  : %s Channel\n' % channel
-    msg += 'Beobachtete Messages : %s Messages\n' % len(bot.messages)
-    msg += 'Ausgeführte Commands : %s Commands\n' % sum(bot.commands_used.values())
-    msg += 'Bot Version          : %s\n' % __version__
-    msg += 'Discord.py Version   : %s\n' % discord.__version__
-    msg += 'Python Version       : %s\n' % platform.python_version()
-    msg += 'GitHub               : https://github.com/Der-Eddy/discord_bot```'
-    await bot.say(msg)
-
-@bot.command()
-async def commands():
-    '''Zeigt an wie oft welcher Command benutzt wurde seit dem letzten Startup'''
-    msg = ':chart: Liste der ausgeführten Befehle (seit letztem Startup)\n'
-    msg += 'Insgesamt: {}\n'.format(sum(bot.commands_used.values()))
-    msg += '```js\n'
-    msg += '{!s:15s}: {!s:>4s}\n'.format('Name', 'Anzahl')
-    chart = sorted(bot.commands_used.items(), key=lambda t: t[1], reverse=True)
-    for name, amount in chart:
-        msg += '{!s:15s}: {!s:>4s}\n'.format(name, amount)
-    msg += '```'
-    await bot.say(msg)
-
-@bot.command(pass_context=True, aliases=['p'])
-async def ping(ctx):
-    '''Misst die Response Time'''
-    ping = ctx.message
-    pong = await bot.say('**:ping_pong:** Pong!')
-    delta = pong.timestamp - ping.timestamp
-    delta = int(delta.total_seconds() * 1000)
-    await bot.edit_message(pong, '**:ping_pong:** Pong! (%d ms)' % delta)
-
-@bot.command(pass_context=True, aliases=['info', 'github', 'trello'])
-async def about(ctx):
-    '''Info über mich'''
-    msg = '**:information_source: Shinobu Oshino (500 Jahre alt)**\n'
-    msg += '```Shinobu Oshino gehört wohl zu den mysteriösesten Charakteren in Bakemonogatari. Sie war bis vorletzten Frühling ein hochangesehener, adeliger, skrupelloser Vampir, der weit über 500 Jahre alt ist. Gnadenlos griff sie Menschen an und massakrierte sie nach Belieben. Auch Koyomi Araragi wurde von ihr attackiert und schwer verwundet. Nur durch das Eingreifen des Exorzisten Meme Oshino konnte Kiss-shot Acerola-orion Heart-under-blade, wie sie damals bekannt war, bezwungen werden. Dabei verlor sie jedoch all ihre Erinnerungen und wurde von einer attraktiven, erwachsenen Frau in einen unschuldigen Mädchenkörper verwandelt.\n\n'
-    msg += 'Seitdem lebt sie zusammen mit Meme in einem verlassenen Gebäude und wurde von ihm aufgenommen. Er gab ihr auch ihren Namen Shinobu. Wann immer man Shinobu sehen sollte, sitzt sie nur mit traurigem Gesicht in einer Ecke und träumt vor sich hin. Sie spricht nicht und wirkt auch sonst meistens sehr abwesend. Einzig und allein zu Koyomi scheint sie ein freundschaftliches Verhältnis zu haben. Das Vampirblut in ihr verlangt immer noch nach Opfern und da sich Koyomi in gewisser Art und Weise schuldig fühlt, stellt er sich regelmäßig als Nahrungsquelle für Shinobu zur Verfügung.\n\n'
-    msg += 'Quelle: http://www.anisearch.de/character/6598,shinobu-oshino/```\n\n'
-    msg += 'Dieser Bot ist außerdem **:free:**, Open-Source, in Python und mit Hilfe von discord.py geschrieben! <https://github.com/Der-Eddy/discord_bot>\n'
-    msg += 'Neueste Neuerungen immer zuerst auf unserem Trello Board! <https://trello.com/b/Kh8nfuBE/discord-bot-shinobu-chan>'
-    with open('img/ava.png', 'rb') as f:
-        await bot.send_file(ctx.message.channel, f, content=msg)
-
-@bot.command(pass_context=True, aliases=['archive'])
-async def log(ctx, *limit:int):
-    '''Archiviert den Log des derzeitigen Channels und läd diesen auf gist hoch
-
-    Beispiel:
-    -----------
-
-    :log 100
-    '''
-    try:
-        limit = int(limit[0])
-    except IndexError:
-        limit = 1000
-    logFile = '{}.log'.format(ctx.message.channel)
-    counter = 0
-    with open(logFile, 'w', encoding='UTF-8') as f:
-        f.write('Archivierte Nachrichten vom Channel: {} am {}\n'.format(ctx.message.channel, ctx.message.timestamp.strftime('%d.%m.%Y %H:%M:%S')))
-        async for message in bot.logs_from(ctx.message.channel, limit=limit, before=ctx.message):
-            try:
-                attachment = '[Angehängte Datei: {}]'.format(message.attachments[0]['url'])
-            except IndexError:
-                attachment = ''
-            f.write('{} {!s:20s}: {} {}\n'.format(message.timestamp.strftime('%d.%m.%Y %H:%M:%S'), message.author, message.clean_content, attachment))
-            counter += 1
-    msg = ':ok: {} Nachrichten wurden archiviert!'.format(counter)
-    with open(logFile, 'rb') as f:
-        await bot.send_file(ctx.message.channel, f, content=msg)
-    os.remove(logFile)
-
-@bot.command(pass_context=True)
-async def echo(ctx, *message):
-    '''Gibt ne Nachricht aus'''
-    msg = '**:mega:** ' + ' '.join(message)
-    await bot.say(msg)
-    await bot.delete_message(ctx.message)
-
-@bot.command()
-async def invite():
-    '''Verschickt einen Invite für den Server des Bot Autors'''
-    permInvite = 'https://discord.gg/kPMbPDc'
-    msg = '**:cool:** ' + permInvite
-    await bot.say(msg)
-
-@bot.command()
-async def whois(member: discord.Member = None):
-    '''Gibt Informationen über einen Benutzer aus
-
-    Beispiel:
-    -----------
-
-    :whois @Der-Eddy#6508
-    '''
-
-    if member.top_role.is_everyone:
-        topRole = 'everyone aka None' #to prevent @everyone spam
-        topRoleColour = '#000000'
-    else:
-        topRole = member.top_role
-        topRoleColour = member.top_role.colour
-
-    if member is not None:
-        msg = '**:information_source:** Informationen über %s:\n' % member
-        msg += '```General              : %s\n' % member
-        msg += 'Name                 : %s\n' % member.name
-        msg += 'Server Nickname      : %s\n' % member.display_name
-        msg += 'Discriminator        : %s\n' % member.discriminator
-        msg += 'ID                   : %s\n' % member.id
-        msg += 'Bot Account?         : %s\n' % member.bot
-        msg += 'Avatar               : %s\n' % member.avatar_url
-        msg += 'Erstellt am          : %s\n' % member.created_at
-        msg += 'Server beigetreten am: %s\n' % member.joined_at
-        msg += 'Rollenfarbe          : %s (%s)\n' % (topRoleColour, topRole)
-        msg += 'Status               : %s\n' % member.status
-        msg += 'Rollen               : %s```' % _getRoles(member.roles)
-    else:
-        msg = '**:no_entry:** Du hast keinen Benutzer angegeben!'
-    await bot.say(msg)
-
-@bot.command(aliases=['epvp'])
-async def epvpis(*user: str):
-    '''Sucht nach einem Benutzernamen auf Elitepvpers
-
-    Beispiel:
-    -----------
-
-    :epvpis Der-Eddy
-    '''
-    user = ' '.join(user)
-    url = 'https://www.elitepvpers.com/forum/ajax.php?do=usersearch'
-    payload = {
-        'do': 'usersearch',
-        'fragment': user
-    }
-    async with aiohttp.post(url, data=payload) as r:
-        if r.status == 200:
-            root = ET.fromstring(await r.text())
-            if len(root) > 0:
-                msg = ':ok: Ich konnte {} Accounts finden!\n```'.format(len(root))
-                for i in root:
-                    userURL = 'https://www.elitepvpers.com/forum/member.php?u=' + i.attrib['userid']
-                    msg += '{:15} | {}\n'.format(i.text, userURL)
-                msg += '```'
-            else:
-                msg = ':no_entry: Ich konnte keine Epvp Accounts finden :sweat:'
-            await bot.say(msg)
-
-@bot.command(pass_context=True, aliases=['e'])
-async def emoji(ctx, emojiname: str):
-    '''Gibt eine vergrößerte Version eines angegebenen Emojis zurück
-
-    Beispiel:
-    -----------
-
-    :emoji Emilia
-    '''
-    emoji = discord.utils.find(lambda e: e.name.lower() == emojiname.lower(), bot.get_all_emojis())
-    if emoji:
-        tempEmojiFile = 'tempEmoji.png'
-        async with aiohttp.get(emoji.url) as img:
-            with open(tempEmojiFile, 'wb') as f:
-                f.write(await img.read())
-        with open(tempEmojiFile, 'rb') as f:
-            await bot.send_file(ctx.message.channel, f)
-        os.remove(tempEmojiFile)
-    else:
-        await bot.say(':x: Konnte das angegebene Emoji leider nicht finden :(')
-
 @bot.command(pass_context=True, hidden=True, aliases=['quit_backup'])
 async def shutdown_backup(ctx):
     '''Fallback if mod cog couldn't load'''
@@ -348,5 +146,4 @@ async def shutdown_backup(ctx):
         await bot.say('**:no_entry:** Du bist nicht mein Bot Besitzer!')
 
 if __name__ == '__main__':
-    startTime = time.time()
     bot.run(loadconfig.__token__)
