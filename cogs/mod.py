@@ -145,19 +145,21 @@ class mod():
         else:
             await self.bot.say('**:negative_squared_cross_mark:** Es gibt keine gebannten Nutzer!')
 
-    @commands.command(pass_context=True, disabled=True, hidden=True)
-    @checks.is_bot_owner()
+    @commands.command(pass_context=True, alias=['clearreactions'])
+    @checks.has_permissions('manage_messages')
     async def removereactions(self, ctx, messageid : str):
-        '''Entfernt alle Emojis von einer Nachricht (MOD ONLY)
+        '''Entfernt alle Emoji Reactions von einer Nachricht (MOD ONLY)
 
         Beispiel:
         -----------
 
         :removereactions 247386709505867776
         '''
-        return # In Work
-        message = discord.utils.get(ctx.message.server.channel, id=int(messageid))
-        await self.bot.remove_reaction(message)
+        message = await self.bot.get_message(ctx.message.channel, messageid)
+        if message:
+            await self.bot.clear_reactions(message)
+        else:
+            await self.bot.say('**:x:** Konnte keine Nachricht mit dieser ID finden!')
 
 def setup(bot):
     bot.add_cog(mod(bot))
