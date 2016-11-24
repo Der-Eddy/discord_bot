@@ -26,13 +26,24 @@ More Details can be found at our [Trello Board](https://trello.com/b/Kh8nfuBE/di
 
 Eine Auflistung aller Befehle gibt es unter `:help` (Standardpräfix)
 
-![help command](https://i.imgur.com/37DE4NU.png)
+![help command](https://i.imgur.com/ntYi4I2.png)
 
 
 Run & Requirements
 -------------
 Ihr benötigt mindestens Python 3.5 + [discord.py](https://github.com/Rapptz/discord.py) für diesen Bot und einen Discord Bot Account (siehe weiter unten).
-Vor dem Start muss im selben Ordner wie `main.py` eine Datei namens `config.py` angelegt werden, ein Beispiel einer solchen gibt es in `config.example.py` zu finden:
+Zusätzlich wird `pytz` aus [PyPI](https://pypi.python.org/pypi/pytz/2016.6.1) benötigt.
+
+Bot Accounts
+-------------
+Allgemeine Infos zu Discord Bot Accounts gibt es bei [discordapp.com/developers/](https://discordapp.com/developers/applications/me).  
+Einen Bot Account fügt man dann über diesen Link hinzu (CLIENT ID einfügen nicht vergessen):  
+`https://discordapp.com/oauth2/authorize?client_id=CLIENTID&scope=bot&permissions=0`
+
+
+Einstellungen
+-------------
+Vor dem Start muss im Ordner `config` eine Datei namens `config.py` angelegt werden, ein Beispiel einer solchen gibt es in `config.example.py` zu finden:
 
     __token__ = 'INSERT BOT TOKEN HERE'
     __prefix__ = ':'
@@ -46,20 +57,42 @@ Vor dem Start muss im selben Ordner wie `main.py` eine Datei namens `config.py` 
     __greetmsg__ = 'False' #HARDCODED Enable/Disable greetmsg at the entry channel of __botserverid__
     __selfassignrole__ = 'Blighttown' #OPTIONAL set to a role to be self assign-able
 
+In `games.py` kann man die Titel der "Playing-" Rotation:
 
-Zusätzlich wird `pytz` aus [PyPI](https://pypi.python.org/pypi/pytz/2016.6.1) benötigt.
+    __games__ = [
+        'with Eddy-Senpai',
+        'with Neko-chan',
+        'with Cats',
+        'try :help',
+        'try :status',
+        'DARK SOULS IV',
+        'with Atom.io',
+        'with Python',
+        'HuniePop',
+        'Crush Crush',
+        'try :neko',
+        'try :kawaii',
+        'with async',
+        'with Karen-chan',
+        'with Rara-chan',
+        'Dota 3'
+    ]
+    __gamesTimer__ = 10 * 60
+
+Erweiterungen (Cogs) die beim starten aktiviert werden sollen, kann man in `cogs.py` einstellen:
+
+    __cogs__ = [
+        'cogs.mod',
+        'cogs.admin',
+        'cogs.fun',
+        'cogs.anime',
+        'cogs.utility'
+        ]
 
 
 Support
 -------------
 Gibts auf meinem Discord Server: `https://discord.gg/kPMbPDc`
-
-
-Bot Accounts
--------------
-Allgemeine Infos zu Discord Bot Accounts gibt es bei [discordapp.com/developers/](https://discordapp.com/developers/applications/me).  
-Einen Bot Account fügt man dann über diesen Link hinzu (CLIENT ID einfügen nicht vergessen):  
-`https://discordapp.com/oauth2/authorize?client_id=CLIENTID&scope=bot&permissions=0`
 
 
 Troubleshooting
