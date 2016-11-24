@@ -11,14 +11,7 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '0.9.2'
-__cogs__ = [
-    'cogs.mod',
-    'cogs.admin',
-    'cogs.fun',
-    'cogs.anime',
-    'cogs.utility'
-    ]
+__version__ = '0.10.0'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -44,7 +37,7 @@ async def on_ready():
     print('Bot-Name: {}'.format(bot.user.name))
     print('Bot-ID: {}'.format(bot.user.id))
     print('------')
-    for cog in __cogs__:
+    for cog in loadconfig.__cogs__:
         try:
             bot.load_extension(cog)
         except Exception:

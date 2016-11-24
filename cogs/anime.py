@@ -124,7 +124,7 @@ class anime():
             msg = '{} tätschelt dich {} :3 \n{}'.format(ctx.message.author.mention, member.mention, random.choice(gifs))
             await self.bot.say(msg)
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, hidden=True)
     async def imgur(self, ctx, amount: int = None):
         '''Lädt eine bestimmte Anzahl der letzten hochgeladenen Bilder im Channel bei Imgur hoch'''
         await self.bot.say(':new: Befehl in Arbeit!')
