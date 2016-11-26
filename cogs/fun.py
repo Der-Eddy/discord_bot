@@ -109,7 +109,7 @@ class fun():
         '''Monty Python'''
         await self.bot.say(member + '\nhttps://media.giphy.com/media/l41lGAcThnMc29u2Q/giphy.gif')
 
-    @commands.command(pass_context=True, aliases=['r'])
+    @commands.command(pass_context=True)
     async def giphy(self, ctx, *searchterm: str):
         '''Listet reaction Bilder von giphy.com
         Erlaubt r-rating Bilder in Channel die 'nsfw' beinhalten
@@ -117,7 +117,7 @@ class fun():
         Beispiel:
         -----------
 
-        :reaction ghibli
+        :giphy ghibli
         '''
         searchstring = urllib.parse.quote_plus(' '.join(searchterm))
         apikey = 'dc6zaTOxFJmzC'
@@ -173,6 +173,28 @@ class fun():
                 date = '{}.{}.{}'.format(js['day'], js['month'], js['year'])
                 msg = '**{}**\n{}\nAlt Text:```{}```XKCD Link: <{}> ({})'.format(js['safe_title'], js['img'], js['alt'], comicUrl, date)
                 await self.bot.say(msg)
+
+    @commands.command(pass_context=True, alias=['r', 'addreaction'])
+    async def reaction(self, ctx, emojiname: str, *messageid : str):
+        '''Fügt der letzten Nachricht ein Emoji als Reaction hinzu oder einer bestimmten Nachricht
+
+        Beispiel:
+        -----------
+        :reaction ok_hand
+
+        :addreaction sunglasses 247386709505867776
+        '''
+        emoji = discord.utils.find(lambda e: e.name.lower() == emojiname.lower(), self.bot.get_all_emojis())
+        if not messageid:
+            async for msg in self.bot.logs_from(ctx.message.channel, limit=1, before=ctx.message):
+                message = msg
+        else:
+            message = await self.bot.get_message(ctx.message.channel, messageid[0])
+        if message:
+            await self.bot.add_reaction(message, emoji)
+            await self.bot.delete_message(ctx.message)
+        else:
+            await self.bot.say('**:x:** Konnte keine Nachricht mit dieser ID finden!')
 
 def setup(bot):
     bot.add_cog(fun(bot))
