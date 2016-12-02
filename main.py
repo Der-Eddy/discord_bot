@@ -15,7 +15,7 @@ __version__ = '0.10.4'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
-handler = RotatingFileHandler(filename='discordbot.log', maxBytes=1024, backupCount=2, encoding='utf-8', mode='w')
+handler = RotatingFileHandler(filename='discordbot.log', maxBytes=1024*5, backupCount=4, encoding='utf-8', mode='w')
 handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
 
