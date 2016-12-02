@@ -6,6 +6,7 @@ import aiohttp
 import discord
 from discord.ext import commands
 import loadconfig
+import checks
 
 class utility():
     '''Allgemeine Befehle welche nirgendwo sonst reinpassen'''

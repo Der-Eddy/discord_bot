@@ -184,7 +184,11 @@ class fun():
 
         :addreaction sunglasses 247386709505867776
         '''
-        emoji = discord.utils.find(lambda e: e.name.lower() == emojiname.lower(), self.bot.get_all_emojis())
+        emojifind = discord.utils.find(lambda e: e.name.lower() == emojiname.lower(), self.bot.get_all_emojis())
+        if emojifind:
+            emoji = emojifind
+        else:
+            emoji = emojiname
         if not messageid:
             async for msg in self.bot.logs_from(ctx.message.channel, limit=1, before=ctx.message):
                 message = msg

@@ -88,6 +88,7 @@ ENV/
 .ropeproject
 
 *.log
+*.log.*
 config.py
 temp*
 tmp*
