@@ -100,7 +100,7 @@ Weitere Tipps folgen
 Full list of requirements
 -------------
 
-    discord.py==0.15.0
+    discord.py==0.15.1
     aiohttp
     websockets
     chardet
@@ -111,7 +111,7 @@ License
 -------------
     MIT License
 
-    Copyright (c) 2016 Eduard Nikoleisen
+    Copyright (c) 2016 - 2017 Eduard Nikoleisen
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
