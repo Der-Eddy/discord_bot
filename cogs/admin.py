@@ -67,5 +67,14 @@ class admin():
             msg = ':x: Konnte keinen passenden Server zu dieser ID finden!'
         await self.bot.say(msg)
 
+    @commands.command(pass_context=True, hidden=True)
+    @checks.is_bot_owner()
+    async def test(self):
+        '''Test Test Test'''
+        embed = discord.Embed(title='Test Title', type='rich', color=0xe74c3c, image='https://abload.de/img/epvp_shield_hiresrlkzk.png', thumbnail='https://abload.de/img/epvp_shield_hiresrlkzk.png')
+        embed.add_field(name='erster', value='content something', inline=True)
+        embed.add_field(name='zweiter', value='https://www.elitepvpers.com/forum/member.php?u=6994157', inline=False)
+        await self.bot.say(embed=embed)
+
 def setup(bot):
     bot.add_cog(admin(bot))

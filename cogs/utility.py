@@ -171,14 +171,17 @@ class utility():
             if r.status == 200:
                 root = ET.fromstring(await r.text())
                 if len(root) > 0:
-                    msg = ':ok: Ich konnte {} Accounts finden!\n```'.format(len(root))
+                    embed = discord.Embed(color=0xf1c40f)
+                    embed.set_footer(text='Es können maximal 15 Accounts gefunden werden')
+                    embed.set_thumbnail(url='https://abload.de/img/epvp_shield_hiresyskb3.png')
+                    msg = ':ok: Ich konnte {} Accounts finden!'.format(len(root))
                     for i in root:
                         userURL = 'https://www.elitepvpers.com/forum/member.php?u=' + i.attrib['userid']
-                        msg += '{:15} | {}\n'.format(i.text, userURL)
-                    msg += '```'
+                        embed.add_field(name=i.text, value=userURL, inline=False)
+                    await self.bot.say(msg, embed=embed)
                 else:
                     msg = ':no_entry: Ich konnte keine Epvp Accounts finden :sweat:'
-                await self.bot.say(msg)
+                    await self.bot.say(msg)
 
     @commands.command(pass_context=True, aliases=['e'])
     async def emoji(self, ctx, emojiname: str):
