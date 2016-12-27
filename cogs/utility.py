@@ -2,6 +2,7 @@ import time
 import os
 import platform
 import xml.etree.ElementTree as ET
+from datetime import datetime
 import aiohttp
 import discord
 from discord.ext import commands
@@ -129,29 +130,30 @@ class utility():
         '''
 
         if member.top_role.is_everyone:
-            topRole = 'everyone aka None' #to prevent @everyone spam
+            topRole = 'everyone' #to prevent @everyone spam
             topRoleColour = '#000000'
         else:
             topRole = member.top_role
             topRoleColour = member.top_role.colour
 
         if member is not None:
-            msg = '**:information_source:** Informationen über %s:\n' % member
-            msg += '```General              : %s\n' % member
-            msg += 'Name                 : %s\n' % member.name
-            msg += 'Server Nickname      : %s\n' % member.display_name
-            msg += 'Discriminator        : %s\n' % member.discriminator
-            msg += 'ID                   : %s\n' % member.id
-            msg += 'Bot Account?         : %s\n' % member.bot
-            msg += 'Avatar               : %s\n' % member.avatar_url
-            msg += 'Erstellt am          : %s\n' % member.created_at
-            msg += 'Server beigetreten am: %s\n' % member.joined_at
-            msg += 'Rollenfarbe          : %s (%s)\n' % (topRoleColour, topRole)
-            msg += 'Status               : %s\n' % member.status
-            msg += 'Rollen               : %s```' % self._getRoles(member.roles)
+            embed = discord.Embed(color=0x3498db) #blue
+            embed.set_footer(text='UserID: {}'.format(member.id))
+            embed.set_thumbnail(url=member.avatar_url)
+            if member.name != member.display_name:
+                fullName = '{} ({})'.format(member, member.display_name)
+            else:
+                fullName = member
+            embed.add_field(name=member.name, value=fullName, inline=False)
+            embed.add_field(name='Discord beigetreten am', value='{}\n(Tage seitdem: {})'.format(member.created_at.strftime('%d.%m.%Y'), (datetime.now()-member.created_at).days), inline=True)
+            embed.add_field(name='Server beigetreten am', value='{}\n(Tage seitdem: {})'.format(member.joined_at.strftime('%d.%m.%Y'), (datetime.now()-member.joined_at).days), inline=True)
+            embed.add_field(name='Avatar Link', value=member.avatar_url, inline=False)
+            embed.add_field(name='Rollen', value=self._getRoles(member.roles), inline=True)
+            embed.add_field(name='Rollenfarbe', value='{} ({})'.format(topRoleColour, topRole), inline=True)
+            await self.bot.say('', embed=embed)
         else:
             msg = '**:no_entry:** Du hast keinen Benutzer angegeben!'
-        await self.bot.say(msg)
+            await self.bot.say(msg)
 
     @commands.command(aliases=['epvp'])
     async def epvpis(self, user: str):
@@ -171,7 +173,7 @@ class utility():
             if r.status == 200:
                 root = ET.fromstring(await r.text())
                 if len(root) > 0:
-                    embed = discord.Embed(color=0xf1c40f)
+                    embed = discord.Embed(color=0xf1c40f) #golden
                     embed.set_footer(text='Es können maximal 15 Accounts gefunden werden')
                     embed.set_thumbnail(url='https://abload.de/img/epvp_shield_hiresyskb3.png')
                     msg = ':ok: Ich konnte {} Accounts finden!'.format(len(root))

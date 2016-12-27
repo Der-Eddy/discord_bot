@@ -100,7 +100,7 @@ Weitere Tipps folgen
 Full list of requirements
 -------------
 
-    discord.py==0.15.1
+    discord.py==0.16.0
     aiohttp
     websockets
     chardet

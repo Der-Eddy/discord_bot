@@ -21,7 +21,7 @@ class fun():
         '''Weil Java != Javscript'''
         await self.bot.say(':interrobang: Meintest du jQuery, Javascript oder Node.js? https://abload.de/img/2016-05-102130191kzpu.png')
 
-    @commands.command(aliases=['c++', 'c', 'c#', 'objective-c'])
+    @commands.command(aliases=['c++', 'c#', 'objective-c'])
     async def csharp(self):
         '''Wie soll man da überhaupt durchblicken???'''
         await self.bot.say(':interrobang: Meintest du C, C++, C# oder Objective-C? https://i.imgur.com/Nd4aAXO.png')
