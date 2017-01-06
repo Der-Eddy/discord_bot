@@ -137,7 +137,7 @@ class utility():
             topRoleColour = member.top_role.colour
 
         if member is not None:
-            embed = discord.Embed(color=0x3498db) #blue
+            embed = discord.Embed(color=member.top_role.colour) #blue
             embed.set_footer(text='UserID: {}'.format(member.id))
             embed.set_thumbnail(url=member.avatar_url)
             if member.name != member.display_name:
