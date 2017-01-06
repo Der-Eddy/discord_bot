@@ -1,6 +1,7 @@
 import sys
 import discord
 from discord.ext import commands
+from memory_profiler import profile, memory_usage
 import loadconfig
 import checks
 
@@ -85,8 +86,12 @@ class admin():
         #embed.add_field(name='erster', value='content something', inline=True)
         #embed.add_field(name='zweiter', value='https://www.elitepvpers.com/forum/member.php?u=6994157', inline=False)
         #await self.bot.say(embed=embed)
-        bReturn = self.bot.gamesLoop.cancel()
-        await self.bot.say(bReturn)
+
+        #bReturn = self.bot.gamesLoop.cancel()
+        #await self.bot.say(bReturn)
+
+        mem_usage = memory_usage(-1)
+        await self.bot.say(mem_usage)
 
 def setup(bot):
     bot.add_cog(admin(bot))

@@ -3,3 +3,4 @@ aiohttp
 websockets
 chardet
 pytz
+memory_profiler

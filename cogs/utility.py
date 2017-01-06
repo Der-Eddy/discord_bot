@@ -6,6 +6,7 @@ from datetime import datetime
 import aiohttp
 import discord
 from discord.ext import commands
+from memory_profiler import memory_usage
 import loadconfig
 import checks
 
@@ -61,7 +62,8 @@ class utility():
         embed.add_field(name='Bot Version', value=self.bot.botVersion, inline=True)
         embed.add_field(name='Discord.py Version', value=discord.__version__, inline=True)
         embed.add_field(name='Python Version', value=platform.python_version(), inline=True)
-        embed.add_field(name='Betriebssystem', value='{} {}'.format(platform.system(), platform.version()), inline=True)
+        embed.add_field(name='Speicher Auslastung', value='{} MB'.format(round(memory_usage(-1)[0], 3)), inline=True)
+        embed.add_field(name='Betriebssystem', value='{} {} {}'.format(platform.system(), platform.release(), platform.version()), inline=False)
         await self.bot.say('', embed=embed)
 
     @commands.command(pass_context=True, aliases=['p'])
