@@ -64,7 +64,7 @@ class utility():
         embed.add_field(name='Python Version', value=platform.python_version(), inline=True)
         embed.add_field(name='Speicher Auslastung', value='{} MB'.format(round(memory_usage(-1)[0], 3)), inline=True)
         embed.add_field(name='Betriebssystem', value='{} {} {}'.format(platform.system(), platform.release(), platform.version()), inline=False)
-        await self.bot.say('', embed=embed)
+        await self.bot.say('**:information_source:** Informationen über diesen Bot:', embed=embed)
 
     @commands.command(pass_context=True, aliases=['p'])
     async def ping(self, ctx):
