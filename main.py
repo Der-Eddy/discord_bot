@@ -11,7 +11,7 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '0.10.8'
+__version__ = '0.10.9'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -45,7 +45,7 @@ async def on_ready():
     bot.commands_used = Counter()
     bot.startTime = time.time()
     bot.botVersion = __version__
-    asyncio.ensure_future(_randomGame())
+    bot.gamesLoop = asyncio.ensure_future(_randomGame())
 
 @bot.event
 async def on_command(command, ctx):

@@ -1,3 +1,4 @@
+import sys
 import discord
 from discord.ext import commands
 import loadconfig
@@ -8,6 +9,15 @@ class admin():
 
     def __init__(self, bot):
         self.bot = bot
+
+    @commands.command(pass_context=True, aliases=['quit'])
+    @checks.is_bot_owner()
+    async def shutdown(self, ctx):
+        '''Schaltet mich ab :( (BOT OWNER ONLY)'''
+        await self.bot.say('**:ok:** Bye!')
+        #self.bot.gamesLoop.cancel()
+        self.bot.logout()
+        sys.exit(0)
 
     @commands.command(pass_context=True, hidden=True)
     @checks.is_bot_owner()
@@ -71,10 +81,12 @@ class admin():
     @checks.is_bot_owner()
     async def test(self):
         '''Test Test Test'''
-        embed = discord.Embed(title='Test Title', type='rich', color=0xe74c3c, image='https://abload.de/img/epvp_shield_hiresrlkzk.png', thumbnail='https://abload.de/img/epvp_shield_hiresrlkzk.png')
-        embed.add_field(name='erster', value='content something', inline=True)
-        embed.add_field(name='zweiter', value='https://www.elitepvpers.com/forum/member.php?u=6994157', inline=False)
-        await self.bot.say(embed=embed)
+        #embed = discord.Embed(title='Test Title', type='rich', color=0xe74c3c, image='https://abload.de/img/epvp_shield_hiresrlkzk.png', thumbnail='https://abload.de/img/epvp_shield_hiresrlkzk.png')
+        #embed.add_field(name='erster', value='content something', inline=True)
+        #embed.add_field(name='zweiter', value='https://www.elitepvpers.com/forum/member.php?u=6994157', inline=False)
+        #await self.bot.say(embed=embed)
+        bReturn = self.bot.gamesLoop.cancel()
+        await self.bot.say(bReturn)
 
 def setup(bot):
     bot.add_cog(admin(bot))

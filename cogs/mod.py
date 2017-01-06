@@ -1,4 +1,3 @@
-import sys
 import datetime
 import asyncio
 import aiohttp
@@ -16,14 +15,6 @@ class mod():
 
     def _currenttime(self):
         return datetime.datetime.now(timezone('Europe/Berlin')).strftime("%H:%M:%S")
-
-    @commands.command(pass_context=True, aliases=['quit'])
-    @checks.is_bot_owner()
-    async def shutdown(self, ctx):
-        '''Schaltet mich ab :( (BOT OWNER ONLY)'''
-        await self.bot.say('**:ok:** Bye!')
-        self.bot.logout()
-        sys.exit(0)
 
     @commands.command(pass_context=True, aliases=['prune'])
     @checks.has_permissions('ban_members') # Security Reasons

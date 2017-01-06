@@ -26,8 +26,8 @@ class utility():
         else:
             return string[:-2]
 
-    @commands.command(aliases=['s', 'uptime', 'up'])
-    async def status(self):
+    @commands.command(pass_context=True, aliases=['s', 'uptime', 'up'])
+    async def status(self, ctx):
         '''Infos über den Bot'''
         timeUp = time.time() - self.bot.startTime
         hours = timeUp / 3600
@@ -37,23 +37,32 @@ class utility():
         admin = ''
         users = 0
         channel = 0
+        try:
+            commandsChart = sorted(self.bot.commands_used.items(), key=lambda t: t[1], reverse=False)
+            topCommand = commandsChart.pop()
+            commandsInfo = '{} (Top-Command: {} x {})'.format(sum(self.bot.commands_used.values()), topCommand[1], topCommand[0])
+        except IndexError:
+            commandsInfo = str(sum(self.bot.commands_used.values()))
+        botMember = ctx.message.server.get_member(self.bot.user.id)
         for s in self.bot.servers:
             users += len(s.members)
             channel += len(s.channels)
             if not admin: admin = s.get_member(loadconfig.__adminid__)
 
-        msg = '**:information_source:** Informationen über diesen Bot:\n'
-        msg += '```Admin                : @%s\n' % admin
-        msg += 'Uptime               : {0:.0f} Stunden, {1:.0f} Minuten und {2:.0f} Sekunden\n'.format(hours, minutes, seconds)
-        msg += 'Benutzer / Server    : %s in %s Server\n' % (users, len(self.bot.servers))
-        msg += 'Beobachtete Channel  : %s Channel\n' % channel
-        msg += 'Beobachtete Messages : %s Messages\n' % len(self.bot.messages)
-        msg += 'Ausgeführte Commands : %s Commands\n' % sum(self.bot.commands_used.values())
-        msg += 'Bot Version          : %s\n' % self.bot.botVersion
-        msg += 'Discord.py Version   : %s\n' % discord.__version__
-        msg += 'Python Version       : %s\n' % platform.python_version()
-        msg += 'GitHub               : https://github.com/Der-Eddy/discord_bot```'
-        await self.bot.say(msg)
+        embed = discord.Embed(color=botMember.top_role.colour)
+        embed.set_footer(text='Dieser Bot ist Open-Source auf GitHub: https://github.com/Der-Eddy/discord_bot')
+        embed.set_thumbnail(url=self.bot.user.avatar_url)
+        embed.add_field(name='Admin', value=admin, inline=False)
+        embed.add_field(name='Uptime', value='{0:.0f} Stunden, {1:.0f} Minuten und {2:.0f} Sekunden\n'.format(hours, minutes, seconds), inline=False)
+        embed.add_field(name='Beobachtete Benutzer', value=users, inline=True)
+        embed.add_field(name='Beobachtete Server', value=len(self.bot.servers), inline=True)
+        embed.add_field(name='Beobachtete Channel', value=channel, inline=True)
+        embed.add_field(name='Ausgeführte Commands', value=commandsInfo, inline=True)
+        embed.add_field(name='Bot Version', value=self.bot.botVersion, inline=True)
+        embed.add_field(name='Discord.py Version', value=discord.__version__, inline=True)
+        embed.add_field(name='Python Version', value=platform.python_version(), inline=True)
+        embed.add_field(name='Betriebssystem', value='{} {}'.format(platform.system(), platform.version()), inline=True)
+        await self.bot.say('', embed=embed)
 
     @commands.command(pass_context=True, aliases=['p'])
     async def ping(self, ctx):
@@ -137,7 +146,7 @@ class utility():
             topRoleColour = member.top_role.colour
 
         if member is not None:
-            embed = discord.Embed(color=member.top_role.colour) #blue
+            embed = discord.Embed(color=member.top_role.colour)
             embed.set_footer(text='UserID: {}'.format(member.id))
             embed.set_thumbnail(url=member.avatar_url)
             if member.name != member.display_name:
