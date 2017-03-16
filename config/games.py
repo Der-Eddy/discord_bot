@@ -14,6 +14,6 @@ __games__ = [
     'with async',
     'with Karen-chan',
     'with Rara-chan',
-    'Dota 3'
+    'NieR:Automata'
 ]
-__gamesTimer__ = 10 * 60 #10 minutes
+__gamesTimer__ = 2 * 60 #2 minutes

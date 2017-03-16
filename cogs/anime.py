@@ -1,5 +1,6 @@
 import sys
 import random
+import re
 import asyncio
 import aiohttp
 import discord
@@ -128,6 +129,18 @@ class anime():
     async def imgur(self, ctx, amount: int = None):
         '''Lädt eine bestimmte Anzahl der letzten hochgeladenen Bilder im Channel bei Imgur hoch'''
         await self.bot.say(':new: Befehl in Arbeit!')
+
+    @commands.command(pass_context=True, alias=['ani'])
+    async def anisearch(self, ctx, url: str = None):
+        '''Gibt Informationen über einen AniSearch.de User zurück'''
+        async with aiohttp.get(url) as r:
+            if r.status == 200:
+                content = await r.text()
+                animeRE = r"<td class=\"rtype2\">\w+</td><td>(\d+)</td>"
+                watchedAnimes = re.search(content, animeRE)
+                await self.bot.say(str(watchedAnimes.group(0)))
+            else:
+                await self.bot.say(':x: Konnte den Benutzer nicht finden (falsche URL?)')
 
 def setup(bot):
     bot.add_cog(anime(bot))

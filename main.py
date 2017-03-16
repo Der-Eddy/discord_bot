@@ -11,7 +11,7 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '0.10.10'
+__version__ = '0.10.11'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -23,12 +23,14 @@ description = '''Der-Eddys deutscher Discord Bot, programmiert mit Discord.py'''
 bot = commands.Bot(command_prefix=loadconfig.__prefix__, description=description)
 
 def _currenttime():
-    return datetime.datetime.now(timezone('Europe/Berlin')).strftime("%H:%M:%S")
+    return datetime.datetime.now(timezone('Europe/Berlin')).strftime('%H:%M:%S')
 
 async def _randomGame():
     #Check games.py to change the list of "games" to be played
     while True:
-        await bot.change_presence(game=discord.Game(name=random.choice(loadconfig.__games__)))
+        randomGame = random.choice(loadconfig.__games__)
+        logging.info('Changing name to {randomGame}')
+        await bot.change_presence(game=discord.Game(name=randomGame))
         await asyncio.sleep(loadconfig.__gamesTimer__)
 
 @bot.event

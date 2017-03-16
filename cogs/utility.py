@@ -66,7 +66,7 @@ class utility():
         embed.add_field(name='Betriebssystem', value='{} {} {}'.format(platform.system(), platform.release(), platform.version()), inline=False)
         await self.bot.say('**:information_source:** Informationen über diesen Bot:', embed=embed)
 
-    @commands.command(pass_context=True, aliases=['p'])
+    @commands.command(pass_context=True)
     async def ping(self, ctx):
         '''Misst die Response Time'''
         ping = ctx.message
