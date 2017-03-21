@@ -116,13 +116,6 @@ class utility():
             await self.bot.send_file(ctx.message.channel, f, content=msg)
         os.remove(logFile)
 
-    @commands.command(pass_context=True)
-    async def echo(self, ctx, message: str):
-        '''Gibt ne Nachricht aus'''
-        msg = '**:mega:** {}'.format(message)
-        await self.bot.say(msg)
-        await self.bot.delete_message(ctx.message)
-
     @commands.command()
     async def invite(self):
         '''Verschickt einen Invite für den Server des Bot Autors'''
