@@ -105,9 +105,9 @@ class fun():
             await self.bot.say('**:arrows_counterclockwise:** Zufällige Zahl ({0} - {1}): {2}'.format(start, end, random.randint(start, end)))
 
     @commands.command(pass_context=True)
-    async def steinigt(self, ctx, *member:str):
+    async def steinigt(self, ctx, member:str):
         '''Monty Python'''
-        await self.bot.say(member + '\nhttps://media.giphy.com/media/l41lGAcThnMc29u2Q/giphy.gif')
+        await self.bot.say(f'R.I.P. {member}\nhttps://media.giphy.com/media/l41lGAcThnMc29u2Q/giphy.gif')
 
     @commands.command(pass_context=True)
     async def giphy(self, ctx, *searchterm: str):
