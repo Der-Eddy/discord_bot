@@ -31,13 +31,14 @@ class mod():
         except IndexError:
             limit = 1
         deleted = 0
-        while limit > 1:
+        while limit >= 1:
             cap = min(limit, 100)
             deleted += len(await self.bot.purge_from(ctx.message.channel, limit=cap, before=ctx.message))
             limit -= cap
         tmp = await self.bot.send_message(ctx.message.channel, '**:put_litter_in_its_place:** {0} Nachrichten gelöscht'.format(deleted))
         await asyncio.sleep(15)
         await self.bot.delete_message(tmp)
+        await self.bot.delete_message(ctx.message)
 
 
     @commands.command(pass_context=True)
