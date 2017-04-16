@@ -200,5 +200,28 @@ class fun():
         else:
             await self.bot.say('**:x:** Konnte keine Nachricht mit dieser ID finden!')
 
+    @commands.command(aliases=['witz'])
+    async def pun(self):
+        '''Weil jeder schlechte Witze mag'''
+        puns = ['Was sagt das eine Streichholz zum anderen Streichholz?\n Komm, lass uns durchbrennen',
+                'Wieviele Deutsche braucht man um eine Glühbirne zu wechseln?\n Einen, wir sind humorlos und effizient.',
+                'Wo wohnt die Katze?\n Im Miezhaus.',
+                'Wie begrüßen sich zwei plastische Chirurgen?\n "Was machst du denn heute für ein Gesicht?"',
+                'Warum essen Veganer kein Huhn?\n Könnte Ei enthalten',
+                '85% der Frauen finden ihren Arsch zu dick, 10% zu dünn, 5% finden ihn so ok, wie er ist und sind froh, dass sie ihn geheiratet haben...',
+                'Meine Freundin meint, ich wär neugierig...\n...zumindest\' steht das in ihrem Tagebuch.',
+                '"Schatz, Ich muss mein T-Shirt waschen! Welches Waschmaschinen Programm soll ich nehmen?" - "Was steht denn auf dem T-Shirt drauf?"\n "Slayer!"',
+                'Gestern erzählte ich meinem Freund, dass ich schon immer dieses Ding aus Harry Potter reiten wollte.\n"einen Besen?" "nein, Hermine."',
+                'Warum gehen Ameisen nicht in die Kirche?\nSie sind in Sekten.',
+                'Was steht auf dem Grabstein eines Mathematikers?\n"Damit hat er nicht gerechnet."',
+                'Wenn ein Yogalehrer seine Beine senkrecht nach oben streckt und dabei furzt, welche Yoga Figur stellt er da?\n Eine Duftkerze',
+                'Warum ging der Luftballon kaputt?\n Aus Platzgründen.',
+                'Ich wollte Spiderman anrufen, aber er hatte kein Netz.']
+        pun = random.choice(puns)
+        emojis = [':laughing:', ':smile:', ':joy:', ':sob:']
+        emoji = random.choice(emojis)
+        msg = f'{emoji} {pun}'
+        await self.bot.say(msg)
+
 def setup(bot):
     bot.add_cog(fun(bot))
