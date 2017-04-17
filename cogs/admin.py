@@ -51,7 +51,7 @@ class admin():
 
     @commands.command(pass_context=True, hidden=True)
     @checks.is_bot_owner()
-    async def server(self, ctx):
+    async def servers(self, ctx):
         '''Listet die aktuellen verbundenen Server auf (BOT OWNER ONLY)'''
         msg = '```js\n'
         msg += '{!s:19s} | {!s:>4s} | {} | {}\n'.format('ID', 'Member', 'Name', 'Owner')
@@ -89,18 +89,24 @@ class admin():
 
     @commands.command(pass_context=True, hidden=True)
     @checks.is_bot_owner()
-    async def test(self):
+    async def test(self, ctx):
         '''Test Test Test'''
-        #embed = discord.Embed(title='Test Title', type='rich', color=0xe74c3c, image='https://abload.de/img/epvp_shield_hiresrlkzk.png', thumbnail='https://abload.de/img/epvp_shield_hiresrlkzk.png')
-        #embed.add_field(name='erster', value='content something', inline=True)
-        #embed.add_field(name='zweiter', value='https://www.elitepvpers.com/forum/member.php?u=6994157', inline=False)
-        #await self.bot.say(embed=embed)
+
+        embed = discord.Embed(title=':white_check_mark: Server added', type='rich', color=0xe74c3c)
+        embed.set_thumbnail(url=ctx.message.server.icon_url)
+        embed.add_field(name='Name', value=ctx.message.server.name, inline=True)
+        embed.add_field(name='ID', value=ctx.message.server.id, inline=True)
+        embed.add_field(name='Besitzer', value=f'{ctx.message.server.owner} ({ctx.message.server.owner.id})', inline=True)
+        embed.add_field(name='Region', value=ctx.message.server.region, inline=True)
+        embed.add_field(name='Mitglieder', value=ctx.message.server.member_count, inline=True)
+        embed.add_field(name='Erstellt am', value=ctx.message.server.created_at, inline=True)
+        await self.bot.send_message(self.bot.owner, embed=embed)
 
         #bReturn = self.bot.gamesLoop.cancel()
         #await self.bot.say(bReturn)
 
-        mem_usage = memory_usage(-1)
-        await self.bot.say(mem_usage)
+        #mem_usage = memory_usage(-1)
+        #await self.bot.say(mem_usage)
 
 def setup(bot):
     bot.add_cog(admin(bot))

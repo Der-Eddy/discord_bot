@@ -200,7 +200,7 @@ class fun():
         else:
             await self.bot.say('**:x:** Konnte keine Nachricht mit dieser ID finden!')
 
-    @commands.command(aliases=['witz'])
+    @commands.command(aliases=['witz', 'joke'])
     async def pun(self):
         '''Weil jeder schlechte Witze mag'''
         puns = ['Was sagt das eine Streichholz zum anderen Streichholz?\n Komm, lass uns durchbrennen',

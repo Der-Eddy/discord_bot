@@ -130,7 +130,7 @@ class anime():
         '''Lädt eine bestimmte Anzahl der letzten hochgeladenen Bilder im Channel bei Imgur hoch'''
         await self.bot.say(':new: Befehl in Arbeit!')
 
-    @commands.command(pass_context=True, alias=['ani'])
+    @commands.command(pass_context=True, alias=['ani'], hidden=True)
     async def anisearch(self, ctx, url: str = None):
         '''Gibt Informationen über einen AniSearch.de User zurück'''
         async with aiohttp.get(url) as r:

@@ -210,6 +210,23 @@ class utility():
         else:
             await self.bot.say(':x: Konnte das angegebene Emoji leider nicht finden :(')
 
+    @commands.command(pass_context=True)
+    async def server(self, ctx):
+        '''Gibt Informationen über die derzeitge Discord Guild aus'''
+        embed = discord.Embed(color=0xf1c40f) #Golden
+        embed.set_thumbnail(url=ctx.message.server.icon_url)
+        embed.add_field(name='Name', value=ctx.message.server.name, inline=True)
+        embed.add_field(name='ID', value=ctx.message.server.id, inline=True)
+        embed.add_field(name='Besitzer', value=ctx.message.server.owner, inline=True)
+        embed.add_field(name='Region', value=ctx.message.server.region, inline=True)
+        embed.add_field(name='Mitglieder', value=ctx.message.server.member_count, inline=True)
+        embed.add_field(name='Erstellt am', value=ctx.message.server.created_at, inline=True)
+        embed.add_field(name='Standard Channel', value=f'#{ctx.message.server.default_channel}', inline=True)
+        #embed.add_field(name='Rollen', value=ctx.message.server.role_hierarchy, inline=True)
+        embed.add_field(name='AFK Voice Timeout', value=f'{ctx.message.server.afk_timeout / 60} min', inline=True)
+        #embed.add_field(name='Custom Emojis', value=ctx.message.server.emojis, inline=True)
+        await self.bot.say(embed=embed)
+
     # This command needs to be at the end due to this name
     @commands.command()
     async def commands(self):

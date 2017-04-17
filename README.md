@@ -2,21 +2,20 @@
 ![Slogan](https://i.imgur.com/vfEgGLU.png)
 =====================
 
-[![Python3](https://img.shields.io/badge/python-3.5-blue.svg)](https://github.com/Der-Eddy/discord_bot)
+[![Python3](https://img.shields.io/badge/python-3.6-blue.svg)](https://github.com/Der-Eddy/discord_bot)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/Der-Eddy/discord_bot/master/LICENSE)
 [![Trello Board](https://img.shields.io/badge/Management-Trello%20Board-blue.svg)](https://trello.com/b/Kh8nfuBE/discord-bot-shinobu-chan)
 [![Discord Server](https://img.shields.io/badge/Support-Discord%20Server-blue.svg)](https://discord.gg/kPMbPDc)
 
 This is mostly a german discord chat bot made with [discord.py](https://github.com/Rapptz/discord.py).  
+If you are looking for a python discord bot to host for yourself, you should rather take a look at [Red Bot](https://github.com/Twentysix26/Red-DiscordBot). Shinobu is only meant to be run on my own server.
 
 Features
 -------------
 - [x] Admin & Mod commands  
 - [x] Fun commands
 - [x] Useless anime commands
-- [x] Heroku Support
-- [x] Moderation/Server Log
-- [x] Message on GitHub Commit
+- [x] Moderation commands
 - [x] Reaction images (Giphy.com)
 - [x] Logging of channel messages into a file
 - [ ] Upload to Imgur
@@ -31,7 +30,7 @@ Eine Auflistung aller Befehle gibt es unter `:help` (Standardpräfix)
 
 Run & Requirements
 -------------
-Ihr benötigt mindestens Python 3.5 + [discord.py](https://github.com/Rapptz/discord.py) für diesen Bot und einen Discord Bot Account (siehe weiter unten).
+Ihr benötigt mindestens Python 3.6 + [discord.py](https://github.com/Rapptz/discord.py) für diesen Bot und einen Discord Bot Account (siehe weiter unten).
 Zusätzlich wird `pytz` aus [PyPI](https://pypi.python.org/pypi/pytz/2016.6.1) benötigt.
 
 Bot Accounts
@@ -50,7 +49,6 @@ Vor dem Start muss im Ordner `config` eine Datei namens `config.py` angelegt wer
     __botserverid__ = '102817255661772800' #Specifies the serverid from which the server-/modlog should be taken + some other nito features
     __adminid__ = 'YOUR USERID i.e. 102815825781596160'
     __kawaiichannel__ = '207909155556687872' #OPTIONAL specified a channel where the :kawaii commands gets this pinned messages
-    __botlogchannel__ = '165175306561388545' #Channel for the server-/modlog, should be probably a channel on the same server as __botserverid__
     __greetmsg__ = 'False' #HARDCODED Enable/Disable greetmsg at the entry channel of __botserverid__
     __selfassignrole__ = 'Blighttown' #OPTIONAL set to a role to be self assign-able
 
@@ -100,7 +98,7 @@ Weitere Tipps folgen
 Full list of requirements
 -------------
 
-    discord.py==0.16.0
+    discord.py==0.16.7
     aiohttp
     websockets
     chardet
