@@ -19,13 +19,23 @@ class utility():
     @staticmethod
     def _getRoles(roles):
         string = ''
-        for r in roles:
-            if not r.is_everyone:
-                string += '{}, '.format(r.name)
+        for role in roles:
+            if not role.is_everyone:
+                string += f'{role.mention}, '
         if string is '':
             return 'None'
         else:
             return string[:-2]
+
+    @staticmethod
+    def _getEmojis(emojis):
+        string = ''
+        for emoji in emojis:
+            string += str(emoji)
+        if string is '':
+            return 'None'
+        else:
+            return string[:1000] #The maximum allowed charcter amount for embed fields
 
     @commands.command(pass_context=True, aliases=['s', 'uptime', 'up'])
     async def status(self, ctx):
@@ -213,18 +223,22 @@ class utility():
     @commands.command(pass_context=True)
     async def server(self, ctx):
         '''Gibt Informationen über die derzeitge Discord Guild aus'''
+        emojis = self._getEmojis(ctx.message.server.emojis)
+        print(emojis)
+        roles = self._getRoles(ctx.message.server.role_hierarchy)
         embed = discord.Embed(color=0xf1c40f) #Golden
         embed.set_thumbnail(url=ctx.message.server.icon_url)
+        embed.set_footer(text='Es können evtl. Emojis fehlen')
         embed.add_field(name='Name', value=ctx.message.server.name, inline=True)
         embed.add_field(name='ID', value=ctx.message.server.id, inline=True)
         embed.add_field(name='Besitzer', value=ctx.message.server.owner, inline=True)
         embed.add_field(name='Region', value=ctx.message.server.region, inline=True)
         embed.add_field(name='Mitglieder', value=ctx.message.server.member_count, inline=True)
-        embed.add_field(name='Erstellt am', value=ctx.message.server.created_at, inline=True)
+        embed.add_field(name='Erstellt am', value=ctx.message.server.created_at.strftime('%d.%m.%Y'), inline=True)
         embed.add_field(name='Standard Channel', value=f'#{ctx.message.server.default_channel}', inline=True)
-        #embed.add_field(name='Rollen', value=ctx.message.server.role_hierarchy, inline=True)
-        embed.add_field(name='AFK Voice Timeout', value=f'{ctx.message.server.afk_timeout / 60} min', inline=True)
-        #embed.add_field(name='Custom Emojis', value=ctx.message.server.emojis, inline=True)
+        embed.add_field(name='AFK Voice Timeout', value=f'{int(ctx.message.server.afk_timeout / 60)} min', inline=True)
+        embed.add_field(name='Rollen', value=roles, inline=True)
+        embed.add_field(name='Custom Emojis', value=emojis, inline=True)
         await self.bot.say(embed=embed)
 
     # This command needs to be at the end due to this name
