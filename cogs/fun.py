@@ -218,7 +218,7 @@ class fun():
                 'Warum ging der Luftballon kaputt?\n Aus Platzgründen.',
                 'Ich wollte Spiderman anrufen, aber er hatte kein Netz.']
         pun = random.choice(puns)
-        emojis = [':laughing:', ':smile:', ':joy:', ':sob:']
+        emojis = [':laughing:', ':smile:', ':joy:', ':sob:', ':rofl:']
         emoji = random.choice(emojis)
         msg = f'{emoji} {pun}'
         await self.bot.say(msg)

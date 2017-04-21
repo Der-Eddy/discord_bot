@@ -95,8 +95,9 @@ class admin():
         #bReturn = self.bot.gamesLoop.cancel()
         #await self.bot.say(bReturn)
 
-        mem_usage = memory_usage(-1)
-        await self.bot.say(mem_usage)
+        #mem_usage = memory_usage(-1)
+        #await self.bot.say(mem_usage)
+        await self.bot.say('<:faeSad:298772756127023104>')
 
 def setup(bot):
     bot.add_cog(admin(bot))

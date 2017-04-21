@@ -11,11 +11,11 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '0.11.1'
+__version__ = '0.11.2'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
-handler = RotatingFileHandler(filename='discordbot.log', maxBytes=1024*5, backupCount=4, encoding='utf-8', mode='w')
+handler = RotatingFileHandler(filename='discordbot.log', maxBytes=1024*5, backupCount=2, encoding='utf-8', mode='w')
 handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
 
@@ -85,7 +85,7 @@ async def on_member_remove(member):
     if member.server.id == loadconfig.__botserverid__:
         memberExtra = '{0} - *{1} ({2})*'.format(member.mention, member, member.id)
         if loadconfig.__greetmsg__ == 'True':
-            await bot.send_message(member.server.default_channel, f':sad: {member.mention} verließ unseren Server')
+            await bot.send_message(member.server.default_channel, f'<:faeSad:298772756127023104> {member.mention} verließ unseren Server')
 
 @bot.event
 async def on_server_join(server):
