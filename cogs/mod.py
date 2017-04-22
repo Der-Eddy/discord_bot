@@ -41,7 +41,7 @@ class mod():
         await self.bot.delete_message(ctx.message)
 
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, hidden=True)
     @checks.is_administrator()
     async def nickname(self, ctx, *name):
         '''Ändert den Server Nickname vom Bot (ADMIN ONLY)'''
@@ -53,7 +53,7 @@ class mod():
             msg = ':ok: Reset von meinem Server Nickname auf: **{0}**'.format(self.bot.user.name)
         await self.bot.say(msg)
 
-    @commands.command(pass_context=True, aliases=['k'])
+    @commands.command(pass_context=True, hidden=True)
     @checks.has_permissions('kick_members')
     async def kick(self, ctx, member: discord.Member=None, *reason):
         '''Kickt ein Mitglied mit einer Begründung (MOD ONLY)
@@ -76,7 +76,7 @@ class mod():
             await asyncio.sleep(15)
             await self.bot.delete_message(tmp)
 
-    @commands.command(pass_context=True, aliases=['b'])
+    @commands.command(pass_context=True, hidden=True)
     @checks.has_permissions('ban_members')
     async def ban(self, ctx, member: discord.Member=None, *reason):
         '''Bannt ein Mitglied mit einer Begründung (MOD ONLY)
@@ -99,7 +99,7 @@ class mod():
             await asyncio.sleep(15)
             await self.bot.delete_message(tmp)
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, hidden=True)
     @checks.has_permissions('ban_members')
     async def unban(self, ctx, user: int=None, *reason):
         '''Entbannt ein Mitglied mit einer Begründung (MOD ONLY)
@@ -124,7 +124,7 @@ class mod():
             await asyncio.sleep(15)
             await self.bot.delete_message(tmp)
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, hidden=True)
     @checks.has_permissions('kick_members')
     async def bans(self, ctx):
         '''Listet aktuell gebannte User auf (MOD ONLY)'''
@@ -137,7 +137,7 @@ class mod():
         else:
             await self.bot.say('**:negative_squared_cross_mark:** Es gibt keine gebannten Nutzer!')
 
-    @commands.command(pass_context=True, alias=['clearreactions'])
+    @commands.command(pass_context=True, alias=['clearreactions'], hidden=True)
     @checks.has_permissions('manage_messages')
     async def removereactions(self, ctx, messageid : str):
         '''Entfernt alle Emoji Reactions von einer Nachricht (MOD ONLY)
