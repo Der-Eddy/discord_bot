@@ -3,6 +3,7 @@ import os
 import platform
 import re
 import asyncio
+import inspect
 import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta
 import aiohttp
@@ -311,7 +312,15 @@ class utility():
     #Shameful copied from https://github.com/Rapptz/RoboDanny/blob/b513a32dfbd4fdbd910f7f56d88d1d012ab44826/cogs/meta.py
     @commands.command(pass_context=True, aliases=['reminder'])
     async def timer(self, ctx, time : TimeParser, *, message=''):
-        '''Setzt einen Timer und benachrichtigt dann einen'''
+        '''Setzt einen Timer und benachrichtigt dann einen
+
+        Beispiel:
+        -----------
+
+        :timer 13m Pizza
+
+        :timer 2h Stream startet
+        '''
         author = ctx.message.author
         reminder = None
         completed = None
@@ -334,6 +343,39 @@ class utility():
     async def timer_error(self, error, ctx):
         if isinstance(error, commands.BadArgument):
             await self.bot.say(str(error))
+
+    #Stolen from https://github.com/Rapptz/RoboDanny/blob/b513a32dfbd4fdbd910f7f56d88d1d012ab44826/cogs/meta.py
+    @commands.command()
+    async def source(self, *, command: str = None):
+        '''Zeigt den Quellcode für einen Befehl auf GitHub an
+
+        Beispiel:
+        -----------
+
+        :source kawaii
+        '''
+        source_url = 'https://github.com/Der-Eddy/discord_bot'
+        if command is None:
+            await self.bot.say(source_url)
+            return
+
+        obj = self.bot.get_command(command.replace('.', ' '))
+        if obj is None:
+            return await self.bot.say(':x: Konnte den Befehl nicht finden')
+
+        # since we found the command we're looking for, presumably anyway, let's
+        # try to access the code itself
+        src = obj.callback.__code__
+        lines, firstlineno = inspect.getsourcelines(src)
+        if not obj.callback.__module__.startswith('discord'):
+            # not a built-in command
+            location = os.path.relpath(src.co_filename).replace('\\', '/')
+        else:
+            location = obj.callback.__module__.replace('.', '/') + '.py'
+            source_url = 'https://github.com/Rapptz/discord.py'
+
+        final_url = '<{}/blob/master/{}#L{}-L{}>\n```Python\n{}```'.format(source_url, location, firstlineno, firstlineno + len(lines) - 1, inspect.getsource(src))
+        await self.bot.say(final_url)
 
     # This command needs to be at the end due to this name
     @commands.command()
