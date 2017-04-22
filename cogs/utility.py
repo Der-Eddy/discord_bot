@@ -367,6 +367,7 @@ class utility():
         # try to access the code itself
         src = obj.callback.__code__
         lines, firstlineno = inspect.getsourcelines(src)
+        sourcecode = inspect.getsource(src).replace('```', '')
         if not obj.callback.__module__.startswith('discord'):
             # not a built-in command
             location = os.path.relpath(src.co_filename).replace('\\', '/')
@@ -374,7 +375,7 @@ class utility():
             location = obj.callback.__module__.replace('.', '/') + '.py'
             source_url = 'https://github.com/Rapptz/discord.py'
 
-        final_url = '<{}/blob/master/{}#L{}-L{}>\n```Python\n{}```'.format(source_url, location, firstlineno, firstlineno + len(lines) - 1, inspect.getsource(src))
+        final_url = '<{}/blob/master/{}#L{}-L{}>\n```Python\n{}```'.format(source_url, location, firstlineno, firstlineno + len(lines) - 1, sourcecode)
         await self.bot.say(final_url)
 
     # This command needs to be at the end due to this name
