@@ -36,10 +36,10 @@ class admin():
 
     @commands.command(pass_context=True, hidden=True)
     @checks.is_bot_owner()
-    async def game(self, ctx, gameName: str):
+    async def game(self, ctx, *, gameName: str):
         '''Ändert das derzeit spielende Spiel (BOT OWNER ONLY)'''
         await self.bot.change_presence(game=discord.Game(name=gameName))
-        await self.bot.say('**:ok:** Ändere das Spiel zu: Playing **{0}**'.format(gameName))
+        await self.bot.say(f'**:ok:** Ändere das Spiel zu: Playing **{gameName}**')
 
     @commands.command(pass_context=True, hidden=True)
     @checks.is_bot_owner()
