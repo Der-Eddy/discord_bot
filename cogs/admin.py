@@ -11,7 +11,7 @@ class admin():
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(pass_context=True, aliases=['quit'])
+    @commands.command(pass_context=True, aliases=['quit'], hidden=True)
     @checks.is_bot_owner()
     async def shutdown(self, ctx):
         '''Schaltet mich ab :( (BOT OWNER ONLY)'''
@@ -78,7 +78,7 @@ class admin():
             msg = ':x: Konnte keinen passenden Server zu dieser ID finden!'
         await self.bot.say(msg)
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, hidden=True)
     @checks.is_bot_owner()
     async def echo(self, ctx, channel: str, *message: str):
         '''Gibt eine Nachricht als Bot auf einem bestimmten Channel aus (BOT OWNER ONLY)'''

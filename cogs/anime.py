@@ -37,7 +37,7 @@ class anime():
         else:
             await self.bot.say('**:no_entry:** Es wurde kein Channel für den Bot eingestellt! Wende dich bitte an den Bot Admin')
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, hidden=True)
     async def nsfw(self, ctx):
         '''Vergibt die Rolle um auf die NSFW Channel zugreifen zu können'''
         if ctx.message.server == self.bot.get_server(loadconfig.__botserverid__):

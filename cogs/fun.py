@@ -109,7 +109,7 @@ class fun():
         '''Monty Python'''
         await self.bot.say(f'R.I.P. {member}\nhttps://media.giphy.com/media/l41lGAcThnMc29u2Q/giphy.gif')
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, hidden=True)
     async def giphy(self, ctx, *searchterm: str):
         '''Listet reaction Bilder von giphy.com
         Erlaubt r-rating Bilder in Channel die 'nsfw' beinhalten

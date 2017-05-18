@@ -11,7 +11,7 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '0.11.6'
+__version__ = '0.11.7'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -68,8 +68,6 @@ async def on_message(message):
         await bot.add_reaction(message, '👀') # :eyes:
     if 'loli' in message.clean_content.lower():
         await bot.add_reaction(message, '🍭') # :lollipop:
-    if 'league of legends' in message.clean_content.lower():
-        await bot.add_reaction(message, '💩') # :poop:
     await bot.process_commands(message)
 
 @bot.event
