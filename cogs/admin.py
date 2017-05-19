@@ -89,6 +89,24 @@ class admin():
 
     @commands.command(pass_context=True, hidden=True)
     @checks.is_bot_owner()
+    async def discriminator(self, ctx, disc: str):
+        '''Gibt Benutzer mit dem jeweiljigen Discriminator zurück'''
+
+        discriminator = disc
+        memberList = ''
+
+        for server in self.bot.servers:
+            for member in server.members:
+                if member.discriminator == discriminator and member.discriminator not in memberList:
+                    memberList += f'{member}\n'
+
+        if memberList:
+            await self.bot.say(memberList)
+        else:
+            await self.bot.say(':x: Konnte niemanden finden')
+
+    @commands.command(pass_context=True, hidden=True)
+    @checks.is_bot_owner()
     async def test(self, ctx):
         '''Test Test Test'''
 
