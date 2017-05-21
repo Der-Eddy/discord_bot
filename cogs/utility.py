@@ -297,6 +297,9 @@ class utility():
         '''Gibt alle Emojis aus auf welche der Bot Zugriff hat'''
         msg = ''
         for emoji in self.bot.get_all_emojis():
+            if len(msg) + len(str(emoji)) > 1000:
+                await self.bot.say(msg)
+                msg = ''
             msg += str(emoji)
         await self.bot.say(msg)
 
