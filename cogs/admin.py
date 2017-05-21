@@ -22,6 +22,14 @@ class admin():
 
     @commands.command(pass_context=True, hidden=True)
     @checks.is_bot_owner()
+    async def restart(self, ctx):
+        '''Startet mich neu (BOT OWNER ONLY)'''
+        await self.bot.say('**:ok:** Bis gleich!')
+        self.bot.logout()
+        sys.exit(6)
+
+    @commands.command(pass_context=True, hidden=True)
+    @checks.is_bot_owner()
     async def avatar(self, ctx, url: str):
         '''Setzt einen neuen Avatar (BOT OWNER ONLY)'''
         tempAvaFile = 'tempAva.png'
