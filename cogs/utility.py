@@ -292,6 +292,14 @@ class utility():
         else:
             await self.bot.say(':x: Konnte das angegebene Emoji leider nicht finden :(')
 
+    @commands.command(aliases=['emotes'])
+    async def emojis(self):
+        '''Gibt alle Emojis aus auf welche der Bot Zugriff hat'''
+        msg = ''
+        for emoji in self.bot.get_all_emojis():
+            msg += str(emoji)
+        await self.bot.say(msg)
+
     @commands.command(pass_context=True)
     async def server(self, ctx):
         '''Gibt Informationen über die derzeitge Discord Guild aus'''
