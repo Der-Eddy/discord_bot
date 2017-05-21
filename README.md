@@ -4,7 +4,6 @@
 
 [![Python3](https://img.shields.io/badge/python-3.6-blue.svg)](https://github.com/Der-Eddy/discord_bot)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/Der-Eddy/discord_bot/master/LICENSE)
-[![Trello Board](https://img.shields.io/badge/Management-Trello%20Board-blue.svg)](https://trello.com/b/Kh8nfuBE/discord-bot-shinobu-chan)
 [![Discord Server](https://img.shields.io/badge/Support-Discord%20Server-blue.svg)](https://discord.gg/kPMbPDc)
 
 This is mostly a german discord chat bot made with [discord.py](https://github.com/Rapptz/discord.py).  
@@ -20,18 +19,39 @@ Features
 - [x] Logging of channel messages into a file
 - [ ] Upload to Imgur
 
-More Details can be found at our [Trello Board](https://trello.com/b/Kh8nfuBE/discord-bot-shinobu-chan)!
-
 
 Eine Auflistung aller Befehle gibt es unter `:help` (Standardpräfix)
 
 ![help command](https://i.imgur.com/ntYi4I2.png)
 
 
-Run & Requirements
+Requirements
 -------------
 Ihr benötigt mindestens Python 3.6 + [discord.py](https://github.com/Rapptz/discord.py) für diesen Bot und einen Discord Bot Account (siehe weiter unten).
 Zusätzlich wird `pytz` aus [PyPI](https://pypi.python.org/pypi/pytz/2016.6.1) benötigt.
+
+
+Run
+-------------
+Entweder ihr startet das Script direkt über `python3 main.py` oder erstellt eine systemd unit, ein Beispiel findet ihr unter `discord.service.example`:
+
+    [Unit]
+    Description=Shinobu Discord Bot
+    After=multi-user.target
+    [Service]
+    WorkingDirectory=/home/eddy/discord_bot
+    User=eddy
+    Group=eddy
+    ExecStart=/usr/bin/python3.6 /home/eddy/discord_bot/main.py
+    Type=idle
+    Restart=on-failure
+    RestartSec=15
+    TimeoutStartSec=15
+
+    [Install]
+    WantedBy=multi-user.target
+
+Nach `/etc/systemd/system/discord.service` kopieren und anpassen. Nicht vergessen die Unit zu starten via `sudo systemctl start discord.service` bzw. Autostart via `sudo systemctl enable discord.service`.
 
 Bot Accounts
 -------------

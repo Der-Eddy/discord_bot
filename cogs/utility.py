@@ -153,7 +153,12 @@ class utility():
         delta = int(delta.total_seconds() * 1000)
         await self.bot.edit_message(pong, '**:ping_pong:** Pong! (%d ms)' % delta)
 
-    @commands.command(pass_context=True, aliases=['info', 'github', 'trello'])
+    @commands.command()
+    async def github(self):
+        '''In progress'''
+        await self.bot.say('https://github.com/Der-Eddy/discord_bot')
+
+    @commands.command(pass_context=True, aliases=['info'])
     async def about(self, ctx):
         '''Info über mich'''
         msg = '**:information_source: Shinobu Oshino (500 Jahre alt)**\n'
@@ -161,7 +166,6 @@ class utility():
         msg += 'Seitdem lebt sie zusammen mit Meme in einem verlassenen Gebäude und wurde von ihm aufgenommen. Er gab ihr auch ihren Namen Shinobu. Wann immer man Shinobu sehen sollte, sitzt sie nur mit traurigem Gesicht in einer Ecke und träumt vor sich hin. Sie spricht nicht und wirkt auch sonst meistens sehr abwesend. Einzig und allein zu Koyomi scheint sie ein freundschaftliches Verhältnis zu haben. Das Vampirblut in ihr verlangt immer noch nach Opfern und da sich Koyomi in gewisser Art und Weise schuldig fühlt, stellt er sich regelmäßig als Nahrungsquelle für Shinobu zur Verfügung.\n\n'
         msg += 'Quelle: http://www.anisearch.de/character/6598,shinobu-oshino/```\n\n'
         msg += 'Dieser Bot ist außerdem **:free:**, Open-Source, in Python und mit Hilfe von discord.py geschrieben! <https://github.com/Der-Eddy/discord_bot>\n'
-        msg += 'Neueste Neuerungen immer zuerst auf unserem Trello Board! <https://trello.com/b/Kh8nfuBE/discord-bot-shinobu-chan>'
         with open('img/ava.png', 'rb') as f:
             await self.bot.send_file(ctx.message.channel, f, content=msg)
 
