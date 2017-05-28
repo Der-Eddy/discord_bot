@@ -1,5 +1,6 @@
 import sys
 import discord
+import aiohttp
 from discord.ext import commands
 from memory_profiler import profile, memory_usage
 import loadconfig

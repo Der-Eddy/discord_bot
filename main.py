@@ -4,14 +4,17 @@ import random
 import time
 import datetime
 import sys
+import os
+import hashlib
 import asyncio
+import aiohttp
 from collections import Counter
 from pytz import timezone
 import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '0.11.11'
+__version__ = '0.11.12'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -32,6 +35,42 @@ async def _randomGame():
         logging.info(f'Changing name to {randomGame}')
         await bot.change_presence(game=discord.Game(name=randomGame))
         await asyncio.sleep(loadconfig.__gamesTimer__)
+
+def _getHash(downloadedFile, hashAlgorithm=hashlib.sha256()):
+        blocksize = 65536
+        algo = hashAlgorithm
+        with open(downloadedFile, 'rb') as file:
+            buffer = file.read(blocksize)
+            while len(buffer) > 0:
+                algo.update(buffer)
+                buffer = file.read(blocksize)
+        return algo.hexdigest()
+
+async def _fileCheck(msg):
+    url = msg.attachments[0]['url']
+    allowedExtension = ['.exe', '.zip', '.rar']
+    if url[-4:] in allowedExtension:
+        name = os.path.basename(url)
+        downloadPath = 'tmp\\' + name
+        async with aiohttp.get(url) as download:
+            with open(downloadPath, 'wb') as f:
+                f.write(await download.read())
+        stats = os.stat(downloadPath)
+        size = stats.st_size
+        KBSize = round(size / 1024, 3)
+        MBSize = round(size / 1024 / 1024, 3)
+        MD5 = _getHash(downloadPath, hashlib.md5())
+        SHA1 = _getHash(downloadPath, hashlib.sha1())
+        SHA256 = _getHash(downloadPath, hashlib.sha256())
+        SHA512 = _getHash(downloadPath, hashlib.sha512())
+        msg = f'**Name:** {name}\n'
+        msg += f'**Size:** {MBSize} MB ({size} Bytes)\n'
+        msg += f'**MD5:** `{MD5}`\n'
+        msg += f'**SHA1:** `{SHA1}`\n'
+        msg += f'**SHA256:** `{SHA256}`\n'
+        msg += f'**SHA512:** `{SHA512}`\n'
+        os.remove(downloadPath)
+        return msg
 
 @bot.event
 async def on_ready():
@@ -68,6 +107,8 @@ async def on_message(message):
         await bot.add_reaction(message, '👀') # :eyes:
     if 'loli' in message.clean_content.lower():
         await bot.add_reaction(message, '🍭') # :lollipop:
+    if len(message.attachments) > 0:
+        await bot.send_message(message.channel, await _fileCheck(message))
     await bot.process_commands(message)
 
 @bot.event
