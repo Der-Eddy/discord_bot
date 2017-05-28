@@ -13,13 +13,13 @@ Commands List
 -------------
 **Info:** Diese Liste gilt für den Standardprefix `:`
 
-###Generic
+### Generic ###
 
 Command und Aliases | Beschreibung | Nutzung
 ----------------|--------------|-------
 `:help` | Zeigt eine Liste aller öffentlichen Commands | `:help`, `:help kawaii`
 
-###Utility
+### Utility ###
 
 Command und Aliases | Beschreibung | Nutzung
 ----------------|--------------|-------
@@ -38,7 +38,7 @@ Command und Aliases | Beschreibung | Nutzung
 `:source`| Zeigt den Quellcode für einen Befehl auf GitHub an | `:source kawaii`
 `:commands`| Zeigt an wie oft welcher Command benutzt wurde seit dem letzten Startup | `:commands`
 
-###Anime
+### Anime ###
 
 Command und Aliases | Beschreibung | Nutzung
 ----------------|--------------|-------
@@ -48,7 +48,7 @@ Command und Aliases | Beschreibung | Nutzung
 `:nep`, `:nepu`, `:topnep` | Can't stop the Nep | `:nep`
 `:pat` | /r/headpats Pat Pat Pat :3 | `:pat @Der-Eddy#6508`
 
-###Fun
+### Fun ###
 
 Command und Aliases | Beschreibung | Nutzung
 ----------------|--------------|-------
@@ -65,7 +65,7 @@ Command und Aliases | Beschreibung | Nutzung
 `:reaction`, `:r`, `:addreaction` | Fügt der letzten Nachricht ein Emoji als Reaction hinzu oder einer bestimmten Nachricht | `:reaction ok_hand`, `:reaction sunglasses 247386709505867776`
 `:pun`, `:witz`, `:joke` | Weil jeder schlechte Witze mag | `:pun`
 
-###Mod
+### Mod ###
 
 Command und Aliases | Beschreibung | Nutzung
 ----------------|--------------|-------
@@ -77,7 +77,7 @@ Command und Aliases | Beschreibung | Nutzung
 `:bans` | Listet aktuell gebannte User auf. **MOD ONLY** | `:bans`
 `:removereactions` | Entfernt alle Emoji Reactions von einer Nachricht. **MOD ONLY** | `:removereactions 247386709505867776`
 
-###Admin
+### Admin ###
 
 Command und Aliases | Beschreibung | Nutzung
 ----------------|--------------|-------
