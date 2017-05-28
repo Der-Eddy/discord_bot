@@ -1,6 +1,0 @@
-discord.py==0.16.7
-aiohttp
-websockets
-chardet
-pytz
-memory_profiler
