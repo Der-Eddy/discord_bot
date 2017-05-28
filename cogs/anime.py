@@ -107,7 +107,13 @@ class anime():
 
     @commands.command(pass_context=True)
     async def pat(self, ctx, member: discord.Member = None):
-        '''/r/headpats Pat Pat Pat :3'''
+        '''/r/headpats Pat Pat Pat :3
+
+        Beispiel:
+        -----------
+
+        :pat @Der-Eddy#6508
+        '''
         if member is not None:
             gifs = ['https://gfycat.com/PoisedWindingCaecilian',
                     'https://cdn.awwni.me/sou1.jpg',

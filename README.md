@@ -9,20 +9,89 @@
 This is mostly a german discord chat bot made with [discord.py](https://github.com/Rapptz/discord.py).  
 If you are looking for a python discord bot to host for yourself, you should rather take a look at [Red Bot](https://github.com/Twentysix26/Red-DiscordBot). Shinobu is only meant to be run on my own server.
 
-Features
+Commands List
 -------------
-- [x] Admin & Mod commands  
-- [x] Fun commands
-- [x] Useless anime commands
-- [x] Moderation commands
-- [x] Reaction images (Giphy.com)
-- [x] Logging of channel messages into a file
-- [ ] Upload to Imgur
+**Info:** Diese Liste gilt für den Standardprefix `:`
+
+###Generic
+
+Command und Aliases | Beschreibung | Nutzung
+----------------|--------------|-------
+`:help` | Zeigt eine Liste aller öffentlichen Commands | `:help`, `:help kawaii`
+
+###Utility
+
+Command und Aliases | Beschreibung | Nutzung
+----------------|--------------|-------
+`:status`, ':s', ':uptime', ':up' | Listet einige Informationen zum Bot aus | `:status`
+`:ping` | Misst die Response Time | `:ping`
+`:github` | Verlinkt zu diesem GitHub Repo | `:github`
+`:about`, `:info` | Informationen über Shinobu Oshino | `:about`
+`:log`, ':archive' | Archiviert den Log des derzeitigen Channels und läd diesen als Attachment hoch | `:log 10`
+`:invite` | Verschickt einen Invite für den Server des Bot Autors | `:invite`
+`:whois` | Gibt Informationen über einen Benutzer aus | `:whois @Der-Eddy#6508`
+`:epvpis`, `:epvp` | Sucht nach einem Benutzernamen auf Elitepvpers | `:epvpis Der-Eddy`
+`:emoji`, `:e` | Gibt eine vergrößerte Version eines angegebenen Emojis zurück | `:emoji Emilie`
+`:emojis`| Gibt alle Emojis aus auf welche der Bot Zugriff hat | `:emojis`
+`:server`, `:serverinfo`, ':guild' | Gibt Informationen über die derzeitge Discord Guild aus | `:server`
+`:timer`, `:reminder` | Setzt einen Timer und benachrichtigt dann einen | `:timer 13m Pizza`, `:timer 2h`
+`:source`| Zeigt den Quellcode für einen Befehl auf GitHub an | `:source kawaii`
+`:commands`| Zeigt an wie oft welcher Command benutzt wurde seit dem letzten Startup | `:commands`
+
+###Anime
+
+Command und Aliases | Beschreibung | Nutzung
+----------------|--------------|-------
+`:kawaii` | Gibt ein zufälliges kawaii Bild aus | `:kawaii`
+`:nsfw` | Vergibt die Rolle um auf die NSFW Channel zugreifen zu können. **Nur auf Eddys Server!** | `:nsfw`
+`:hello`, `:wave`, `:hi`, `:ohaiyo` | Nonsense gifs zum Hallo sagen | `:hello`
+`:nep`, `:nepu`, `:topnep` | Can't stop the Nep | `:nep`
+`:pat` | /r/headpats Pat Pat Pat :3 | `:pat @Der-Eddy#6508`
+
+###Fun
+
+Command und Aliases | Beschreibung | Nutzung
+----------------|--------------|-------
+`:java`, `:javascript`, `:nodejs`, `:js` | Weil Java != Javscript | `:java`
+`:csharp`, `:c++`, `:c#`, `:objective-c` | Wie soll man da überhaupt durchblicken??? | `:csharp`
+`:praise` | Praise the sun | `:praise`
+`:css` | Counter Strike: Source | `:css`
+`:countdown` | It's the final countdown | `:countdown`
+`:neko`, `:cat`, `:randomcat` | Zufällige Katzen Bilder nyan~ | `:neko`
+`:random`, `:rand` | Gibt eine zufällige Zahl oder Member aus | `:random`, `:random coin`, `:random 6`, `:random 10 20`, `:random user`
+`:steinigt` | Monty Python | `:steinigt @Ravenstorm#1191`
+`:hype`, `:hypu`, `:train` | HYPE TRAIN CHOO CHOO | `:hype`
+`:xkcd` | Zeigt den letzten oder zufääligen XKCD Comic | `:xkcd`, `:xkcd random`
+`:reaction`, `:r`, `:addreaction` | Fügt der letzten Nachricht ein Emoji als Reaction hinzu oder einer bestimmten Nachricht | `:reaction ok_hand`, `:reaction sunglasses 247386709505867776`
+`:pun`, `:witz`, `:joke` | Weil jeder schlechte Witze mag | `:pun`
+
+###Mod
+
+Command und Aliases | Beschreibung | Nutzung
+----------------|--------------|-------
+`:purge`, `:prune` | Löscht mehere Nachrichten auf einmal. **MOD ONLY** | `:purge 100`
+`:nickname` | Ändert den Server Nickname vom Bot. **ADMIN ONLY** | `:nickname Shinobu`
+`:kick` | Kickt ein Mitglied mit einer Begründung. **MOD ONLY** | `:kick @Der-Eddy#6508`, `:kick @Der-Eddy#6508 Spammt Werbung`
+`:ban` | Bannt ein Mitglied mit einer Begründung. **MOD ONLY** | `:ban @Der-Eddy#6508`, `:ban @Der-Eddy#6508 Spammt Werbung`
+`:unban` | Entbannt ein Mitglied mit einer Begründung. **MOD ONLY** | `:unban 102815825781596160`
+`:bans` | Listet aktuell gebannte User auf. **MOD ONLY** | `:bans`
+`:removereactions` | Entfernt alle Emoji Reactions von einer Nachricht. **MOD ONLY** | `:removereactions 247386709505867776`
+
+###Admin
+
+Command und Aliases | Beschreibung | Nutzung
+----------------|--------------|-------
+`:shutdown`, `:quit` | Schaltet den Bot aus. **BOT OWNER ONLY** | `:shutdown`
+`:restart` | Startet den Bot neu. **BOT OWNER ONLY** | `:restart`
+`:avatar` | Setzt einen neuen Avatar. **BOT OWNER ONLY** | `:avatar https://i.imgur.com/iJlPa3V.png`
+`:game` | Ändert das derzeit spielende Spiel. **BOT OWNER ONLY** | `:game Dark Souls`
+`:name` | Ändert den globalen Namen vom Bot. **BOT OWNER ONLY** | `:name Shinobu-chan`
+`:servers` | Listet die aktuellen verbundenen Server auf. **BOT OWNER ONLY** | `:servers`
+`:leaveserver` | Schaltet den Bot aus. **BOT OWNER ONLY** | `:leaveserver 102817255661772800`
+`:echo` | Gibt eine Nachricht als Bot auf einem bestimmten Channel aus. **BOT OWNER ONLY** | `:echo 102817255661772800 Ich bin ein Bot!`
+`:discriminator` | Gibt Benutzer mit dem jeweiljigen Discriminator zurück. **BOT OWNER ONLY** | `:discriminator 6508`
 
 
-Eine Auflistung aller Befehle gibt es unter `:help` (Standardpräfix)
-
-![help command](https://i.imgur.com/ntYi4I2.png)
 
 
 Requirements

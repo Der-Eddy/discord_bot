@@ -17,9 +17,9 @@ class mod():
         return datetime.datetime.now(timezone('Europe/Berlin')).strftime("%H:%M:%S")
 
     @commands.command(pass_context=True, aliases=['prune'], hidden=True)
-    @checks.has_permissions('ban_members') # Security Reasons
+    @checks.has_permissions('ban_members')
     async def purge(self, ctx, *limit):
-        '''Löscht mehere Nachrichten auf einmal (ADMIN ONLY)
+        '''Löscht mehere Nachrichten auf einmal (MOD ONLY)
 
         Beispiel:
         -----------

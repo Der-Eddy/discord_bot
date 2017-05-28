@@ -171,7 +171,7 @@ class utility():
 
     @commands.command(pass_context=True, aliases=['archive'])
     async def log(self, ctx, *limit: int):
-        '''Archiviert den Log des derzeitigen Channels und läd diesen auf gist hoch
+        '''Archiviert den Log des derzeitigen Channels und läd diesen als Attachment hoch
 
         Beispiel:
         -----------
@@ -303,7 +303,7 @@ class utility():
             msg += str(emoji)
         await self.bot.say(msg)
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, aliases=['serverinfo', 'guild'])
     async def server(self, ctx):
         '''Gibt Informationen über die derzeitge Discord Guild aus'''
         emojis = self._getEmojis(ctx.message.server.emojis)
