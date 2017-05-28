@@ -303,7 +303,7 @@ class utility():
             msg += str(emoji)
         await self.bot.say(msg)
 
-    @commands.command(pass_context=True, aliases=['serverinfo', 'guild'])
+    @commands.command(pass_context=True, aliases=['serverinfo', 'guild', 'membercount'])
     async def server(self, ctx):
         '''Gibt Informationen über die derzeitge Discord Guild aus'''
         emojis = self._getEmojis(ctx.message.server.emojis)

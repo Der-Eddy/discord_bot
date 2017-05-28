@@ -23,17 +23,17 @@ Command und Aliases | Beschreibung | Nutzung
 
 Command und Aliases | Beschreibung | Nutzung
 ----------------|--------------|-------
-`:status`, ':s', ':uptime', ':up' | Listet einige Informationen zum Bot aus | `:status`
+`:status`, `:s`, `:uptime`, `:up` | Listet einige Informationen zum Bot aus | `:status`
 `:ping` | Misst die Response Time | `:ping`
 `:github` | Verlinkt zu diesem GitHub Repo | `:github`
 `:about`, `:info` | Informationen über Shinobu Oshino | `:about`
-`:log`, ':archive' | Archiviert den Log des derzeitigen Channels und läd diesen als Attachment hoch | `:log 10`
+`:log`, `:archive` | Archiviert den Log des derzeitigen Channels und läd diesen als Attachment hoch | `:log 10`
 `:invite` | Verschickt einen Invite für den Server des Bot Autors | `:invite`
 `:whois` | Gibt Informationen über einen Benutzer aus | `:whois @Der-Eddy#6508`
 `:epvpis`, `:epvp` | Sucht nach einem Benutzernamen auf Elitepvpers | `:epvpis Der-Eddy`
 `:emoji`, `:e` | Gibt eine vergrößerte Version eines angegebenen Emojis zurück | `:emoji Emilie`
 `:emojis`| Gibt alle Emojis aus auf welche der Bot Zugriff hat | `:emojis`
-`:server`, `:serverinfo`, ':guild' | Gibt Informationen über die derzeitge Discord Guild aus | `:server`
+`:server`, `:serverinfo`, `:guild`, `:membercount` | Gibt Informationen über die derzeitge Discord Guild aus | `:server`
 `:timer`, `:reminder` | Setzt einen Timer und benachrichtigt dann einen | `:timer 13m Pizza`, `:timer 2h`
 `:source`| Zeigt den Quellcode für einen Befehl auf GitHub an | `:source kawaii`
 `:commands`| Zeigt an wie oft welcher Command benutzt wurde seit dem letzten Startup | `:commands`
