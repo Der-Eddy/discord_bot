@@ -271,6 +271,10 @@ class utility():
                     msg = ':no_entry: Ich konnte keine Epvp Accounts finden :sweat:'
                     await self.bot.say(msg)
 
+    @commands.command(aliases=['verify'])
+    async def epvpverify(self, user: str):
+        pass
+
     @commands.command(pass_context=True, aliases=['e'])
     async def emoji(self, ctx, emojiname: str):
         '''Gibt eine vergrößerte Version eines angegebenen Emojis zurück

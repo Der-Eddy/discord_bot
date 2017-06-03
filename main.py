@@ -14,7 +14,7 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '0.11.13'
+__version__ = '0.11.14'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -22,7 +22,8 @@ handler = RotatingFileHandler(filename='discordbot.log', maxBytes=1024*5, backup
 handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
 
-description = '''Der-Eddys deutscher Discord Bot, programmiert mit Discord.py\nEine volle Liste aller Commands gibts hier: https://github.com/Der-Eddy/discord_bot#commands-list'''
+description = '''Der-Eddys deutscher Discord Bot, programmiert mit Discord.py\n
+                 Eine volle Liste aller Commands gibts hier: https://github.com/Der-Eddy/discord_bot#commands-list'''
 bot = commands.Bot(command_prefix=loadconfig.__prefix__, description=description)
 
 def _currenttime():
@@ -103,7 +104,7 @@ async def on_command(command, ctx):
 async def on_message(message):
     if message.author.bot:
         return
-    if bot.user.mentioned_in(message):
+    if bot.user.mentioned_in(message) and message.mention_everyone is False:
         await bot.add_reaction(message, '👀') # :eyes:
     if 'loli' in message.clean_content.lower():
         await bot.add_reaction(message, '🍭') # :lollipop:
