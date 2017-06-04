@@ -105,6 +105,18 @@ class utility():
         else:
             return string[:1000] #The maximum allowed charcter amount for embed fields
 
+    @staticmethod
+    async def _getDiscordTag(username):
+        url = f'https://www.elitepvpers.com/forum/member.php?username={username}'
+        async with aiohttp.get(url, cookies=loadconfig.__cookieJar__) as r:
+            if r.status == 200:
+                content = await r.text()
+                #with open('debug.html', 'w', encoding='utf-8') as file_:
+                #    file_.write(content)
+                regex = r"<dt class=\"shade\">Discord<\/dt>\n<dd>(?P<username>.+)#(?P<discriminator>\d{4})<\/dd>"
+                match = re.search(regex, content)
+                return match.group(1) + '#' + match.group(2)
+
     @commands.command(pass_context=True, aliases=['s', 'uptime', 'up'])
     async def status(self, ctx):
         '''Infos über den Bot'''
@@ -271,9 +283,52 @@ class utility():
                     msg = ':no_entry: Ich konnte keine Epvp Accounts finden :sweat:'
                     await self.bot.say(msg)
 
-    @commands.command(aliases=['verify'])
-    async def epvpverify(self, user: str):
-        pass
+    @commands.command(pass_context=True, aliases=['verify'])
+    async def epvpverify(self, ctx, *user: str):
+        '''Verifying a discord user via elitepvpers
+
+        Beispiel:
+        -----------
+
+        :epvpverify
+
+        :epvpverify Der-Eddy
+        '''
+        #Eddys Server
+        if ctx.message.server.id == '102817255661772800':
+            verifyRole = 'Member'
+        #Coding Channel
+        elif ctx.message.server.id == '161637499939192832':
+            verifyRole = 'Verified Account'
+        else:
+            await self.bot.say('**:no_entry:** This command only works on some selected servers!')
+            return
+
+        if len(user) == 0:
+            username = ctx.message.author.name
+        else:
+            username = user[0]
+        tmp = await self.bot.say(f':ok: Trying to verify user **{username}**...')
+        await self.bot.send_typing(ctx.message.channel)
+
+        if str(ctx.message.author) == await self._getDiscordTag(username):
+            role = discord.utils.get(ctx.message.server.roles, name=verifyRole)
+            if role in ctx.message.author.roles:
+                try:
+                    await self.bot.remove_roles(ctx.message.author, role)
+                except:
+                    pass
+                await self.bot.edit_message(tmp, f':negative_squared_cross_mark: Role **{role}** removed')
+            else:
+                try:
+                    await self.bot.add_roles(ctx.message.author, role)
+                except:
+                    pass
+                await self.bot.edit_message(tmp, f':white_check_mark: User **{ctx.message.author.name}** successfully verified! Added to role **{role}**')
+        else:
+            await self.bot.edit_message(tmp, f':x: Could not verify user **{ctx.message.author.name}**' +
+                '\nDon\'t forget to add your Discord username + discriminator in your elitepvpers settings! ' +
+                '(<https://www.elitepvpers.com/forum/profile.php?do=editprofile>) \nhttps://i.imgur.com/4ckQsjX.png')
 
     @commands.command(pass_context=True, aliases=['e'])
     async def emoji(self, ctx, emojiname: str):
