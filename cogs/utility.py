@@ -115,7 +115,10 @@ class utility():
                 #    file_.write(content)
                 regex = r"<dt class=\"shade\">Discord<\/dt>\n<dd>(?P<username>.+)#(?P<discriminator>\d{4})<\/dd>"
                 match = re.search(regex, content)
-                return match.group(1) + '#' + match.group(2)
+                try:
+                    return match.group(1) + '#' + match.group(2)
+                except AttributeError:
+                    return ''
 
     @commands.command(pass_context=True, aliases=['s', 'uptime', 'up'])
     async def status(self, ctx):
