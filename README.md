@@ -19,6 +19,13 @@ Command und Aliases | Beschreibung | Nutzung
 ----------------|--------------|-------
 `:help` | Zeigt eine Liste aller öffentlichen Commands | `:help`, `:help kawaii`
 
+### Forum ###
+
+Command und Aliases | Beschreibung | Nutzung
+----------------|--------------|-------
+`:epvpis`, `:epvp` | Sucht nach einem Benutzernamen auf Elitepvpers | `:epvpis Der-Eddy`
+`:epvpverify`, `:verify` | Verifiziert einen Discord Benutzer über Elitepvpers | `:epvpverify`, `:epvpverify Der-Eddy`
+
 ### Utility ###
 
 Command und Aliases | Beschreibung | Nutzung
@@ -30,8 +37,6 @@ Command und Aliases | Beschreibung | Nutzung
 `:log`, `:archive` | Archiviert den Log des derzeitigen Channels und läd diesen als Attachment hoch | `:log 10`
 `:invite` | Verschickt einen Invite für den Server des Bot Autors | `:invite`
 `:whois` | Gibt Informationen über einen Benutzer aus | `:whois @Der-Eddy#6508`
-`:epvpis`, `:epvp` | Sucht nach einem Benutzernamen auf Elitepvpers | `:epvpis Der-Eddy`
-`:epvpverify`, `:verify` | Verifiziert einen Discord Benutzer über Elitepvpers | `:epvpverify`, `:epvpverify Der-Eddy`
 `:emoji`, `:e` | Gibt eine vergrößerte Version eines angegebenen Emojis zurück | `:emoji Emilie`
 `:emojis`| Gibt alle Emojis aus auf welche der Bot Zugriff hat | `:emojis`
 `:server`, `:serverinfo`, `:guild`, `:membercount` | Gibt Informationen über die derzeitge Discord Guild aus | `:server`
