@@ -4,5 +4,6 @@ __cogs__ = [
     'cogs.admin',
     'cogs.fun',
     'cogs.anime',
-    'cogs.utility'
+    'cogs.utility',
+    'cogs.forum'
     ]

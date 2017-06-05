@@ -172,7 +172,8 @@ Erweiterungen (Cogs) die beim starten aktiviert werden sollen, kann man in `cogs
         'cogs.admin',
         'cogs.fun',
         'cogs.anime',
-        'cogs.utility'
+        'cogs.utility',
+        'cogs.forum'
         ]
 
 
