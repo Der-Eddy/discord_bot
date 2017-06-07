@@ -15,9 +15,9 @@ class forum():
         self.bot = bot
 
     @staticmethod
-    async def _getDiscordTag(username):
+    async def _getDiscordTag(username, userAgentHeaders):
         url = f'https://www.elitepvpers.com/forum/member.php?username={username}'
-        async with aiohttp.get(url, cookies=loadconfig.__cookieJar__) as r:
+        async with aiohttp.get(url, cookies=loadconfig.__cookieJar__, headers = userAgentHeaders) as r:
             if r.status == 200:
                 content = await r.text()
                 #with open('debug.html', 'w', encoding='utf-8') as file_:
@@ -43,7 +43,7 @@ class forum():
             'do': 'usersearch',
             'fragment': user
         }
-        async with aiohttp.post(url, data=payload) as r:
+        async with aiohttp.post(url, data=payload, headers = self.bot.userAgentHeaders) as r:
             if r.status == 200:
                 root = ET.fromstring(await r.text())
                 if len(root) > 0:
@@ -87,7 +87,7 @@ class forum():
         tmp = await self.bot.say(f':ok: Trying to verify user **{username}**...')
         await self.bot.send_typing(ctx.message.channel)
 
-        if str(ctx.message.author) == await self._getDiscordTag(username):
+        if str(ctx.message.author) == await self._getDiscordTag(username, self.bot.userAgentHeaders):
             role = discord.utils.get(ctx.message.server.roles, name=verifyRole)
             if role in ctx.message.author.roles:
                 try:

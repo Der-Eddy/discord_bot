@@ -14,7 +14,7 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '0.12.3'
+__version__ = '0.12.4'
 
 logger = logging.getLogger('discord')
 #logger.setLevel(logging.DEBUG)
@@ -88,6 +88,7 @@ async def on_ready():
     bot.commands_used = Counter()
     bot.startTime = time.time()
     bot.botVersion = __version__
+    bot.userAgentHeaders = {'User-Agent': f'linux:shinobu_discordbot:v{__version__} (by Der-Eddy)'}
     bot.owner = discord.utils.find(lambda u: u.id == loadconfig.__adminid__, bot.get_all_members())
     bot.gamesLoop = asyncio.ensure_future(_randomGame())
 
@@ -98,15 +99,18 @@ async def on_command(command, ctx):
     if msg.channel.is_private:
         destination = 'Private Message'
     else:
-        destination = '#{0.channel.name} ({0.server.name})'.format(msg)
-    logging.info('{0.timestamp}: {0.author.name} in {1}: {0.content}'.format(msg, destination))
+        destination = f'#{msg.channel.name} ({msg.server.name})'
+    logging.info(f'{msg.timestamp}: {msg.author.name} in {destination}: {msg.content}')
 
 @bot.event
 async def on_message(message):
     if message.author.bot:
         return
     if bot.user.mentioned_in(message) and message.mention_everyone is False:
-        await bot.add_reaction(message, '👀') # :eyes:
+        if 'help' in message.content.lower():
+            await bot.send_message(message.channel, 'Eine volle Liste aller Commands gibts hier: https://github.com/Der-Eddy/discord_bot#commands-list')
+        else:
+            await bot.add_reaction(message, '👀') # :eyes:
     if 'loli' in message.clean_content.lower():
         await bot.add_reaction(message, '🍭') # :lollipop:
     if len(message.attachments) > 0:
