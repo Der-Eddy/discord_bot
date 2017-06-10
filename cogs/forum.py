@@ -84,7 +84,7 @@ class forum():
             username = ctx.message.author.name
         else:
             username = user[0]
-        tmp = await self.bot.say(f':ok: Trying to verify user **{username}**...')
+        tmp = await self.bot.say(f':ok: Trying to verify Discord user **{ctx.message.author}** with Elitepvpers user **{username}**...')
         await self.bot.send_typing(ctx.message.channel)
 
         if str(ctx.message.author) == await self._getDiscordTag(username, self.bot.userAgentHeaders):
@@ -105,7 +105,7 @@ class forum():
             await self.bot.edit_message(tmp, f':x: Could not verify user **{username}**')
             await self.bot.send_message(ctx.message.author, 'I\'m messaging you because I couldn\'t verify you with your corresponding Elitepvpers account' +
                                    '\n\nYou will need to specify your Elitepvpers username with the `:verify` command in case your Discord username is' +
-                                   'not the same as your Elitepvpers username.' +
+                                   '**not** the same as your Elitepvpers username.' +
                                    'This can be done via `:verify [YOUR ELITEPVPERS USERNAME]`' +
                                    '\n\nAlso don\'t forget to add your Discord username + discriminator in your elitepvpers settings! ' +
                                    '(<https://www.elitepvpers.com/forum/profile.php?do=editprofile>) \nhttps://i.imgur.com/4ckQsjX.png')

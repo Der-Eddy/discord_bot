@@ -180,7 +180,7 @@ class utility():
         try:
             limit = int(limit[0])
         except IndexError:
-            limit = 1000
+            limit = 10
         logFile = '{}.log'.format(ctx.message.channel)
         counter = 0
         with open(logFile, 'w', encoding='UTF-8') as f:
