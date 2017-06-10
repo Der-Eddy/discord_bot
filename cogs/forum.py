@@ -102,9 +102,13 @@ class forum():
                     pass
                 await self.bot.edit_message(tmp, f':white_check_mark: User **{username}** successfully verified! Added to role **{role}**')
         else:
-            await self.bot.edit_message(tmp, f':x: Could not verify user **{username}**' +
-                '\nDon\'t forget to add your Discord username + discriminator in your elitepvpers settings! ' +
-                '(<https://www.elitepvpers.com/forum/profile.php?do=editprofile>) \nhttps://i.imgur.com/4ckQsjX.png')
+            await self.bot.edit_message(tmp, f':x: Could not verify user **{username}**')
+            await self.bot.send_message(ctx.message.author, 'I\'m messaging you because I couldn\'t verify you with your corresponding Elitepvpers account' +
+                                   '\n\nYou will need to specify your Elitepvpers username with the `:verify` command in case your Discord username is' +
+                                   'not the same as your Elitepvpers username.' +
+                                   'This can be done via `:verify [YOUR ELITEPVPERS USERNAME]`' +
+                                   '\n\nAlso don\'t forget to add your Discord username + discriminator in your elitepvpers settings! ' +
+                                   '(<https://www.elitepvpers.com/forum/profile.php?do=editprofile>) \nhttps://i.imgur.com/4ckQsjX.png')
 
 def setup(bot):
     bot.add_cog(forum(bot))
