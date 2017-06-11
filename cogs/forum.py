@@ -102,7 +102,7 @@ class forum():
                     pass
                 await self.bot.edit_message(tmp, f':white_check_mark: User **{username}** successfully verified! Added to role **{role}**')
         else:
-            await self.bot.edit_message(tmp, f':x: Could not verify user **{username}**')
+            await self.bot.edit_message(tmp, f':x: Could not verify Discord user **{ctx.message.author}** with Elitepvpers user **{username}**')
             await self.bot.send_message(ctx.message.author, 'I\'m messaging you because I couldn\'t verify you with your corresponding Elitepvpers account' +
                                    '\n\nYou will need to specify your Elitepvpers username with the `:verify` command in case your Discord username is' +
                                    '**not** the same as your Elitepvpers username.' +
