@@ -235,6 +235,7 @@ class utility():
             embed.add_field(name='Avatar Link', value=member.avatar_url, inline=False)
             embed.add_field(name='Rollen', value=self._getRoles(member.roles), inline=True)
             embed.add_field(name='Rollenfarbe', value='{} ({})'.format(topRoleColour, topRole), inline=True)
+            embed.add_field(name='Status', value=member.status, inline=True)
             await self.bot.say('', embed=embed)
         else:
             msg = '**:no_entry:** Du hast keinen Benutzer angegeben!'
