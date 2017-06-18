@@ -128,7 +128,7 @@ class forum():
             username = user[0]
 
         url = f'{self.discourseURL}/users/{username}.json'
-        async with aiohttp.put(url, data = {'api_key': loadconfig.__discourseAPIKey__, 'api_username': 'Eddy'}) as r:
+        async with aiohttp.put(url, data = loadconfig.__discourseAPIKey__) as r:
             if r.status == 200:
                 json = await r.json()
                 if json['user']['primary_group_flair_bg_color'] == None or True:
