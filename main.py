@@ -14,7 +14,7 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '0.12.11'
+__version__ = '0.12.12'
 
 logger = logging.getLogger('discord')
 #logger.setLevel(logging.DEBUG)
@@ -33,7 +33,9 @@ def _currenttime():
 async def _randomGame():
     #Check games.py to change the list of "games" to be played
     while True:
-        randomGame = random.choice(loadconfig.__games__)
+        serverCount = len(bot.servers)
+        memberCount = len(list(bot.get_all_members()))
+        randomGame = random.choice(loadconfig.__games__).format(servers = serverCount, members = memberCount)
         logging.info(f'Changing name to {randomGame}')
         await bot.change_presence(game=discord.Game(name=randomGame))
         await asyncio.sleep(loadconfig.__gamesTimer__)

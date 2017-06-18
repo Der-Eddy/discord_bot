@@ -47,6 +47,9 @@ class admin():
     @checks.is_bot_owner()
     async def changegame(self, ctx, *, gameName: str):
         '''Ändert das derzeit spielende Spiel (BOT OWNER ONLY)'''
+        serverCount = len(self.bot.servers)
+        memberCount = len(list(self.bot.get_all_members()))
+        gameName = gameName.format(servers = serverCount, members = memberCount)
         await self.bot.change_presence(game=discord.Game(name=gameName))
         await self.bot.say(f'**:ok:** Ändere das Spiel zu: Playing **{gameName}**')
 

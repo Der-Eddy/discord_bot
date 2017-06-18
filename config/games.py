@@ -12,6 +12,7 @@ __games__ = [
     'with async',
     'with Karen-chan',
     'with Rara-chan',
-    'NieR:Automata'
+    '{servers} Server',
+    '{members} Member'
 ]
 __gamesTimer__ = 2 * 60 #2 minutes
