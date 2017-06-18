@@ -148,13 +148,14 @@ class forum():
                     discordName = '{} ({})'.format(json['user']['username'], json['user']['name'])
                 embed.add_field(name='Username', value=discordName, inline=True)
                 embed.add_field(name='Vertrauensstufe', value=json['user']['trust_level'], inline=True)
-                embed.add_field(name='Titel', value=json['user']['title'], inline=True)
+                if json['user']['title'] != '' and json['user']['title'] != None:
+                    embed.add_field(name='Titel', value=json['user']['title'], inline=True)
                 embed.add_field(name='Registriert am', value=json['user']['created_at'], inline=True)
                 embed.add_field(name='Abzeichen', value=json['user']['badge_count'], inline=True)
                 embed.add_field(name='Beiträge', value=json['user']['post_count'], inline=True)
-                if json['user']['user_fields']['7'] != '' or json['user']['user_fields']['7'] == None:
+                if json['user']['user_fields']['7'] != '' and json['user']['user_fields']['7'] != None:
                     embed.add_field(name='Discord', value=json['user']['user_fields']['7'], inline=True)
-                if json['user']['user_fields']['1'] != '' or json['user']['user_fields']['1'] == None:
+                if json['user']['user_fields']['1'] != '' and json['user']['user_fields']['1'] != None:
                     embed.add_field(name='Steam', value='http://steamcommunity.com/id/' + json['user']['user_fields']['1'], inline=True)
                 groups = ''
                 for group in json['user']['groups']:
@@ -162,6 +163,7 @@ class forum():
                         groups += group['name'] + ', '
                 if groups != '':
                     embed.add_field(name='Gruppen', value=groups[:-2], inline=True)
+                embed.add_field(name='Profile Link', value=f'{self.discourseURL}/users/{username}/summary', inline=True)
                 await self.bot.say(embed=embed)
             else:
                 msg = f':no_entry: Ich konnte keinen Account **{username}** auf kokoro-ko.de finden :sweat:'
