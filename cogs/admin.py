@@ -115,22 +115,6 @@ class admin():
             await self.bot.say(':x: Konnte niemanden finden')
 
     @commands.command(pass_context=True, hidden=True)
-    @checks.is_administrator()
-    async def role(self, ctx, *roleName: str):
-        '''Listet alle Benutzer einer Rolle auf'''
-        roleName = ' '.join(roleName)
-        role = discord.utils.get(ctx.message.server.roles, name=roleName)
-        msg = ''
-        for member in ctx.message.server.members:
-            if role in member.roles:
-                msg += f'{member.id} | {member}\n'
-
-        if msg == '':
-            await self.bot.say(':x: Konnte keinen Benutzer mit dieser Rolle finden!')
-        else:
-            await self.bot.say(msg)
-
-    @commands.command(pass_context=True, hidden=True)
     @checks.is_bot_owner()
     async def test(self, ctx):
         '''Test Test Test'''

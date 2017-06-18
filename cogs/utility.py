@@ -366,6 +366,21 @@ class utility():
 
         await self.bot.say(final_url)
 
+    @commands.command(pass_context=True, hidden=True)
+    async def role(self, ctx, *roleName: str):
+        '''Listet alle Benutzer einer Rolle auf'''
+        roleName = ' '.join(roleName)
+        role = discord.utils.get(ctx.message.server.roles, name=roleName)
+        msg = ''
+        for member in ctx.message.server.members:
+            if role in member.roles:
+                msg += f'{member.id} | {member}\n'
+
+        if msg == '':
+            await self.bot.say(':x: Konnte keinen Benutzer mit dieser Rolle finden!')
+        else:
+            await self.bot.say(msg)
+
     # This command needs to be at the end due to this name
     @commands.command()
     async def commands(self):

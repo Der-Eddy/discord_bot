@@ -44,6 +44,7 @@ Command und Aliases | Beschreibung | Nutzung
 `:timer`, `:reminder` | Setzt einen Timer und benachrichtigt dann einen | `:timer 13m Pizza`, `:timer 2h`
 `:source`| Zeigt den Quellcode für einen Befehl auf GitHub an | `:source kawaii`
 `:commands`| Zeigt an wie oft welcher Command benutzt wurde seit dem letzten Startup | `:commands`
+`:role`| Listet alle Benutzer einer Rolle auf | `:role Admins`
 
 ### Anime ###
 
