@@ -13,6 +13,7 @@ class forum():
 
     def __init__(self, bot):
         self.bot = bot
+        self.discourseURL = 'https://www.kokoro-ko.de'
 
     @staticmethod
     async def _getDiscordTag(username, userAgentHeaders):
@@ -56,7 +57,7 @@ class forum():
                         embed.add_field(name=i.text, value=userURL, inline=False)
                     await self.bot.say(msg, embed=embed)
                 else:
-                    msg = ':no_entry: Ich konnte keine Epvp Accounts finden :sweat:'
+                    msg = f':no_entry: Ich konnte keine Epvp Accounts zu **{username}** finden :sweat:'
                     await self.bot.say(msg)
 
     @commands.command(pass_context=True, aliases=['verify'])
@@ -109,6 +110,62 @@ class forum():
                                    'This can be done via `:verify [YOUR ELITEPVPERS USERNAME]`' +
                                    '\n\nAlso don\'t forget to add your Discord username + discriminator in your elitepvpers settings! ' +
                                    '(<https://www.elitepvpers.com/forum/profile.php?do=editprofile>) \nhttps://i.imgur.com/4ckQsjX.png')
+
+    @commands.command(pass_context=True, aliases=['user'])
+    async def kokoro(self, ctx, *user: str):
+        '''Gibt Benutzerdaten über einen Benutzer aus Kokoro-ko.de aus
+
+        Beispiel:
+        -----------
+
+        :kokoro
+
+        :user Eddy
+        '''
+        if len(user) == 0:
+            username = ctx.message.author.name
+        else:
+            username = user[0]
+
+        url = f'{self.discourseURL}/users/{username}.json'
+        async with aiohttp.put(url, data = {'api_key': loadconfig.__discourseAPIKey__, 'api_username': 'Eddy'}) as r:
+            if r.status == 200:
+                json = await r.json()
+                if json['user']['primary_group_flair_bg_color'] == None or True:
+                    color = 0xff6600 #orange
+                else:
+                    #color = hex(int(json['user']['primary_group_flair_bg_color'], 16))
+                    color = discord.Color(hex(int(json['user']['primary_group_flair_bg_color'], 16)))
+                    print(color.value)
+                    #currently not working??
+                embed = discord.Embed(color=color)
+                embed.set_footer(text='kokoro-ko.de - Dein Anime und Gaming forum')
+                avatarURL = self.discourseURL + json['user']['avatar_template']
+                embed.set_thumbnail(url=avatarURL.format(size = '124'))
+                if json['user']['name'] == '':
+                    discordName = json['user']['username']
+                else:
+                    discordName = '{} ({})'.format(json['user']['username'], json['user']['name'])
+                embed.add_field(name='Username', value=discordName, inline=True)
+                embed.add_field(name='Vertrauensstufe', value=json['user']['trust_level'], inline=True)
+                embed.add_field(name='Titel', value=json['user']['title'], inline=True)
+                embed.add_field(name='Registriert am', value=json['user']['created_at'], inline=True)
+                embed.add_field(name='Abzeichen', value=json['user']['badge_count'], inline=True)
+                embed.add_field(name='Beiträge', value=json['user']['post_count'], inline=True)
+                if json['user']['user_fields']['7'] != '' or json['user']['user_fields']['7'] == None:
+                    embed.add_field(name='Discord', value=json['user']['user_fields']['7'], inline=True)
+                if json['user']['user_fields']['1'] != '' or json['user']['user_fields']['1'] == None:
+                    embed.add_field(name='Steam', value='http://steamcommunity.com/id/' + json['user']['user_fields']['1'], inline=True)
+                groups = ''
+                for group in json['user']['groups']:
+                    if group['automatic'] == False:
+                        groups += group['name'] + ', '
+                if groups != '':
+                    embed.add_field(name='Gruppen', value=groups[:-2], inline=True)
+                await self.bot.say(embed=embed)
+            else:
+                msg = f':no_entry: Ich konnte keinen Account **{username}** auf kokoro-ko.de finden :sweat:'
+                await self.bot.say(msg)
 
 def setup(bot):
     bot.add_cog(forum(bot))

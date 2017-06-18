@@ -1,5 +1,5 @@
 try:
-    from config.config import __token__, __prefix__, __adminid__, __kawaiichannel__, __botlogchannel__, __botserverid__, __greetmsg__, __selfassignrole__, __cookieJar__
+    from config.config import __token__, __prefix__, __adminid__, __kawaiichannel__, __botlogchannel__, __botserverid__, __greetmsg__, __selfassignrole__, __cookieJar__, __discourseAPIKey__
 except ImportError:
     #Heorku stuff
     import os
@@ -12,6 +12,7 @@ except ImportError:
     __greetmsg__ = os.environ.get('DISCORD_GREETMSG')
     __selfassignrole__ = os.environ.get('DISCORD_SELFASSIGNROLE')
     __cookieJar__ = os.environ.get('DISCORD_COOKIEJAR')
+    __discourseAPIKey__ = os.environ.get('DISCORD_DISCOURSEAPIKEY')
 
 from config.games import __games__, __gamesTimer__
 from config.cogs import __cogs__
