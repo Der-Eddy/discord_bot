@@ -43,12 +43,28 @@ class admin():
         asyncio.sleep(2)
         await self.bot.say('**:ok:** Mein neuer Avatar!\n %s' % self.bot.user.avatar_url)
 
-    @commands.command(pass_context=True, hidden=True)
+    @commands.command(pass_context=True, hidden=True, aliases=['game'])
     @checks.is_bot_owner()
-    async def game(self, ctx, *, gameName: str):
+    async def changegame(self, ctx, *, gameName: str):
         '''Ändert das derzeit spielende Spiel (BOT OWNER ONLY)'''
         await self.bot.change_presence(game=discord.Game(name=gameName))
         await self.bot.say(f'**:ok:** Ändere das Spiel zu: Playing **{gameName}**')
+
+    @commands.command(pass_context=True, hidden=True)
+    @checks.is_bot_owner()
+    async def changestatus(self, ctx, status: str):
+        '''Ändert den Online Status vom Bot (BOT OWNER ONLY)'''
+        status = status.lower()
+        if status == 'offline' or status == 'off' or status == 'invisible':
+            discordStatus = discord.Status.invisible
+        elif status == 'idle':
+            discordStatus = discord.Status.idle
+        elif status == 'dnd' or status == 'disturb':
+            discordStatus = discord.Status.dnd
+        else:
+            discordStatus = discord.Status.online
+        await self.bot.change_presence(status=discordStatus)
+        await self.bot.say(f'**:ok:** Ändere Status zu: **{discordStatus}**')
 
     @commands.command(pass_context=True, hidden=True)
     @checks.is_bot_owner()

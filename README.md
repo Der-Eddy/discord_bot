@@ -92,7 +92,8 @@ Command und Aliases | Beschreibung | Nutzung
 `:shutdown`, `:quit` | Schaltet den Bot aus. **BOT OWNER ONLY** | `:shutdown`
 `:restart` | Startet den Bot neu. **BOT OWNER ONLY** | `:restart`
 `:avatar` | Setzt einen neuen Avatar. **BOT OWNER ONLY** | `:avatar https://i.imgur.com/iJlPa3V.png`
-`:game` | Ändert das derzeit spielende Spiel. **BOT OWNER ONLY** | `:game Dark Souls`
+`:changegame`, `:game` | Ändert das derzeit spielende Spiel. **BOT OWNER ONLY** | `:changegame Dark Souls`
+`:changestatus` | Ändert den Online Status vom Bot. **BOT OWNER ONLY** | `:changestatus idle`
 `:name` | Ändert den globalen Namen vom Bot. **BOT OWNER ONLY** | `:name Shinobu-chan`
 `:servers` | Listet die aktuellen verbundenen Server auf. **BOT OWNER ONLY** | `:servers`
 `:leaveserver` | Schaltet den Bot aus. **BOT OWNER ONLY** | `:leaveserver 102817255661772800`
