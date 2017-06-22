@@ -14,7 +14,7 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '0.13.1'
+__version__ = '0.13.2'
 
 logger = logging.getLogger('discord')
 #logger.setLevel(logging.DEBUG)
@@ -141,7 +141,7 @@ async def on_member_remove(member):
 
 @bot.event
 async def on_server_join(server):
-    embed = discord.Embed(title=':white_check_mark: Server hinzugefügt', type='rich', color=0x2ecc71)
+    embed = discord.Embed(title=':white_check_mark: Server hinzugefügt', type='rich', color=0x2ecc71) #Green
     embed.set_thumbnail(url=server.icon_url)
     embed.add_field(name='Name', value=server.name, inline=True)
     embed.add_field(name='ID', value=server.id, inline=True)
@@ -153,7 +153,7 @@ async def on_server_join(server):
 
 @bot.event
 async def on_server_remove(server):
-    embed = discord.Embed(title=':x: Server entfernt', type='rich', color=0xe74c3c)
+    embed = discord.Embed(title=':x: Server entfernt', type='rich', color=0xe74c3c) #Red
     embed.set_thumbnail(url=server.icon_url)
     embed.add_field(name='Name', value=server.name, inline=True)
     embed.add_field(name='ID', value=server.id, inline=True)
@@ -162,6 +162,17 @@ async def on_server_remove(server):
     embed.add_field(name='Mitglieder', value=server.member_count, inline=True)
     embed.add_field(name='Erstellt am', value=server.created_at, inline=True)
     await bot.send_message(bot.owner, embed=embed)
+
+@bot.event
+async def on_error(event, *args, **kwargs):
+    embed = discord.Embed(title=':x: Event Error', colour=0xe74c3c) #Red
+    embed.add_field(name='Event', value=event)
+    embed.description = '```py\n%s\n```' % traceback.format_exc()
+    embed.timestamp = datetime.datetime.utcnow()
+    try:
+        await bot.send_message(bot.owner, embed=embed)
+    except:
+        pass
 
 @bot.command(pass_context=True, hidden=True, aliases=['quit_backup'])
 async def shutdown_backup(ctx):
