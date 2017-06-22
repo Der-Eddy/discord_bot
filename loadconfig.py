@@ -16,3 +16,4 @@ except ImportError:
 
 from config.games import __games__, __gamesTimer__
 from config.cogs import __cogs__
+from config.blacklist import __blacklist__

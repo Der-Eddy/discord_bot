@@ -14,7 +14,7 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '0.13.0'
+__version__ = '0.13.1'
 
 logger = logging.getLogger('discord')
 #logger.setLevel(logging.DEBUG)
@@ -124,6 +124,9 @@ async def on_message(message):
 @bot.event
 async def on_member_join(member):
     if member.server.id == loadconfig.__botserverid__:
+        if member.id in loadconfig.__blacklist__:
+            bot.kick(member)
+            await bot.send_message(bot.owner, f'Benutzer **{member}** automatisch gekickt')
         memberExtra = '{0} - *{1} ({2})*'.format(member.mention, member, member.id)
         if loadconfig.__greetmsg__ == 'True':
             emojis = [':wave:', ':congratulations:', ':wink:', ':new:', ':cool:', ':white_check_mark:', ':tada:']
