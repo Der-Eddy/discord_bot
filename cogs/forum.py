@@ -31,7 +31,7 @@ class forum():
                     return ''
 
     @commands.command(aliases=['epvp'])
-    @commands.cooldown(1, 1, commands.cooldowns.BucketType.server)
+    @commands.cooldown(1, 5, commands.cooldowns.BucketType.server)
     async def epvpis(self, user: str):
         '''Sucht nach einem Benutzernamen auf Elitepvpers
 

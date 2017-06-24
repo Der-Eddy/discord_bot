@@ -14,7 +14,7 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '0.14.0'
+__version__ = '0.14.1'
 
 logger = logging.getLogger('discord')
 #logger.setLevel(logging.DEBUG)
@@ -182,7 +182,7 @@ async def on_command_error(error, ctx):
         await bot.say(':x: Dieser Command wurde deaktiviert')
     elif isinstance(error, commands.CommandInvokeError):
         embed = discord.Embed(title=':x: Command Error', colour=0x992d22) #Dark Red
-        embed.add_field(name='Error', value=error.original.__traceback__)
+        embed.add_field(name='Error', value=error)
         embed.add_field(name='Server', value=ctx.message.server)
         embed.add_field(name='Channel', value=ctx.message.channel)
         embed.add_field(name='User', value=ctx.message.author)

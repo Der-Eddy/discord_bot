@@ -153,9 +153,22 @@ class utility():
         await self.bot.edit_message(pong, '**:ping_pong:** Pong! (%d ms)' % delta)
 
     @commands.command()
+    @commands.cooldown(1, 2, commands.cooldowns.BucketType.default)
     async def github(self):
         '''In progress'''
-        await self.bot.say('https://github.com/Der-Eddy/discord_bot')
+        url = 'https://api.github.com/repos/Der-Eddy/discord_bot/stats/commit_activity'
+        async with aiohttp.get(url) as r:
+            if r.status == 200:
+                content = await r.json()
+                commitCount = 0
+                for week in content:
+                    commitCount += week['total']
+
+                embed = discord.Embed(title='GitHub Repo Stats', type='rich', color=0xf1c40f) #Golden
+                embed.set_thumbnail(url='https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png')
+                embed.add_field(name='Commits', value=commitCount, inline=True)
+                embed.add_field(name='Link', value='https://github.com/Der-Eddy/discord_bot')
+                await self.bot.say(embed=embed)
 
     @commands.command(pass_context=True, aliases=['info'])
     async def about(self, ctx):
