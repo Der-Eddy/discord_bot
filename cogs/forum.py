@@ -31,6 +31,7 @@ class forum():
                     return ''
 
     @commands.command(aliases=['epvp'])
+    @commands.cooldown(1, 1, commands.cooldowns.BucketType.server)
     async def epvpis(self, user: str):
         '''Sucht nach einem Benutzernamen auf Elitepvpers
 
@@ -60,7 +61,14 @@ class forum():
                     msg = f':no_entry: Ich konnte keine Epvp Accounts zu **{username}** finden :sweat:'
                     await self.bot.say(msg)
 
+    @epvpis.error
+    async def epvpis_error(self, error, ctx):
+        if isinstance(error, commands.errors.CommandOnCooldown):
+            seconds = str(error)[34:]
+            await self.bot.say(f':alarm_clock: Cooldown! Versuche es in {seconds} erneut')
+
     @commands.command(pass_context=True, aliases=['verify'])
+    @commands.cooldown(1, 5, commands.cooldowns.BucketType.server)
     async def epvpverify(self, ctx, *user: str):
         '''Verifying a discord user via elitepvpers
 
@@ -111,7 +119,15 @@ class forum():
                                    '\n\nAlso don\'t forget to add your Discord username + discriminator in your elitepvpers settings! ' +
                                    '(<https://www.elitepvpers.com/forum/profile.php?do=editprofile>) \nhttps://i.imgur.com/4ckQsjX.png')
 
+    @epvpverify.error
+    async def epvpverify_error(self, error, ctx):
+        if isinstance(error, commands.errors.CommandOnCooldown):
+            await self.bot.say(str(error))
+        else:
+            await self.bot.say('Having currently difficulties to reach elitepvpers. Try it again in some hours.')
+
     @commands.command(pass_context=True, aliases=['user'])
+    @commands.cooldown(2, 1, commands.cooldowns.BucketType.server)
     async def kokoro(self, ctx, *user: str):
         '''Gibt Benutzerdaten über einen Benutzer aus Kokoro-ko.de aus
 
@@ -168,6 +184,12 @@ class forum():
             else:
                 msg = f':no_entry: Ich konnte keinen Account **{username}** auf kokoro-ko.de finden :sweat:'
                 await self.bot.say(msg)
+
+    @kokoro.error
+    async def kokoro_error(self, error, ctx):
+        if isinstance(error, commands.errors.CommandOnCooldown):
+            seconds = str(error)[34:]
+            await self.bot.say(f':alarm_clock: Cooldown! Versuche es in {seconds} erneut')
 
 def setup(bot):
     bot.add_cog(forum(bot))

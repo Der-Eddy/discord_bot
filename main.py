@@ -14,7 +14,7 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '0.13.2'
+__version__ = '0.14.0'
 
 logger = logging.getLogger('discord')
 #logger.setLevel(logging.DEBUG)
@@ -173,6 +173,24 @@ async def on_error(event, *args, **kwargs):
         await bot.send_message(bot.owner, embed=embed)
     except:
         pass
+
+@bot.event
+async def on_command_error(error, ctx):
+    if isinstance(error, commands.NoPrivateMessage):
+        await bot.send_message(ctx.message.author, 'This command cannot be used in private messages.')
+    elif isinstance(error, commands.DisabledCommand):
+        await bot.say(':x: Dieser Command wurde deaktiviert')
+    elif isinstance(error, commands.CommandInvokeError):
+        embed = discord.Embed(title=':x: Command Error', colour=0x992d22) #Dark Red
+        embed.add_field(name='Error', value=error.original.__traceback__)
+        embed.add_field(name='Server', value=ctx.message.server)
+        embed.add_field(name='Channel', value=ctx.message.channel)
+        embed.add_field(name='User', value=ctx.message.author)
+        embed.timestamp = datetime.datetime.utcnow()
+        try:
+            await bot.send_message(bot.owner, embed=embed)
+        except:
+            pass
 
 @bot.command(pass_context=True, hidden=True, aliases=['quit_backup'])
 async def shutdown_backup(ctx):

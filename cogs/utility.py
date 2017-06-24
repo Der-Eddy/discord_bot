@@ -169,6 +169,7 @@ class utility():
             await self.bot.send_file(ctx.message.channel, f, content=msg)
 
     @commands.command(pass_context=True, aliases=['archive'])
+    @commands.cooldown(1, 60, commands.cooldowns.BucketType.channel)
     async def log(self, ctx, *limit: int):
         '''Archiviert den Log des derzeitigen Channels und läd diesen als Attachment hoch
 
@@ -196,6 +197,12 @@ class utility():
         with open(logFile, 'rb') as f:
             await self.bot.send_file(ctx.message.channel, f, content=msg)
         os.remove(logFile)
+
+    @log.error
+    async def log_error(self, error, ctx):
+        if isinstance(error, commands.errors.CommandOnCooldown):
+            seconds = str(error)[34:]
+            await self.bot.say(f':alarm_clock: Cooldown! Versuche es in {seconds} erneut')
 
     @commands.command()
     async def invite(self):
@@ -296,6 +303,7 @@ class utility():
 
     #Shameful copied from https://github.com/Rapptz/RoboDanny/blob/b513a32dfbd4fdbd910f7f56d88d1d012ab44826/cogs/meta.py
     @commands.command(pass_context=True, aliases=['reminder'])
+    @commands.cooldown(1, 30, commands.cooldowns.BucketType.user)
     async def timer(self, ctx, time : TimeParser, *, message=''):
         '''Setzt einen Timer und benachrichtigt dann einen
 
@@ -328,6 +336,9 @@ class utility():
     async def timer_error(self, error, ctx):
         if isinstance(error, commands.BadArgument):
             await self.bot.say(str(error))
+        elif isinstance(error, commands.errors.CommandOnCooldown):
+            seconds = str(error)[34:]
+            await self.bot.say(f':alarm_clock: Cooldown! Versuche es in {seconds} erneut')
 
     #Stolen from https://github.com/Rapptz/RoboDanny/blob/b513a32dfbd4fdbd910f7f56d88d1d012ab44826/cogs/meta.py
     @commands.command()

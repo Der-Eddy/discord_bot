@@ -134,6 +134,7 @@ class admin():
             await self.bot.say(':x: Konnte niemanden finden')
 
     @commands.command(pass_context=True, hidden=True)
+    @commands.cooldown(1, 10, commands.cooldowns.BucketType.channel)
     @checks.is_bot_owner()
     async def test(self, ctx):
         '''Test Test Test'''
@@ -144,6 +145,13 @@ class admin():
         #mem_usage = memory_usage(-1)
         #await self.bot.say(mem_usage)
         await self.bot.say('<:faeSad:298772756127023104>')
+
+    @test.error
+    async def test_error(self, error, ctx):
+        if isinstance(error, commands.errors.CommandOnCooldown):
+            #await self.bot.say(str(error))
+            seconds = str(error)[34:]
+            await self.bot.say(f':alarm_clock: Cooldown! Versuche es in {seconds} erneut')
 
 def setup(bot):
     bot.add_cog(admin(bot))
