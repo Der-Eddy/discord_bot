@@ -14,7 +14,7 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '0.14.1'
+__version__ = '0.14.2'
 
 logger = logging.getLogger('discord')
 #logger.setLevel(logging.DEBUG)
@@ -81,6 +81,11 @@ async def on_ready():
     print('Logged in as')
     print(f'Bot-Name: {bot.user.name}')
     print(f'Bot-ID: {bot.user.id}')
+    if bot.user.id == '204966267147255808':
+        bot.dev = True
+    else:
+        bot.dev = False
+    print(f'Dev Mode: {bot.dev}')
     print('------')
     for cog in loadconfig.__cogs__:
         try:
@@ -123,7 +128,7 @@ async def on_message(message):
 
 @bot.event
 async def on_member_join(member):
-    if member.server.id == loadconfig.__botserverid__:
+    if member.server.id == loadconfig.__botserverid__ and not bot.dev:
         if member.id in loadconfig.__blacklist__:
             bot.kick(member)
             await bot.send_message(bot.owner, f'Benutzer **{member}** automatisch gekickt')
@@ -134,7 +139,7 @@ async def on_member_join(member):
 
 @bot.event
 async def on_member_remove(member):
-    if member.server.id == loadconfig.__botserverid__:
+    if member.server.id == loadconfig.__botserverid__ and not bot.dev:
         memberExtra = '{0} - *{1} ({2})*'.format(member.mention, member, member.id)
         if loadconfig.__greetmsg__ == 'True':
             await bot.send_message(member.server.default_channel, f'<:faeSad:298772756127023104> **{member.name}** verließ unseren Server')
@@ -181,16 +186,19 @@ async def on_command_error(error, ctx):
     elif isinstance(error, commands.DisabledCommand):
         await bot.say(':x: Dieser Command wurde deaktiviert')
     elif isinstance(error, commands.CommandInvokeError):
-        embed = discord.Embed(title=':x: Command Error', colour=0x992d22) #Dark Red
-        embed.add_field(name='Error', value=error)
-        embed.add_field(name='Server', value=ctx.message.server)
-        embed.add_field(name='Channel', value=ctx.message.channel)
-        embed.add_field(name='User', value=ctx.message.author)
-        embed.timestamp = datetime.datetime.utcnow()
-        try:
-            await bot.send_message(bot.owner, embed=embed)
-        except:
-            pass
+        if bot.dev:
+            raise error
+        else:
+            embed = discord.Embed(title=':x: Command Error', colour=0x992d22) #Dark Red
+            embed.add_field(name='Error', value=error)
+            embed.add_field(name='Server', value=ctx.message.server)
+            embed.add_field(name='Channel', value=ctx.message.channel)
+            embed.add_field(name='User', value=ctx.message.author)
+            embed.timestamp = datetime.datetime.utcnow()
+            try:
+                await bot.send_message(bot.owner, embed=embed)
+            except:
+                pass
 
 @bot.command(pass_context=True, hidden=True, aliases=['quit_backup'])
 async def shutdown_backup(ctx):

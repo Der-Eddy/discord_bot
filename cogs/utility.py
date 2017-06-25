@@ -5,6 +5,7 @@ import re
 import asyncio
 import inspect
 from datetime import datetime, timedelta
+from collections import Counter
 import aiohttp
 import discord
 from discord.ext import commands
@@ -153,7 +154,7 @@ class utility():
         await self.bot.edit_message(pong, '**:ping_pong:** Pong! (%d ms)' % delta)
 
     @commands.command()
-    @commands.cooldown(1, 2, commands.cooldowns.BucketType.default)
+    @commands.cooldown(1, 2, commands.cooldowns.BucketType.server)
     async def github(self):
         '''In progress'''
         url = 'https://api.github.com/repos/Der-Eddy/discord_bot/stats/commit_activity'
@@ -169,6 +170,8 @@ class utility():
                 embed.add_field(name='Commits', value=commitCount, inline=True)
                 embed.add_field(name='Link', value='https://github.com/Der-Eddy/discord_bot')
                 await self.bot.say(embed=embed)
+            else:
+                await self.bot.say(':x: Konnte nicht aufs GitHub API zugreifen\nhttps://github.com/Der-Eddy/discord_bot')
 
     @commands.command(pass_context=True, aliases=['info'])
     async def about(self, ctx):
@@ -405,6 +408,22 @@ class utility():
             await self.bot.say(':x: Konnte keinen Benutzer mit dieser Rolle finden!')
         else:
             await self.bot.say(msg)
+
+    @commands.command(pass_context=True)
+    async def games(self, ctx, *scope):
+        '''Zeigt welche Spiele wie oft auf dem Server gerade gespielt werden'''
+        games = Counter()
+        for member in ctx.message.server.members:
+            if member.game != None:
+                games[member.game] += 1
+        msg = ':chart: Spiele die derzeit auf diesem Server gespielt werden\n'
+        msg += '```js\n'
+        msg += '{!s:40s}: {!s:>3s}\n'.format('Name', 'Anzahl')
+        chart = sorted(games.items(), key=lambda t: t[1], reverse=True)
+        for name, amount in chart:
+            msg += '{!s:40s}: {!s:>3s}\n'.format(name, amount)
+        msg += '```'
+        await self.bot.say(msg)
 
     # This command needs to be at the end due to this name
     @commands.command()
