@@ -14,7 +14,7 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '0.14.2'
+__version__ = '0.14.3'
 
 logger = logging.getLogger('discord')
 #logger.setLevel(logging.DEBUG)
@@ -194,6 +194,7 @@ async def on_command_error(error, ctx):
             embed.add_field(name='Server', value=ctx.message.server)
             embed.add_field(name='Channel', value=ctx.message.channel)
             embed.add_field(name='User', value=ctx.message.author)
+            embed.add_field(name='Message', value=ctx.message.clean_content)
             embed.timestamp = datetime.datetime.utcnow()
             try:
                 await bot.send_message(bot.owner, embed=embed)

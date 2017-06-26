@@ -99,11 +99,7 @@ class forum():
         if str(ctx.message.author) == await self._getDiscordTag(username, self.bot.userAgentHeaders):
             role = discord.utils.get(ctx.message.server.roles, name=verifyRole)
             if role in ctx.message.author.roles:
-                try:
-                    await self.bot.remove_roles(ctx.message.author, role)
-                except:
-                    pass
-                await self.bot.edit_message(tmp, f':negative_squared_cross_mark: Role **{role}** removed')
+                await self.bot.edit_message(tmp, f':negative_squared_cross_mark: You already have the role **{role}**!')
             else:
                 try:
                     await self.bot.add_roles(ctx.message.author, role)
