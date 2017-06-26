@@ -89,15 +89,25 @@ class forum():
             await self.bot.say('**:no_entry:** This command only works on some selected servers!')
             return
 
+        role = discord.utils.get(ctx.message.server.roles, name=verifyRole)
+
         if len(user) == 0:
             username = ctx.message.author.name
         else:
-            username = user[0]
+            if user[0] == 'remove':
+                try:
+                    await self.bot.remove_roles(ctx.message.author, role)
+                    await self.bot.say(f':ok: Role **{role}** removed')
+                except:
+                    pass
+                finally:
+                    return
+            else:
+                username = user[0]
         tmp = await self.bot.say(f':ok: Trying to verify Discord user **{ctx.message.author}** with Elitepvpers user **{username}**...')
         await self.bot.send_typing(ctx.message.channel)
 
         if str(ctx.message.author) == await self._getDiscordTag(username, self.bot.userAgentHeaders):
-            role = discord.utils.get(ctx.message.server.roles, name=verifyRole)
             if role in ctx.message.author.roles:
                 await self.bot.edit_message(tmp, f':negative_squared_cross_mark: You already have the role **{role}**!')
             else:
