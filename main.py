@@ -14,7 +14,7 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '0.14.4'
+__version__ = '0.14.5'
 
 logger = logging.getLogger('discord')
 #logger.setLevel(logging.DEBUG)
@@ -111,7 +111,7 @@ async def on_command(command, ctx):
 
 @bot.event
 async def on_message(message):
-    if message.author.bot:
+    if message.author.bot or messae.author.id in loadconfig.__blacklist__:
         return
     if bot.user.mentioned_in(message) and message.mention_everyone is False:
         if 'help' in message.content.lower():
