@@ -1,11 +1,14 @@
 import random
 import urllib.parse
+import sqlite3
 import asyncio
 import aiohttp
 import discord
 from discord.ext import commands
 
 class fun():
+    db = 'reaction.db'
+
     def __init__(self, bot):
         self.bot = bot
 
@@ -199,6 +202,46 @@ class fun():
             await self.bot.delete_message(ctx.message)
         else:
             await self.bot.say('**:x:** Konnte keine Nachricht mit dieser ID finden!')
+
+    @commands.command(pass_context=True, aliases=['tag'])
+    async def tags(self, ctx, command: str, *arg):
+        '''Erstellt tags oder gibt diese aus
+        Benutzung:
+        -----------
+        :tags COMMAND
+            Gibt ein zufälliges Bild unter dem command aus
+        :tags add COMMAND BILDURL
+            Fügt das jeweilige Bild zum jeweiligen command hinzu
+        :tags del ID
+            Löscht den Eintrag mit der jeweiligen ID, nur für Modaratoren und Ersteller des Eintrags
+        :tags list
+            Gibt die volle Liste an commands und jeweiligen Links
+        '''
+        with sqlite3.connect(self.db) as con:
+            c = con.cursor()
+            if command == 'add' or command == 'new':
+                if len(arg) > 1:
+                    c.execute('INSERT INTO "reactions" ("command","url","author") VALUES (?, ?, ?)', (arg[0].lower(), arg[1], str(ctx.message.author)))
+                    con.commit()
+                    await self.bot.say(':ok: Tag **{}** hinzugefügt!'.format(arg[0].lower()))
+            elif command == 'del' or command == 'rm':
+                if self.checkRole(ctx.message.author, self.mod):
+                    c.execute('DELETE FROM "reactions" WHERE "id" in (?)', (int(arg[0]), ))
+                else:
+                    c.execute('DELETE FROM "reactions" WHERE "id" in (?) AND "author" IN (?)', (int(arg[0]), str(ctx.message.author)))
+                con.commit()
+                await self.bot.say(':put_litter_in_its_place: Tag-ID #{} gelöscht!'.format(arg[0].lower()))
+            elif command == 'list':
+                lst = c.execute('SELECT * FROM "reactions"')
+                msg = ''
+                for i in lst:
+                    msg += '**ID:** {:>3} | **Command:** {:>10} | **Content:** `{}` | **Author:** {}\n'.format(i[0], i[1], i[2], i[3])
+                await self.bot.say(msg)
+            else:
+                lst = c.execute('SELECT * FROM "reactions" WHERE "command" LIKE (?)', (command,))
+                reaction = random.choice(lst.fetchall())
+                await self.bot.say(reaction[2])
+            c.close()
 
     @commands.command(aliases=['witz', 'joke'])
     async def pun(self):

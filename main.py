@@ -1,6 +1,8 @@
 import logging
 from logging.handlers import RotatingFileHandler
 import random
+import sqlite3
+import traceback
 import time
 import datetime
 import sys
@@ -14,7 +16,7 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '0.14.5'
+__version__ = '0.15.0'
 
 logger = logging.getLogger('discord')
 #logger.setLevel(logging.DEBUG)
@@ -39,6 +41,18 @@ async def _randomGame():
         logging.info(f'Changing name to {randomGame}')
         await bot.change_presence(game=discord.Game(name=randomGame))
         await asyncio.sleep(loadconfig.__gamesTimer__)
+
+def _setupDatabase(db):
+    with sqlite3.connect(db) as con:
+        c = con.cursor()
+        c.execute('''CREATE TABLE IF NOT EXISTS `reactions` (
+                    	`id`	INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+                    	`command`	TEXT NOT NULL,
+                    	`url`	TEXT NOT NULL UNIQUE,
+                    	`author`	TEXT
+                    );''')
+        con.commit()
+        c.close()
 
 def _getHash(downloadedFile, hashAlgorithm=hashlib.sha256()):
         blocksize = 65536
@@ -98,6 +112,7 @@ async def on_ready():
     bot.userAgentHeaders = {'User-Agent': f'linux:shinobu_discordbot:v{__version__} (by Der-Eddy)'}
     bot.owner = discord.utils.find(lambda u: u.id == loadconfig.__adminid__, bot.get_all_members())
     bot.gamesLoop = asyncio.ensure_future(_randomGame())
+    _setupDatabase('reaction.db')
 
 @bot.event
 async def on_command(command, ctx):
@@ -111,7 +126,7 @@ async def on_command(command, ctx):
 
 @bot.event
 async def on_message(message):
-    if message.author.bot or messae.author.id in loadconfig.__blacklist__:
+    if message.author.bot or message.author.id in loadconfig.__blacklist__:
         return
     if bot.user.mentioned_in(message) and message.mention_everyone is False:
         if 'help' in message.content.lower():

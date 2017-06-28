@@ -73,6 +73,7 @@ Command und Aliases | Beschreibung | Nutzung
 `:xkcd` | Zeigt den letzten oder zufääligen XKCD Comic | `:xkcd`, `:xkcd random`
 `:reaction`, `:r`, `:addreaction` | Fügt der letzten Nachricht ein Emoji als Reaction hinzu oder einer bestimmten Nachricht | `:reaction ok_hand`, `:reaction sunglasses 247386709505867776`
 `:pun`, `:witz`, `:joke` | Weil jeder schlechte Witze mag | `:pun`
+`:tags`, `:tag` | Erstellt tags oder gibt diese aus | `:tags new hentai https://youtu.be/tg3rG-e6haw`, `:tags del 2`, `:tags hentai`
 
 ### Mod ###
 
