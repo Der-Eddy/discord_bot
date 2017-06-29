@@ -16,7 +16,7 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '0.15.3'
+__version__ = '0.15.4'
 
 logger = logging.getLogger('discord')
 #logger.setLevel(logging.DEBUG)
@@ -138,7 +138,8 @@ async def on_message(message):
     if 'instagram.com' in message.clean_content.lower():
         await bot.add_reaction(message, '💩') # :poop:
     if len(message.attachments) > 0:
-        await bot.send_message(message.channel, await _fileCheck(message))
+        try:
+            await bot.send_message(message.channel, await _fileCheck(message))
     await bot.process_commands(message)
 
 @bot.event
