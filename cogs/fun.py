@@ -221,7 +221,9 @@ class fun():
             c = con.cursor()
             if command == 'add' or command == 'new':
                 if len(arg) > 1:
-                    c.execute('INSERT INTO "reactions" ("command","url","author") VALUES (?, ?, ?)', (arg[0].lower(), arg[1], str(ctx.message.author)))
+                    command = arg[0].lower()
+                    content = list(arg[1:])
+                    c.execute('INSERT INTO "reactions" ("command","url","author") VALUES (?, ?, ?)', (command, ' '.join(content), str(ctx.message.author)))
                     con.commit()
                     await self.bot.say(':ok: Tag **{}** hinzugefügt!'.format(arg[0].lower()))
             elif command == 'del' or command == 'rm':
@@ -235,7 +237,7 @@ class fun():
                 lst = c.execute('SELECT * FROM "reactions"')
                 msg = ''
                 for i in lst:
-                    msg += '**ID:** {:>3} | **Command:** {:>10} | **Content:** `{}` | **Author:** {}\n'.format(i[0], i[1], i[2], i[3])
+                    msg += '**ID:** {:>3} | **Command:** {:>15} | **Author:** {}\n'.format(i[0], i[1], i[3])
                 await self.bot.say(msg)
             else:
                 lst = c.execute('SELECT * FROM "reactions" WHERE "command" LIKE (?)', (command,))
