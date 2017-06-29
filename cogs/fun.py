@@ -5,6 +5,7 @@ import asyncio
 import aiohttp
 import discord
 from discord.ext import commands
+import loadconfig
 
 class fun():
     db = 'reaction.db'
@@ -227,7 +228,7 @@ class fun():
                     con.commit()
                     await self.bot.say(':ok: Tag **{}** hinzugefügt!'.format(arg[0].lower()))
             elif command == 'del' or command == 'rm':
-                if self.checkRole(ctx.message.author, self.mod):
+                if ctx.message.author.id == loadconfig.__adminid__:
                     c.execute('DELETE FROM "reactions" WHERE "id" in (?)', (int(arg[0]), ))
                 else:
                     c.execute('DELETE FROM "reactions" WHERE "id" in (?) AND "author" IN (?)', (int(arg[0]), str(ctx.message.author)))
