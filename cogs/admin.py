@@ -82,9 +82,9 @@ class admin():
     async def servers(self, ctx):
         '''Listet die aktuellen verbundenen Server auf (BOT OWNER ONLY)'''
         msg = '```js\n'
-        msg += '{!s:19s} | {!s:>4s} | {} | {}\n'.format('ID', 'Member', 'Name', 'Owner')
+        msg += '{!s:19s} | {!s:>5s} | {} | {}\n'.format('ID', 'Member', 'Name', 'Owner')
         for server in self.bot.servers:
-            msg += '{!s:19s} | {!s:>4s}| {} | {}\n'.format(server.id, server.member_count, server.name, server.owner)
+            msg += '{!s:19s} | {!s:>5s}| {} | {}\n'.format(server.id, server.member_count, server.name, server.owner)
         msg += '```'
         await self.bot.say(msg)
 
