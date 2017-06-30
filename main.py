@@ -16,7 +16,7 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '0.15.4'
+__version__ = '0.15.5'
 
 logger = logging.getLogger('discord')
 #logger.setLevel(logging.DEBUG)
@@ -140,6 +140,8 @@ async def on_message(message):
     if len(message.attachments) > 0:
         try:
             await bot.send_message(message.channel, await _fileCheck(message))
+        except:
+            pass
     await bot.process_commands(message)
 
 @bot.event
