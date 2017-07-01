@@ -207,7 +207,7 @@ class utility():
                     attachment = '[Angehängte Datei: {}]'.format(message.attachments[0]['url'])
                 except IndexError:
                     attachment = ''
-                f.write('{} {!s:20s}: {} {}\n'.format(message.timestamp.strftime('%d.%m.%Y %H:%M:%S'), message.author, message.clean_content, attachment))
+                f.write('{} {!s:20s}: {} {}\r\n'.format(message.timestamp.strftime('%d.%m.%Y %H:%M:%S'), message.author, message.clean_content, attachment))
                 counter += 1
         msg = ':ok: {} Nachrichten wurden archiviert!'.format(counter)
         with open(logFile, 'rb') as f:
@@ -420,8 +420,13 @@ class utility():
         msg += '```js\n'
         msg += '{!s:40s}: {!s:>3s}\n'.format('Name', 'Anzahl')
         chart = sorted(games.items(), key=lambda t: t[1], reverse=True)
-        for name, amount in chart:
-            msg += '{!s:40s}: {!s:>3s}\n'.format(name, amount)
+        for index, (name, amount) in enumerate(chart):
+            if len(msg) < 1950:
+                msg += '{!s:40s}: {!s:>3s}\n'.format(name, amount)
+            else:
+                amount = len(chart) - index
+                msg += f'+ {amount} andere'
+                break
         msg += '```'
         await self.bot.say(msg)
 
