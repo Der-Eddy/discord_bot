@@ -75,6 +75,12 @@ Command und Aliases | Beschreibung | Nutzung
 `:pun`, `:witz`, `:joke` | Weil jeder schlechte Witze mag | `:pun`
 `:tags`, `:tag` | Erstellt tags oder gibt diese aus | `:tags new hentai https://youtu.be/tg3rG-e6haw`, `:tags del 2`, `:tags hentai`
 
+### Gwent ###
+
+Command und Aliases | Beschreibung | Nutzung
+----------------|--------------|-------
+`:gwent`, `:gwentcard`| Gibt Informationen zu einer Gwent Karte aus | `:gwent Decoy`
+
 ### Mod ###
 
 Command und Aliases | Beschreibung | Nutzung
@@ -154,7 +160,7 @@ Vor dem Start muss im Ordner `config` eine Datei namens `config.py` angelegt wer
     __discourseAPIKey__ = {'api_key': '9f0be26ea6a4f47dba6c627ee2f5aa139caa29f8b899bc96c3b7b94755a9363f', 'api_username': 'Eddy'} #OPTIONAL Needed for all discourse related commands
     __cookieJar__ = {'loginuuid': 'löaskdjfölkdfa65sdf46a5s4df56e1f23s1df32asd1f5ef1325s11bSJ9.ImRXcWNHeWI98sd5f4s65ef6s31h1fgjdfg6h54sdfasdfcvbcvb2465UrYlRORDYyTWREQThtYjBrcFEzd1wvbXZJRiswdlwvaWc5YkZSdDlMQUYzZEJIeE03SitsTFZhSFh5cGgrcHducXdzYjVMMTU5U0lGenNITitsYmdSSWIremlNU01UeVM5XC9ZaVpLSFBmaEkyU3NsZjQ1MVNDeHBvOGdaWWxGRlhmZ28raTlcL0RTYzlQaUJkc2N1alp4VW00dXJHMkd5UUttTnZQekZPa2Y1aE1qUjdHNVRwNkdyakhtNUtWc3VWYmUySVc0bkUyQ0pSWVMi.b6nMo5Q3hBMLauEsePPVNSdTJ8I5CqbZFDLrrln-oag', 'bbuserid': '5660970', 'bbpassword': '1753ec1889f70aa87845cc5bfd3b4409'} #OPTIONAL Needed for all elitepvpers related commands
 
-In `games.py` kann man die Titel der "Playing-" Rotation:
+In `games.py` kann man die Titel der "Playing-" Rotation anpassen. Platzhalter wie `{servers}` oder `{members}` sind möglich.
 
     __games__ = [
         'with Eddy-Senpai',
@@ -162,17 +168,16 @@ In `games.py` kann man die Titel der "Playing-" Rotation:
         'with Cats',
         'try :help',
         'try :status',
-        'DARK SOULS IV',
         'with Atom.io',
         'with Python',
         'HuniePop',
-        'Crush Crush',
-        'try :neko',
+        'try :about',
         'try :kawaii',
         'with async',
         'with Karen-chan',
         'with Rara-chan',
-        'Dota 3'
+        '{servers} Server',
+        '{members} Member'
     ]
     __gamesTimer__ = 10 * 60
 
@@ -184,7 +189,8 @@ Erweiterungen (Cogs) die beim starten aktiviert werden sollen, kann man in `cogs
         'cogs.fun',
         'cogs.anime',
         'cogs.utility',
-        'cogs.forum'
+        'cogs.forum',
+        'cogs.gwent'
         ]
 
 
@@ -201,7 +207,7 @@ Weitere Tipps folgen
 Full list of requirements
 -------------
 
-    discord.py==0.16.7
+    discord.py
     aiohttp
     websockets
     chardet
