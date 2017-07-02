@@ -51,10 +51,14 @@ class gwent():
                     embed.add_field(name='Stärke', value=json['strength'], inline=True)
                 if json['traits'] != '' and json['traits'] != None:
                     embed.add_field(name='Traits', value=json['traits'], inline=True)
-                embed.add_field(name='Typ', value=json['group'], inline=True)
-                embed.add_field(name='Seltenheit', value=json['rarity'], inline=True)
-                embed.add_field(name='Fraktion', value=json['faction'], inline=True)
-                embed.add_field(name='Reihe', value=json['lane'], inline=True)
+                if json['group'] != '' and json['group'] != None:
+                    embed.add_field(name='Typ', value=json['group'], inline=True)
+                if json['rarity'] != '' and json['rarity'] != None:
+                    embed.add_field(name='Seltenheit', value=json['rarity'], inline=True)
+                if json['faction'] != '' and json['faction'] != None:
+                    embed.add_field(name='Fraktion', value=json['faction'], inline=True)
+                if json['lane'] != '' and json['lane'] != None:
+                    embed.add_field(name='Reihe', value=json['lane'], inline=True)
                 if json['loyalty'] != '' and json['loyalty'] != None:
                     embed.add_field(name='Loyalität', value=json['loyalty'], inline=True)
                 embed.add_field(name='Text', value=json['text'], inline=False)
