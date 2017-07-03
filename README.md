@@ -79,7 +79,7 @@ Command und Aliases | Beschreibung | Nutzung
 
 Command und Aliases | Beschreibung | Nutzung
 ----------------|--------------|-------
-`:gwent`, `:gwentcard`| Gibt Informationen zu einer Gwent Karte aus | `:gwent Decoy`
+`:gwent`, `:gwint`, `:gwentcard`| Gibt Informationen zu einer Gwent Karte aus | `:gwent Decoy`
 
 ### Mod ###
 

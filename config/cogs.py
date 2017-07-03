@@ -5,6 +5,5 @@ __cogs__ = [
     'cogs.fun',
     'cogs.anime',
     'cogs.utility',
-    'cogs.forum',
-    'cogs.gwent'
+    'cogs.forum'
     ]
