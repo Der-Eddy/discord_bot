@@ -75,6 +75,12 @@ Command und Aliases | Beschreibung | Nutzung
 `:pun`, `:witz`, `:joke` | Weil jeder schlechte Witze mag | `:pun`
 `:tags`, `:tag` | Erstellt tags oder gibt diese aus | `:tags new hentai https://youtu.be/tg3rG-e6haw`, `:tags del 2`, `:tags hentai`
 
+### Steam ###
+
+Command und Aliases | Beschreibung | Nutzung
+----------------|--------------|-------
+`:steam` | Gibt Informationen zu einem Spiel bei Steam aus | `:steam 570`
+
 ### Gwent ###
 
 Command und Aliases | Beschreibung | Nutzung

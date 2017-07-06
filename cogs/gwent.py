@@ -24,7 +24,7 @@ class gwent():
         cardName = ' '.join(card)
         url = f'{self.APIURL}{cardName}'
         await self.bot.send_typing(ctx.message.channel)
-        async with aiohttp.post(url) as r:
+        async with aiohttp.get(url) as r:
             if r.status == 200:
                 json = await r.json()
 
