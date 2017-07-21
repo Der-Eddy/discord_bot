@@ -4,11 +4,13 @@ import platform
 import re
 import asyncio
 import inspect
+import textwrap
 from datetime import datetime, timedelta
 from collections import Counter
 import aiohttp
 import discord
 from discord.ext import commands
+from PIL import Image, ImageDraw, ImageFont
 from memory_profiler import memory_usage
 import loadconfig
 import checks
@@ -83,6 +85,10 @@ class utility():
 
     def __init__(self, bot):
         self.bot = bot
+
+    @staticmethod
+    def _newImage(width, height, color):
+        return Image.new("L", (width, height), color)
 
     @staticmethod
     def _getRoles(roles):
@@ -429,6 +435,54 @@ class utility():
                 break
         msg += '```'
         await self.bot.say(msg)
+
+    @commands.command(pass_context=True)
+    async def spoiler(self, ctx, *, text: str):
+        '''Erstellt ein GIF Bild welches beim Hover einen Spoiler Text anzeigt'''
+        #https://github.com/flapjax/FlapJack-Cogs/blob/master/spoiler/spoiler.py
+        message = ctx.message
+        await self.bot.delete_message(ctx.message)
+
+        lineLength = 60
+        margin = (5, 5)
+        fontFile = "font/Ubuntu-R.ttf"
+        fontSize = 16
+        fontColor = 150
+        bgColor = 20
+        font = ImageFont.truetype(fontFile, fontSize)
+
+        textLines = []
+        for line in text.splitlines():
+            textLines.extend(textwrap.wrap(line, lineLength, replace_whitespace=False))
+
+        title = "SPOILER! Hover zum lesen"
+        width = font.getsize(title)[0] + 50
+        height = 0
+
+        for line in textLines:
+            size = font.getsize(line)
+            width = max(width, size[0])
+            height += size[1] + 2
+
+        width += margin[0]*2
+        height += margin[1]*2
+
+        textFull = '\n'.join(textLines)
+
+        spoilIMG = [self._newImage(width, height, bgColor) for _ in range(2)]
+        spoilText = [title, textFull]
+
+        for img, txt in zip(spoilIMG, spoilText):
+            canvas = ImageDraw.Draw(img)
+            canvas.multiline_text(margin, txt, font=font, fill=fontColor, spacing=4)
+
+        path = f'tmp\\{message.id}.gif'
+
+        spoilIMG[0].save(path, format="GIF", save_all=True, append_images=[spoilIMG[1]], duration=[0, 0xFFFF], loop=0)
+        content = "**" + message.author.display_name + "** hat einen Text gespoilert:"
+        await self.bot.send_file(ctx.message.channel, path, content=content)
+
+        os.remove(path)
 
     # This command needs to be at the end due to this name
     @commands.command()

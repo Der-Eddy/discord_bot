@@ -46,6 +46,7 @@ Command und Aliases | Beschreibung | Nutzung
 `:commands`| Zeigt an wie oft welcher Command benutzt wurde seit dem letzten Startup | `:commands`
 `:role`| Listet alle Benutzer einer Rolle auf | `:role Admins`
 `:games`| Zeigt welche Spiele wie oft auf dem Server gerade gespielt werden | `:games`
+`:spoiler`| Erstellt ein GIF Bild welches beim Hover einen Spoiler Text anzeigt | `:spoiler`
 
 ### Anime ###
 
@@ -219,6 +220,7 @@ Full list of requirements
     chardet
     pytz
     memory_profiler
+    pillow
 
 
 License
