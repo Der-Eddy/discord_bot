@@ -99,6 +99,7 @@ Command und Aliases | Beschreibung | Nutzung
 `:unban` | Entbannt ein Mitglied mit einer Begründung. **MOD ONLY** | `:unban 102815825781596160`
 `:bans` | Listet aktuell gebannte User auf. **MOD ONLY** | `:bans`
 `:removereactions` | Entfernt alle Emoji Reactions von einer Nachricht. **MOD ONLY** | `:removereactions 247386709505867776`
+`:permissions` | Listet alle Rechte des Bots auf **ADMIN OR BOT OWNER ONLY** | `:permissions`
 
 ### Admin ###
 
