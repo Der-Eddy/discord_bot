@@ -25,6 +25,11 @@ def is_administrator():
         return _check_permissions(ctx, 'administrator')
     return commands.check(predicate)
 
+def is_administrator_or_owner():
+    def predicate(ctx):
+        return _check_permissions(ctx, 'administrator') or commands.check(lambda ctx: _check_is_owner(ctx.message))
+    return commands.check(predicate)
+
 def has_permissions(perms):
     def predicate(ctx):
         return _check_permissions(ctx, perms)

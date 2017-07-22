@@ -441,12 +441,16 @@ class utility():
         '''Erstellt ein GIF Bild welches beim Hover einen Spoiler Text anzeigt'''
         #https://github.com/flapjax/FlapJack-Cogs/blob/master/spoiler/spoiler.py
         message = ctx.message
-        await self.bot.delete_message(ctx.message)
+        content = '**' + message.author.display_name + '** hat einen Text gespoilert:'
+        try:
+            await self.bot.delete_message(ctx.message)
+        except discord.errors.Forbidden:
+            content += '\n*(Bitte lösche deinen eigenen Beitrag)*'
 
         lineLength = 60
         margin = (5, 5)
         fontFile = "font/Ubuntu-R.ttf"
-        fontSize = 16
+        fontSize = 18
         fontColor = 150
         bgColor = 20
         font = ImageFont.truetype(fontFile, fontSize)
@@ -455,7 +459,7 @@ class utility():
         for line in text.splitlines():
             textLines.extend(textwrap.wrap(line, lineLength, replace_whitespace=False))
 
-        title = "SPOILER! Hover zum lesen"
+        title = 'SPOILER! Hover zum lesen'
         width = font.getsize(title)[0] + 50
         height = 0
 
@@ -478,8 +482,7 @@ class utility():
 
         path = f'tmp\\{message.id}.gif'
 
-        spoilIMG[0].save(path, format="GIF", save_all=True, append_images=[spoilIMG[1]], duration=[0, 0xFFFF], loop=0)
-        content = "**" + message.author.display_name + "** hat einen Text gespoilert:"
+        spoilIMG[0].save(path, format='GIF', save_all=True, append_images=[spoilIMG[1]], duration=[0, 0xFFFF], loop=0)
         await self.bot.send_file(ctx.message.channel, path, content=content)
 
         os.remove(path)

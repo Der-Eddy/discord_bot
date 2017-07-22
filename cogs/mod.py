@@ -153,5 +153,25 @@ class mod():
         else:
             await self.bot.say('**:x:** Konnte keine Nachricht mit dieser ID finden!')
 
+    @commands.command(pass_context=True, hidden=True)
+    @checks.is_administrator_or_owner()
+    async def permissions(self, ctx):
+        '''Listet alle Rechte des Bots auf'''
+        permissions = ctx.message.channel.permissions_for(ctx.message.server.me)
+
+        embed = discord.Embed(title=':customs:  Permissions', color=0x3498db) #Blue
+        embed.add_field(name='Server', value=ctx.message.server)
+        embed.add_field(name='Channel', value=ctx.message.channel, inline=False)
+
+        for item, valueBool in permissions:
+            if valueBool == True:
+                value = ':white_check_mark:'
+            else:
+                value = ':x:'
+            embed.add_field(name=item, value=value)
+
+        embed.timestamp = datetime.datetime.utcnow()
+        await self.bot.say(embed=embed)
+
 def setup(bot):
     bot.add_cog(mod(bot))
