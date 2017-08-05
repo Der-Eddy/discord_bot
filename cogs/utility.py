@@ -233,8 +233,8 @@ class utility():
         msg = '**:cool:** ' + permInvite
         await self.bot.say(msg)
 
-    @commands.command()
-    async def whois(self, member: discord.Member=None):
+    @commands.command(pass_context=True)
+    async def whois(self, ctx, member: discord.Member=None):
         '''Gibt Informationen über einen Benutzer aus
 
         Beispiel:
@@ -242,6 +242,8 @@ class utility():
 
         :whois @Der-Eddy#6508
         '''
+        if member == None:
+            member = ctx.message.author
 
         if member.top_role.is_everyone:
             topRole = 'everyone' #to prevent @everyone spam
