@@ -132,6 +132,52 @@ class anime():
             msg = '{} tätschelt dich {} :3 \n{}'.format(ctx.message.author.mention, member.mention, random.choice(gifs))
             await self.bot.say(msg)
 
+    @commands.command(pass_context=True, aliases=['rate', 'waifu'])
+    async def ratewaifu(self, ctx, *, waifuName: str):
+        '''Rate my waifu
+
+        Beispiel:
+        -----------
+
+        :ratewaifu Sagiri
+        '''
+        waifu = waifuName.lower()
+        bestWaifus = ['kobeni', 'emilia', 'shinobu', 'karen', 'shouka', 'minori', 'chidori', 'sagiri', 'mashiro', 'last order', 'saki', 'makoto', 'yui', 'nep', 'neptunia']
+        trashWaifus = ['shino']
+        if waifu in bestWaifus:
+            rating = 10
+        elif waifu in trashWaifus:
+            rating = 0
+        else:
+            rating = hash(waifu) % 10
+
+        if waifu == 'emilia':
+            emoji = '<:Emilia:230684388084416512>'
+        elif waifu == 'shinobu':
+            emoji = '<:Shinobu:303302053688770561>'
+        elif waifu == 'mashiro':
+            emoji = '<:mashiro:266233568626343936>'
+        elif waifu == 'nep' or waifu == 'neptunia':
+            emoji = '<:nep:261230988758220822>'
+        elif rating < 2:
+            emoji = ':put_litter_in_its_place:'
+        elif rating < 5:
+            emoji = '<:k3llyLUL:341946977266827264>'
+        elif rating < 7:
+            emoji = '<:k3llyTHINK:341946932639432704>'
+        elif rating < 9:
+            emojis = ['<:faeGasm:298772756412104704>', '<:naroGasm:341200647741243393>']
+            emoji = random.choice(emojis)
+        elif rating < 10:
+            emojis = ['<:kanoLewd:230662559458525185>', '<:fowShy:230662561580843008>', '<:mendoLewd:230662561169801216>']
+            emoji = random.choice(emojis)
+        elif rating == 10:
+            emojis = ['<:okhand:335170448666918923>', '<:nepnep:314906910061101057>', '<:gaku:249970768786489345>', '<:faeWant:313430419661914113>']
+            emoji = random.choice(emojis)
+
+        msg = f'{emoji} Ich bewerte **{waifuName}** als **{rating}/10**'
+        await self.bot.say(msg)
+
     @commands.command(pass_context=True, hidden=True)
     async def imgur(self, ctx, amount: int = None):
         '''Lädt eine bestimmte Anzahl der letzten hochgeladenen Bilder im Channel bei Imgur hoch'''

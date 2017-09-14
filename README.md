@@ -57,6 +57,7 @@ Command und Aliases | Beschreibung | Nutzung
 `:hello`, `:wave`, `:hi`, `:ohaiyo` | Nonsense gifs zum Hallo sagen | `:hello`
 `:nep`, `:nepu`, `:topnep` | Can't stop the Nep | `:nep`
 `:pat` | /r/headpats Pat Pat Pat :3 | `:pat @Der-Eddy#6508`
+`:ratewaifu`, `:rate`, `:waifu` | Bewertet deine Waifu | `:ratewaifu Shinobu`
 
 ### Fun ###
 
