@@ -142,7 +142,7 @@ class anime():
         :ratewaifu Sagiri
         '''
         waifu = waifuName.lower()
-        bestWaifus = ['kobeni', 'emilia', 'shinobu', 'karen', 'shouka', 'minori', 'chidori', 'sagiri', 'mashiro', 'last order', 'saki', 'makoto', 'yui', 'nep', 'neptunia']
+        bestWaifus = ['kobeni', 'emilia', 'shinobu', 'karen', 'shouko', 'minori', 'chidori', 'sagiri', 'mashiro', 'last order', 'saki', 'makoto', 'yui', 'nep', 'neptunia']
         trashWaifus = ['shino']
         if waifu in bestWaifus:
             rating = 10
