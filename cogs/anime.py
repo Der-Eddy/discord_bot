@@ -59,7 +59,7 @@ class anime():
             else:
                 tmp = await self.bot.say('**:no_entry:** Es wurde keine Rolle für den Bot eingestellt! Wende dich bitte an den Bot Admin')
         else:
-            tmp = await self.bot.say('**:no_entry:** This command will only works on the server of <@{}>!'.format(__adminid__))
+            tmp = await self.bot.say('**:no_entry:** This command will only works on the server of <@{}>!'.format(loadconfig.__adminid__))
         await asyncio.sleep(2 * 60)
         await self.bot.delete_message(tmp)
         await self.bot.delete_message(ctx.message)
@@ -142,10 +142,11 @@ class anime():
         :ratewaifu Sagiri
         '''
         waifu = waifuName.lower()
-        bestWaifus = ['kobeni', 'emilia', 'shinobu', 'karen', 'shouko', 'minori',
-                      'chidori', 'sagiri', 'mashiro', 'last order', 'saki', 'makoto',
-                      'yui', 'nep', 'neptunia', 'taiga']
+        bestWaifus = ['kobeni', 'emilia', 'shinobu', 'karen', 'shouko', 'shoko',
+                      'minori', 'chidori', 'sagiri', 'mashiro', 'last order',
+                      'saki', 'makoto', 'yui', 'nep', 'neptunia', 'taiga']
         trashWaifus = ['shino', 'rikka']
+        #this lists are highly biased, but who cares ¯\_(ツ)_/¯
         if waifu in bestWaifus:
             rating = 10
         elif waifu in trashWaifus:

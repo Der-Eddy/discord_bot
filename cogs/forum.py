@@ -82,9 +82,12 @@ class forum():
         #Eddys Server
         if ctx.message.server.id == '102817255661772800':
             verifyRole = 'Member'
-        #Coding Channel
+        #Coding Lounge
         elif ctx.message.server.id == '161637499939192832':
             verifyRole = 'Verified Account'
+        #Coding Lounge 2.0
+        elif ctx.message.server.id == '357603732634075136':
+            verifyRole = 'Verified e*pvp Account'
         else:
             await self.bot.say('**:no_entry:** This command only works on some selected servers!')
             return
