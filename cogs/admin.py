@@ -134,6 +134,15 @@ class admin():
             await self.bot.say(':x: Konnte niemanden finden')
 
     @commands.command(pass_context=True, hidden=True)
+    @checks.is_bot_owner()
+    async def geninvite(self, ctx, serverid: str):
+        '''Generiert einen Invite für einen Server wenn möglich (BOT OWNER ONLY)'''
+        server = self.bot.get_server(serverid)
+        invite = await self.bot.create_invite(server, max_uses=1, unique=False)
+        msg = f'Invite für **{server.name}** ({server.id})\n{invite.url}'
+        await self.bot.send_message(self.bot.owner, msg)
+
+    @commands.command(pass_context=True, hidden=True)
     @commands.cooldown(1, 10, commands.cooldowns.BucketType.channel)
     @checks.is_bot_owner()
     async def test(self, ctx):

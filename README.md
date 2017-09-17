@@ -116,6 +116,7 @@ Command und Aliases | Beschreibung | Nutzung
 `:leaveserver` | Schaltet den Bot aus. **BOT OWNER ONLY** | `:leaveserver 102817255661772800`
 `:echo` | Gibt eine Nachricht als Bot auf einem bestimmten Channel aus. **BOT OWNER ONLY** | `:echo 102817255661772800 Ich bin ein Bot!`
 `:discriminator` | Gibt Benutzer mit dem jeweiljigen Discriminator zurück. **BOT OWNER ONLY** | `:discriminator 6508`
+`:geninvite` | Generiert einen Invite für einen Server wenn möglich. **BOT OWNER ONLY** | `:geninvite 102817255661772800`
 
 
 

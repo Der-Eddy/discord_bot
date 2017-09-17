@@ -230,7 +230,7 @@ class utility():
     async def invite(self):
         '''Verschickt einen Invite für den Server des Bot Autors'''
         permInvite = 'https://discord.gg/kPMbPDc'
-        msg = '**:cool:** ' + permInvite
+        msg = ':cool: Der-Eddys Discord Server (for Shinobu-chan support)' + permInvite
         await self.bot.say(msg)
 
     @commands.command(pass_context=True)
