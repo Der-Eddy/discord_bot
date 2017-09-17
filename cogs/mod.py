@@ -173,5 +173,24 @@ class mod():
         embed.timestamp = datetime.datetime.utcnow()
         await self.bot.say(embed=embed)
 
+    @commands.command(pass_context=True, hidden=True)
+    @checks.is_administrator_or_owner()
+    async def hierarchy(self, ctx):
+        '''Listet die Rollen-Hierarchie des derzeitigen Servers auf'''
+        server = ctx.message.server
+
+        msg = f'Rollen-Hierarchie für Server **{server}**:\n\n'
+        roleDict = {}
+
+        for role in server.roles:
+            if role.is_everyone:
+                roleDict[role.position] = 'everyone'
+            else:
+                roleDict[role.position] = role.name
+
+        for role in sorted(roleDict.items(), reverse=True):
+            msg += role[1] + '\n'
+        await self.bot.say(msg)
+
 def setup(bot):
     bot.add_cog(mod(bot))
