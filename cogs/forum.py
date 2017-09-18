@@ -17,7 +17,10 @@ class forum():
 
     @staticmethod
     async def _getDiscordTag(username, userAgentHeaders):
-        url = f'https://www.elitepvpers.com/forum/member.php?username={username}'
+        if username.startswith('https://www.elitepvpers.com/forum/'):
+            url = username
+        else:
+            url = f'https://www.elitepvpers.com/forum/member.php?username={username}'
         async with aiohttp.get(url, cookies=loadconfig.__cookieJar__, headers = userAgentHeaders) as r:
             if r.status == 200:
                 content = await r.text()
@@ -78,6 +81,8 @@ class forum():
         :epvpverify
 
         :epvpverify Der-Eddy
+
+        :verify https://www.elitepvpers.com/forum/members/984054-der-eddy.html
         '''
         #Eddys Server
         if ctx.message.server.id == '102817255661772800':
@@ -116,7 +121,8 @@ class forum():
             else:
                 try:
                     await self.bot.add_roles(ctx.message.author, role)
-                    await self.bot.change_nickname(ctx.message.author, username)
+                    if not username.startswith('https://www.elitepvpers.com/forum/'):
+                        await self.bot.change_nickname(ctx.message.author, username)
                 except:
                     pass
                 await self.bot.edit_message(tmp, f':white_check_mark: User **{username}** successfully verified! Added to role **{role}**')

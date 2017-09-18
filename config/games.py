@@ -3,16 +3,13 @@ __games__ = [
     'with Neko-chan',
     'with Cats',
     'try :help',
-    'try :status',
     'with Atom.io',
     'with Python',
-    'HuniePop',
     'try :about',
     'try :kawaii',
     'with async',
     'with Karen-chan',
-    'with Rara-chan',
-    '{servers} Server',
-    '{members} Member'
+    'on {servers} Server',
+    'with {members} Member'
 ]
 __gamesTimer__ = 2 * 60 #2 minutes
