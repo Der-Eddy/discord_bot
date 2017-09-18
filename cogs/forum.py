@@ -106,7 +106,7 @@ class forum():
                 finally:
                     return
             else:
-                username = user[0]
+                username = ' '.join(user)
         tmp = await self.bot.say(f':ok: Trying to verify Discord user **{ctx.message.author}** with Elitepvpers user **{username}**...')
         await self.bot.send_typing(ctx.message.channel)
 
@@ -116,6 +116,7 @@ class forum():
             else:
                 try:
                     await self.bot.add_roles(ctx.message.author, role)
+                    await self.bot.change_nickname(ctx.message.author, username)
                 except:
                     pass
                 await self.bot.edit_message(tmp, f':white_check_mark: User **{username}** successfully verified! Added to role **{role}**')
