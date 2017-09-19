@@ -403,7 +403,7 @@ class utility():
         await self.bot.say(final_url)
 
     @commands.command(pass_context=True, hidden=True)
-    async def role(self, ctx, *roleName: str):
+    async def roleUsers(self, ctx, *roleName: str):
         '''Listet alle Benutzer einer Rolle auf'''
         roleName = ' '.join(roleName)
         role = discord.utils.get(ctx.message.server.roles, name=roleName)
@@ -489,7 +489,7 @@ class utility():
 
         os.remove(path)
 
-    @commands.command(pass_context=True, aliases=['rank'])
+    @commands.command(pass_context=True, aliases=['rank', 'role', 'roles'])
     async def ranks(self, ctx, *rankName: str):
         '''Beitritt einer bestimmten Rolle, funktioniert nur auf den Coding Lounge Server
 
