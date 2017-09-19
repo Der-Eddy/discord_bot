@@ -489,6 +489,59 @@ class utility():
 
         os.remove(path)
 
+    @commands.command(pass_context=True, aliases=['rank'])
+    async def ranks(self, ctx, *rankName: str):
+        '''Beitritt eines bestimmten Ranges, funktioniert nur auf den Coding Lounge Server
+
+        Beispiel:
+        -----------
+
+        :ranks
+
+        :ranks Python
+        '''
+        if ctx.message.server.id != '357603732634075136': #Coding Lounge 2.0
+            await self.bot.say(':x: This command only works on the Coding Lounge Server!')
+            return
+
+        rankList = ['HTML / CSS', 'Javascript', 'C/C++', '.NET', 'PHP', 'NSFW',
+                    'Java', 'Gourmet', 'ASM', 'Python']
+
+        if len(rankName) == 0:
+            rolesList = ''
+            for role in rankList:
+                count = 0
+                roleServer = discord.utils.get(ctx.message.server.roles, name=role)
+                for member in ctx.message.server.members:
+                    if roleServer in member.roles:
+                        count += 1
+                rolesList += '{:20}{} Member\n'.format(role, count)
+            embed = discord.Embed(color=0xf1c40f) #Golden
+            embed.set_thumbnail(url=ctx.message.server.icon_url)
+            embed.set_footer(text='Use the ":rank {RANKNAME}" command to join a rank')
+            embed.add_field(name='Ranks', value=rolesList, inline=True)
+            await self.bot.say(embed=embed)
+            return
+        else:
+            rankName = ' '.join(rankName)
+            if not rankName in rankList:
+                await self.bot.say(':x: Couldn\'t find that rank!')
+                return
+
+            rank = discord.utils.get(ctx.message.server.roles, name=rankName)
+            if rank in ctx.message.author.roles:
+                try:
+                    await self.bot.remove_roles(ctx.message.author, rank)
+                except:
+                    pass
+                await self.bot.say(f':negative_squared_cross_mark: Rank **{rank}** removed from **{ctx.message.author.mention}**')
+            else:
+                try:
+                    await self.bot.add_roles(ctx.message.author, rank)
+                except:
+                    pass
+                await self.bot.say(f':white_check_mark: Rank **{rank}** added to **{ctx.message.author.mention}**')
+
     # This command needs to be at the end due to this name
     @commands.command()
     async def commands(self):
