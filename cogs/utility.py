@@ -515,35 +515,29 @@ class utility():
                 for member in ctx.message.server.members:
                     if roleServer in member.roles:
                         count += 1
-                rolesList += '{:20}{} Member\n'.format(role, count)
+                rolesList += '{:20}{:>10} Member\n'.format(role, count)
             embed = discord.Embed(color=0xf1c40f) #Golden
             embed.set_thumbnail(url=ctx.message.server.icon_url)
-            embed.set_footer(text='Use the ":rank {RANKNAME}" command to join a rank')
+            embed.set_footer(text='Use the ":rank RANKNAME" command to join a rank')
             embed.add_field(name='Ranks', value=rolesList, inline=True)
             await self.bot.say(embed=embed)
             return
         else:
             rankName = ' '.join(rankName)
             #Avoiding some common pitfalls ...
-            rankName.replace('HTML/CSS', 'HTML / CSS')
-            rankName.replace('HTML', 'HTML / CSS')
-            rankName.replace('CSS', 'HTML / CSS')
-            rankName.replace('javascript', 'Javascript')
-            rankName.replace('JavaScript', 'Javascript')
-            rankName.replace('js', 'Javascript')
-            rankName.replace('C / C++', 'C/C++')
-            rankName.replace('C++', 'C/C++')
-            rankName.replace('C', 'C/C++')
-            rankName.replace('C#', '.NET')
-            rankName.replace('php', 'PHP')
-            rankName.replace('nsfw', 'NSFW')
-            rankName.replace('ASM', 'Assembler')
-            rankName.replace('python', 'Python')
-            rankName.replace('autoit', 'AutoIt')
-            rankName.replace('Autoit', 'AutoIt')
+            rankName = rankName.replace('HTML/CSS', 'HTML / CSS')
+            rankName = rankName.replace('javascript', 'Javascript')
+            rankName = rankName.replace('js', 'Javascript')
+            rankName = rankName.replace('C / C++', 'C/C++')
+            rankName = rankName.replace('C#', '.NET')
+            rankName = rankName.replace('php', 'PHP')
+            rankName = rankName.replace('nsfw', 'NSFW')
+            rankName = rankName.replace('ASM', 'Assembler')
+            rankName = rankName.replace('python', 'Python')
+            rankName = rankName.replace('Autoit', 'AutoIt')
 
             if not rankName in rankList:
-                await self.bot.say(':x: Couldn\'t find that rank!')
+                await self.bot.say(':x: Couldn\'t find that rank! Use `:ranks` to list all available ranks')
                 return
 
             rank = discord.utils.get(ctx.message.server.roles, name=rankName)
