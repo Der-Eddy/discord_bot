@@ -491,7 +491,7 @@ class utility():
 
     @commands.command(pass_context=True, aliases=['rank'])
     async def ranks(self, ctx, *rankName: str):
-        '''Beitritt eines bestimmten Ranges, funktioniert nur auf den Coding Lounge Server
+        '''Beitritt einer bestimmten Rolle, funktioniert nur auf den Coding Lounge Server
 
         Beispiel:
         -----------
@@ -524,6 +524,24 @@ class utility():
             return
         else:
             rankName = ' '.join(rankName)
+            #Avoiding some common pitfalls ...
+            rankName.replace('HTML/CSS', 'HTML / CSS')
+            rankName.replace('HTML', 'HTML / CSS')
+            rankName.replace('CSS', 'HTML / CSS')
+            rankName.replace('javascript', 'Javascript')
+            rankName.replace('JavaScript', 'Javascript')
+            rankName.replace('js', 'Javascript')
+            rankName.replace('C / C++', 'C/C++')
+            rankName.replace('C++', 'C/C++')
+            rankName.replace('C', 'C/C++')
+            rankName.replace('C#', '.NET')
+            rankName.replace('php', 'PHP')
+            rankName.replace('nsfw', 'NSFW')
+            rankName.replace('ASM', 'Assembler')
+            rankName.replace('python', 'Python')
+            rankName.replace('autoit', 'AutoIt')
+            rankName.replace('Autoit', 'AutoIt')
+
             if not rankName in rankList:
                 await self.bot.say(':x: Couldn\'t find that rank!')
                 return
