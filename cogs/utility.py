@@ -505,7 +505,7 @@ class utility():
             return
 
         rankList = ['HTML / CSS', 'Javascript', 'C/C++', '.NET', 'PHP', 'NSFW',
-                    'Java', 'Gourmet', 'Assembler', 'Python', 'Math']
+                    'Java', 'Gourmet', 'Assembler', 'Python', 'Math', 'AutoIt']
 
         if len(rankName) == 0:
             rolesList = ''
