@@ -44,10 +44,10 @@ Command und Aliases | Beschreibung | Nutzung
 `:timer`, `:reminder` | Setzt einen Timer und benachrichtigt dann einen | `:timer 13m Pizza`, `:timer 2h`
 `:source`| Zeigt den Quellcode für einen Befehl auf GitHub an | `:source kawaii`
 `:commands`| Zeigt an wie oft welcher Command benutzt wurde seit dem letzten Startup | `:commands`
-`:roleUsers`| Listet alle Benutzer einer Rolle auf | `:role Admins`
+`:roleUsers`| Listet alle Benutzer einer Rolle auf | `:roleUsers Admins`
 `:games` | Zeigt welche Spiele wie oft auf dem Server gerade gespielt werden | `:games`
 `:spoiler` | Erstellt ein GIF Bild welches beim Hover einen Spoiler Text anzeigt | `:spoiler`
-`:ranks`, `:rank`, `:role`, `:roles` | Beitritt eines bestimmten Ranges, funktioniert nur auf den Coding Lounge Server | `:ranks`, ':ranks Python'
+`:ranks`, `:rank`, `:role`, `:roles` | Beitritt eines bestimmten Ranges, funktioniert nur auf den Coding Lounge Server | `:ranks`, `:ranks Python'`
 
 ### Anime ###
 
