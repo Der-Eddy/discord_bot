@@ -47,7 +47,7 @@ Command und Aliases | Beschreibung | Nutzung
 `:roleUsers`| Listet alle Benutzer einer Rolle auf | `:roleUsers Admins`
 `:games` | Zeigt welche Spiele wie oft auf dem Server gerade gespielt werden | `:games`
 `:spoiler` | Erstellt ein GIF Bild welches beim Hover einen Spoiler Text anzeigt | `:spoiler`
-`:ranks`, `:rank`, `:role`, `:roles` | Beitritt eines bestimmten Ranges, funktioniert nur auf den Coding Lounge Server | `:ranks`, `:ranks Python'`
+`:ranks`, `:rank`, `:role`, `:roles` | Auflistung aller Ränge oder beitritt eines bestimmten Ranges | `:ranks`, `:ranks Python'`
 
 ### Anime ###
 
