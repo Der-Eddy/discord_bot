@@ -500,10 +500,12 @@ class utility():
 
         :ranks Python
         '''
-        rankList = ['HTML / CSS', 'Javascript', 'C/C++', '.NET', 'PHP', 'NSFW',
-                    'Java', 'Gourmet', 'Assembler', 'Python', 'Math', 'AutoIt']
+        codingLoungeID = '161637499939192832'
+        rankList = ['HTML + CSS', 'Javascript', 'C++ / C', '.NET', 'PHP', 'NSFW',
+                    'Java', 'Gourmet', 'assembler', 'Python', 'Math', 'AutoIt',
+                    'Member']
 
-        if len(rankName) == 0 and ctx.message.server.id != '357603732634075136' or ''.join(rankName) == 'all':
+        if len(rankName) == 0 and ctx.message.server.id != codingLoungeID or ''.join(rankName) == 'all':
             rolesList = '`'
             for roleServer in ctx.message.server.roles:
                 if not roleServer.is_everyone:
@@ -516,7 +518,7 @@ class utility():
             embed.set_thumbnail(url=ctx.message.server.icon_url)
             embed.add_field(name='Ranks', value=rolesList + '`', inline=True)
             await self.bot.say(embed=embed)
-        elif len(rankName) == 0 and ctx.message.server.id == '357603732634075136':
+        elif len(rankName) == 0 and ctx.message.server.id == codingLoungeID:
             rolesList = '`'
             for role in rankList:
                 count = 0
@@ -530,19 +532,19 @@ class utility():
             embed.set_footer(text='Use the ":rank RANKNAME" command to join a rank')
             embed.add_field(name='Ranks', value=rolesList + '`', inline=True)
             await self.bot.say(embed=embed)
-        elif ctx.message.server.id != '357603732634075136':
+        elif ctx.message.server.id != codingLoungeID:
             await self.bot.say(':x: This command only works on the Coding Lounge Server!')
-        elif ctx.message.server.id == '357603732634075136':
+        elif ctx.message.server.id == codingLoungeID:
             rankName = ' '.join(rankName)
             #Avoiding some common pitfalls ... and some if checks ...
-            rankName = rankName.replace('HTML/CSS', 'HTML / CSS')
+            rankName = rankName.replace('HTML / CSS', 'HTML + CSS')
             rankName = rankName.replace('javascript', 'Javascript')
             rankName = rankName.replace('js', 'Javascript')
-            rankName = rankName.replace('C / C++', 'C/C++')
+            rankName = rankName.replace('C / C++', 'C++ / C')
             rankName = rankName.replace('C#', '.NET')
             rankName = rankName.replace('php', 'PHP')
             rankName = rankName.replace('nsfw', 'NSFW')
-            rankName = rankName.replace('ASM', 'Assembler')
+            rankName = rankName.replace('ASM', 'assembler')
             rankName = rankName.replace('python', 'Python')
             rankName = rankName.replace('Autoit', 'AutoIt')
 
