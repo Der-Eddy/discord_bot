@@ -16,7 +16,7 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '0.18.2'
+__version__ = '0.18.3'
 
 logger = logging.getLogger('discord')
 #logger.setLevel(logging.DEBUG)
@@ -127,6 +127,9 @@ async def on_command(command, ctx):
 @bot.event
 async def on_message(message):
     if message.author.bot or message.author.id in loadconfig.__blacklist__:
+        return
+    if message.channel.is_private:
+        await bot.send_message(message.channel, ':x: Sorry, but I don\'t accept commands through direct messages! Please use the `#bots` channel of your corresponding server!')
         return
     if bot.dev == True and message.author.id != loadconfig.__adminid__:
         return
