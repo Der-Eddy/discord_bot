@@ -103,6 +103,7 @@ Command und Aliases | Beschreibung | Nutzung
 `:removereactions` | Entfernt alle Emoji Reactions von einer Nachricht. **MOD ONLY** | `:removereactions 247386709505867776`
 `:permissions` | Listet alle Rechte des Bots auf. **ADMIN OR BOT OWNER ONLY** | `:permissions`
 `:hierarchy` | Listet die Rollen-Hierarchie des derzeitigen Servers auf. **ADMIN OR BOT OWNER ONLY** | `:hierarchy`
+`:setrank`, `:setrole` | Vergibt einen Rang an einem Benutzer. **MOD ONLY** | `:setrole @Der-Eddy#6508 Member`
 
 ### Admin ###
 

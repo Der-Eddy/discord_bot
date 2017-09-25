@@ -192,5 +192,23 @@ class mod():
             msg += role[1] + '\n'
         await self.bot.say(msg)
 
+    @commands.command(pass_context=True, hidden=True, alies=['setrole'])
+    @checks.has_permissions('manage_roles')
+    async def setrank(self, ctx, member: discord.Member=None, *rankName: str):
+        '''Vergibt einen Rang an einem Benutzer
+
+        Beispiel:
+        -----------
+
+        :setrole @Der-Eddy#6508 Member
+        '''
+        rank = discord.utils.get(ctx.message.server.roles, name=' '.join(rankName))
+        if member is not None:
+            await self.bot.add_roles(member, rank)
+            await self.bot.say(f':white_check_mark: Rolle **{rank.name}** wurde an **{member.name}** verteilt')
+        else:
+            await self.bot.say(':no_entry: Du musst einen Benutzer angeben!')
+
+
 def setup(bot):
     bot.add_cog(mod(bot))
