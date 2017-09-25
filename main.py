@@ -16,7 +16,7 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '0.18.7'
+__version__ = '0.18.8'
 
 logger = logging.getLogger('discord')
 #logger.setLevel(logging.DEBUG)
@@ -160,7 +160,8 @@ async def on_member_join(member):
             emojis = [':wave:', ':congratulations:', ':wink:', ':new:', ':cool:', ':white_check_mark:', ':tada:']
             await bot.send_message(member.server.default_channel, '{0} Willkommen {1} auf Der-Eddys Discord Server! Für weitere Informationen, wie unsere nsfw Channel :underage: , besuche unseren <#165973433086115840> Channel.'.format(random.choice(emojis), member.mention))
     elif member.server.id == '161637499939192832':
-        await bot.add_roles(member, 'Member')
+        rank = discord.utils.get(member.server.roles, name='Member')
+        await bot.add_roles(member, rank)
 
 @bot.event
 async def on_member_remove(member):
