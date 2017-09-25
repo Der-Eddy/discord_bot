@@ -36,7 +36,7 @@ Command und Aliases | Beschreibung | Nutzung
 `:github` | Verlinkt zu diesem GitHub Repo | `:github`
 `:about`, `:info` | Informationen über Shinobu Oshino | `:about`
 `:log`, `:archive` | Archiviert den Log des derzeitigen Channels und läd diesen als Attachment hoch | `:log 10`
-`:invite` | Verschickt einen Invite für den Server des Bot Autors | `:invite`
+`:invite` | Erstellt einen Invite Link für den derzeitigen Channel | `:invite`
 `:whois` | Gibt Informationen über einen Benutzer aus | `:whois @Der-Eddy#6508`
 `:emoji`, `:e` | Gibt eine vergrößerte Version eines angegebenen Emojis zurück | `:emoji Emilie`
 `:emojis`| Gibt alle Emojis aus auf welche der Bot Zugriff hat | `:emojis`

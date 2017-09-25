@@ -226,11 +226,11 @@ class utility():
             seconds = str(error)[34:]
             await self.bot.say(f':alarm_clock: Cooldown! Versuche es in {seconds} erneut')
 
-    @commands.command()
-    async def invite(self):
-        '''Verschickt einen Invite für den Server des Bot Autors'''
-        permInvite = 'https://discord.gg/kPMbPDc'
-        msg = ':cool: Der-Eddys Discord Server (for Shinobu-chan support)' + permInvite
+    @commands.command(pass_context=True)
+    async def invite(self, ctx):
+        '''Erstellt einen Invite Link für den derzeitigen Channel'''
+        invite = await self.bot.create_invite(ctx.message.channel, unique=False)
+        msg = f'Invite Link für **#{ctx.message.channel.name}** auf Server **{ctx.message.server.name}**:\n{invite}'
         await self.bot.say(msg)
 
     @commands.command(pass_context=True)
