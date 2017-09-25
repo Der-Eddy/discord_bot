@@ -6,8 +6,8 @@
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/Der-Eddy/discord_bot/master/LICENSE)
 [![Discord Server](https://img.shields.io/badge/Support-Discord%20Server-blue.svg)](https://discord.gg/kPMbPDc)
 
-This is mostly a german discord chat bot made with [discord.py](https://github.com/Rapptz/discord.py).  
-If you are looking for a python discord bot to host for yourself, you should rather take a look at [Red Bot](https://github.com/Twentysix26/Red-DiscordBot). Shinobu is only meant to be run on my own server.
+**ATTENTION:** This is mostly a german discord chat bot made with [discord.py](https://github.com/Rapptz/discord.py).  
+If you are looking for a python discord bot to host for yourself, you should rather take a look at [Red Bot](https://github.com/Twentysix26/Red-DiscordBot) if you want a highly customizable self-hosted python bot. Shinobu is only meant to be run on my own server.
 
 Commands List
 -------------
