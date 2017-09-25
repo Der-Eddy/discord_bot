@@ -209,6 +209,23 @@ class mod():
         else:
             await self.bot.say(':no_entry: Du musst einen Benutzer angeben!')
 
+    @commands.command(pass_context=True, hidden=True, alies=['rmrole'])
+    @checks.has_permissions('manage_roles')
+    async def rmrank(self, ctx, member: discord.Member=None, *rankName: str):
+        '''Entfernt einen Rang von einem Benutzer
+
+        Beispiel:
+        -----------
+
+        :rmrole @Der-Eddy#6508 Member
+        '''
+        rank = discord.utils.get(ctx.message.server.roles, name=' '.join(rankName))
+        if member is not None:
+            await self.bot.remove_roles(member, rank)
+            await self.bot.say(f':white_check_mark: Rolle **{rank.name}** wurde von **{member.name}** entfernt')
+        else:
+            await self.bot.say(':no_entry: Du musst einen Benutzer angeben!')
+
 
 def setup(bot):
     bot.add_cog(mod(bot))
