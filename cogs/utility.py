@@ -513,7 +513,7 @@ class utility():
                     for member in ctx.message.server.members:
                         if roleServer in member.roles:
                             count += 1
-                    rolesList += f'{roleServer.name:30}{count} Member\n'
+                    rolesList += f'{roleServer.name:30}{count} Members\n'
             embed = discord.Embed(color=0xf1c40f) #Golden
             embed.set_thumbnail(url=ctx.message.server.icon_url)
             embed.add_field(name='Ranks', value=rolesList + '`', inline=True)
@@ -526,7 +526,7 @@ class utility():
                 for member in ctx.message.server.members:
                     if roleServer in member.roles:
                         count += 1
-                rolesList += f'{role:20}{count} Member\n'
+                rolesList += f'{role:20}{count} Members\n'
             embed = discord.Embed(color=0x3498db) #Blue
             embed.set_thumbnail(url=ctx.message.server.icon_url)
             embed.set_footer(text='Use the ":rank RANKNAME" command to join a rank')
