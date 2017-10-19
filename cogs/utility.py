@@ -504,8 +504,9 @@ class utility():
             await self.bot.say(':x: This command only works on the Coding Lounge Server!')
             return
 
-        rankList = ['HTML / CSS', 'Javascript', 'C/C++', '.NET', 'PHP', 'NSFW',
-                    'Java', 'Gourmet', 'Assembler', 'Python', 'Math', 'AutoIt']
+        rankList = ['HTML + CSS', 'Javascript', 'C/C++', '.NET', 'PHP', 'NSFW',
+                    'Java', 'Gourmet', 'Assembler', 'Python', 'Math', 'AutoIt', 
+                    'Clash']
 
         if len(rankName) == 0:
             rolesList = ''
