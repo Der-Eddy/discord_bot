@@ -502,8 +502,8 @@ class utility():
         '''
         codingLoungeID = '161637499939192832'
         rankList = ['HTML + CSS', 'Javascript', 'C++ / C', '.NET', 'PHP', 'NSFW',
-                    'Java', 'Gourmet', 'assembler', 'Python', 'Math', 'AutoIt',
-                    'Member']
+                    'Java', 'Gourmet', 'Assembler', 'Python', 'Math', 'AutoIt',
+                    'Member', 'Clash']
 
         if len(rankName) == 0 and ctx.message.server.id != codingLoungeID or ''.join(rankName) == 'all':
             rolesList = '`'
