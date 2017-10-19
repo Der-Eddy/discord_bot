@@ -226,11 +226,11 @@ class utility():
             seconds = str(error)[34:]
             await self.bot.say(f':alarm_clock: Cooldown! Versuche es in {seconds} erneut')
 
-    @commands.command()
-    async def invite(self):
-        '''Verschickt einen Invite für den Server des Bot Autors'''
-        permInvite = 'https://discord.gg/kPMbPDc'
-        msg = ':cool: Der-Eddys Discord Server (for Shinobu-chan support)' + permInvite
+    @commands.command(pass_context=True)
+    async def invite(self, ctx):
+        '''Erstellt einen Invite Link für den derzeitigen Channel'''
+        invite = await self.bot.create_invite(ctx.message.channel, unique=False)
+        msg = f'Invite Link für **#{ctx.message.channel.name}** auf Server **{ctx.message.server.name}**:\n{invite}'
         await self.bot.say(msg)
 
     @commands.command(pass_context=True)
@@ -403,7 +403,7 @@ class utility():
         await self.bot.say(final_url)
 
     @commands.command(pass_context=True, hidden=True)
-    async def role(self, ctx, *roleName: str):
+    async def roleUsers(self, ctx, *roleName: str):
         '''Listet alle Benutzer einer Rolle auf'''
         roleName = ' '.join(roleName)
         role = discord.utils.get(ctx.message.server.roles, name=roleName)
@@ -489,9 +489,9 @@ class utility():
 
         os.remove(path)
 
-    @commands.command(pass_context=True, aliases=['rank'])
+    @commands.command(pass_context=True, aliases=['rank', 'role', 'roles'])
     async def ranks(self, ctx, *rankName: str):
-        '''Beitritt eines bestimmten Ranges, funktioniert nur auf den Coding Lounge Server
+        '''Auflistung aller Ränge oder beitritt eines bestimmten Ranges
 
         Beispiel:
         -----------
@@ -500,33 +500,56 @@ class utility():
 
         :ranks Python
         '''
-        if ctx.message.server.id != '357603732634075136': #Coding Lounge 2.0
-            await self.bot.say(':x: This command only works on the Coding Lounge Server!')
-            return
+        codingLoungeID = '161637499939192832'
+        rankList = ['HTML + CSS', 'Javascript', 'C++ / C', '.NET', 'PHP', 'NSFW',
+                    'Java', 'Gourmet', 'assembler', 'Python', 'Math', 'AutoIt',
+                    'Member', 'Clash']
 
-        rankList = ['HTML + CSS', 'Javascript', 'C/C++', '.NET', 'PHP', 'NSFW',
-                    'Java', 'Gourmet', 'Assembler', 'Python', 'Math', 'AutoIt', 
-                    'Clash']
-
-        if len(rankName) == 0:
-            rolesList = ''
+        if len(rankName) == 0 and ctx.message.server.id != codingLoungeID or ''.join(rankName) == 'all':
+            rolesList = '`'
+            for roleServer in ctx.message.server.roles:
+                if not roleServer.is_everyone:
+                    count = 0
+                    for member in ctx.message.server.members:
+                        if roleServer in member.roles:
+                            count += 1
+                    rolesList += f'{roleServer.name:30}{count} Members\n'
+            embed = discord.Embed(color=0xf1c40f) #Golden
+            embed.set_thumbnail(url=ctx.message.server.icon_url)
+            embed.add_field(name='Ranks', value=rolesList + '`', inline=True)
+            await self.bot.say(embed=embed)
+        elif len(rankName) == 0 and ctx.message.server.id == codingLoungeID:
+            rolesList = '`'
             for role in rankList:
                 count = 0
                 roleServer = discord.utils.get(ctx.message.server.roles, name=role)
                 for member in ctx.message.server.members:
                     if roleServer in member.roles:
                         count += 1
-                rolesList += '{:20}{} Member\n'.format(role, count)
-            embed = discord.Embed(color=0xf1c40f) #Golden
+                rolesList += f'{role:20}{count} Members\n'
+            embed = discord.Embed(color=0x3498db) #Blue
             embed.set_thumbnail(url=ctx.message.server.icon_url)
-            embed.set_footer(text='Use the ":rank {RANKNAME}" command to join a rank')
-            embed.add_field(name='Ranks', value=rolesList, inline=True)
+            embed.set_footer(text='Use the ":rank RANKNAME" command to join a rank')
+            embed.add_field(name='Ranks', value=rolesList + '`', inline=True)
             await self.bot.say(embed=embed)
-            return
-        else:
+        elif ctx.message.server.id != codingLoungeID:
+            await self.bot.say(':x: This command only works on the Coding Lounge Server!')
+        elif ctx.message.server.id == codingLoungeID:
             rankName = ' '.join(rankName)
+            #Avoiding some common pitfalls ... and some if checks ...
+            rankName = rankName.replace('HTML / CSS', 'HTML + CSS')
+            rankName = rankName.replace('javascript', 'Javascript')
+            rankName = rankName.replace('js', 'Javascript')
+            rankName = rankName.replace('C / C++', 'C++ / C')
+            rankName = rankName.replace('C#', '.NET')
+            rankName = rankName.replace('php', 'PHP')
+            rankName = rankName.replace('nsfw', 'NSFW')
+            rankName = rankName.replace('ASM', 'assembler')
+            rankName = rankName.replace('python', 'Python')
+            rankName = rankName.replace('Autoit', 'AutoIt')
+
             if not rankName in rankList:
-                await self.bot.say(':x: Couldn\'t find that rank!')
+                await self.bot.say(':x: Couldn\'t find that rank! Use `:ranks` to list all available ranks')
                 return
 
             rank = discord.utils.get(ctx.message.server.roles, name=rankName)

@@ -36,7 +36,7 @@ class forum():
     @commands.command(aliases=['epvp'])
     @commands.cooldown(1, 5, commands.cooldowns.BucketType.server)
     async def epvpis(self, user: str):
-        '''Sucht nach einem Benutzernamen auf Elitepvpers
+        '''Search for an username on elitepvpers.com
 
         Beispiel:
         -----------
@@ -53,22 +53,22 @@ class forum():
                 root = ET.fromstring(await r.text())
                 if len(root) > 0:
                     embed = discord.Embed(color=0xf1c40f) #golden
-                    embed.set_footer(text='Es können maximal 15 Accounts gefunden werden')
+                    embed.set_footer(text='A maximum of 15 user can be displayed')
                     embed.set_thumbnail(url='https://abload.de/img/epvp_shield_hiresyskb3.png')
-                    msg = ':ok: Ich konnte {} Accounts finden!'.format(len(root))
+                    msg = ':ok: I could find {} user!'.format(len(root))
                     for i in root:
                         userURL = 'https://www.elitepvpers.com/forum/member.php?u=' + i.attrib['userid']
                         embed.add_field(name=i.text, value=userURL, inline=False)
                     await self.bot.say(msg, embed=embed)
                 else:
-                    msg = f':no_entry: Ich konnte keine Epvp Accounts zu **{username}** finden :sweat:'
+                    msg = f':no_entry: Couldn\'t find any user **{username}** :sweat:'
                     await self.bot.say(msg)
 
     @epvpis.error
     async def epvpis_error(self, error, ctx):
         if isinstance(error, commands.errors.CommandOnCooldown):
             seconds = str(error)[34:]
-            await self.bot.say(f':alarm_clock: Cooldown! Versuche es in {seconds} erneut')
+            await self.bot.say(f':alarm_clock: Cooldown! Try again in {seconds}')
 
     @commands.command(pass_context=True, aliases=['verify'])
     @commands.cooldown(1, 5, commands.cooldowns.BucketType.server)

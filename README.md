@@ -6,8 +6,8 @@
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/Der-Eddy/discord_bot/master/LICENSE)
 [![Discord Server](https://img.shields.io/badge/Support-Discord%20Server-blue.svg)](https://discord.gg/kPMbPDc)
 
-This is mostly a german discord chat bot made with [discord.py](https://github.com/Rapptz/discord.py).  
-If you are looking for a python discord bot to host for yourself, you should rather take a look at [Red Bot](https://github.com/Twentysix26/Red-DiscordBot). Shinobu is only meant to be run on my own server.
+**ATTENTION:** This is mostly a german discord chat bot made with [discord.py](https://github.com/Rapptz/discord.py).  
+If you are looking for a python discord bot to host for yourself, you should rather take a look at [Red Bot](https://github.com/Twentysix26/Red-DiscordBot) if you want a highly customizable self-hosted python bot. Shinobu is only meant to be run on my own server.
 
 Commands List
 -------------
@@ -36,7 +36,7 @@ Command und Aliases | Beschreibung | Nutzung
 `:github` | Verlinkt zu diesem GitHub Repo | `:github`
 `:about`, `:info` | Informationen über Shinobu Oshino | `:about`
 `:log`, `:archive` | Archiviert den Log des derzeitigen Channels und läd diesen als Attachment hoch | `:log 10`
-`:invite` | Verschickt einen Invite für den Server des Bot Autors | `:invite`
+`:invite` | Erstellt einen Invite Link für den derzeitigen Channel | `:invite`
 `:whois` | Gibt Informationen über einen Benutzer aus | `:whois @Der-Eddy#6508`
 `:emoji`, `:e` | Gibt eine vergrößerte Version eines angegebenen Emojis zurück | `:emoji Emilie`
 `:emojis`| Gibt alle Emojis aus auf welche der Bot Zugriff hat | `:emojis`
@@ -44,10 +44,10 @@ Command und Aliases | Beschreibung | Nutzung
 `:timer`, `:reminder` | Setzt einen Timer und benachrichtigt dann einen | `:timer 13m Pizza`, `:timer 2h`
 `:source`| Zeigt den Quellcode für einen Befehl auf GitHub an | `:source kawaii`
 `:commands`| Zeigt an wie oft welcher Command benutzt wurde seit dem letzten Startup | `:commands`
-`:role`| Listet alle Benutzer einer Rolle auf | `:role Admins`
+`:roleUsers`| Listet alle Benutzer einer Rolle auf | `:roleUsers Admins`
 `:games` | Zeigt welche Spiele wie oft auf dem Server gerade gespielt werden | `:games`
 `:spoiler` | Erstellt ein GIF Bild welches beim Hover einen Spoiler Text anzeigt | `:spoiler`
-`:ranks`, `:rank` | Beitritt eines bestimmten Ranges, funktioniert nur auf den Coding Lounge Server | `:ranks`, ':ranks Python'
+`:ranks`, `:rank`, `:role`, `:roles` | Auflistung aller Ränge oder beitritt eines bestimmten Ranges | `:ranks`, `:ranks Python'`
 
 ### Anime ###
 
@@ -103,6 +103,8 @@ Command und Aliases | Beschreibung | Nutzung
 `:removereactions` | Entfernt alle Emoji Reactions von einer Nachricht. **MOD ONLY** | `:removereactions 247386709505867776`
 `:permissions` | Listet alle Rechte des Bots auf. **ADMIN OR BOT OWNER ONLY** | `:permissions`
 `:hierarchy` | Listet die Rollen-Hierarchie des derzeitigen Servers auf. **ADMIN OR BOT OWNER ONLY** | `:hierarchy`
+`:setrank`, `:setrole` | Vergibt einen Rang an einem Benutzer. **MOD ONLY** | `:setrole @Der-Eddy#6508 Member`
+`:rmrank`, `:rmrole` | Entfernt einen Rang von einem Benutzer. **MOD ONLY** | `:rmrole @Der-Eddy#6508 Member`
 
 ### Admin ###
 

@@ -1,5 +1,7 @@
 import sys
+import os
 import discord
+import asyncio
 import aiohttp
 from discord.ext import commands
 from memory_profiler import profile, memory_usage

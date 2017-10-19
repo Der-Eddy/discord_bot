@@ -16,7 +16,7 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '0.17.12'
+__version__ = '0.18.9'
 
 logger = logging.getLogger('discord')
 #logger.setLevel(logging.DEBUG)
@@ -126,7 +126,12 @@ async def on_command(command, ctx):
 
 @bot.event
 async def on_message(message):
-    if message.author.bot or message.author.id in loadconfig.__blacklist__ or message.server.id == '110373943822540800':
+    if message.author.bot or message.author.id in loadconfig.__blacklist__:
+        return
+    if message.channel.is_private:
+        await bot.send_message(message.channel, ':x: Sorry, but I don\'t accept commands through direct messages! Please use the `#bots` channel of your corresponding server!')
+        return
+    if bot.dev == True and message.author.id != loadconfig.__adminid__:
         return
     if bot.user.mentioned_in(message) and message.mention_everyone is False:
         if 'help' in message.content.lower():
@@ -154,6 +159,9 @@ async def on_member_join(member):
         if loadconfig.__greetmsg__ == 'True':
             emojis = [':wave:', ':congratulations:', ':wink:', ':new:', ':cool:', ':white_check_mark:', ':tada:']
             await bot.send_message(member.server.default_channel, '{0} Willkommen {1} auf Der-Eddys Discord Server! Für weitere Informationen, wie unsere nsfw Channel :underage: , besuche unseren <#165973433086115840> Channel.'.format(random.choice(emojis), member.mention))
+    elif member.server.id == '161637499939192832':
+        rank = discord.utils.get(member.server.roles, name='Member')
+        await bot.add_roles(member, rank)
 
 @bot.event
 async def on_member_remove(member):
