@@ -155,7 +155,13 @@ class admin():
 
         #mem_usage = memory_usage(-1)
         #await self.bot.say(mem_usage)
-        await self.bot.say('<:faeSad:298772756127023104>')
+        #await self.bot.say('<:faeSad:298772756127023104>')
+
+        msg = await self.bot.say('Reaction Test')
+        await self.bot.add_reaction(msg, '👀')
+        await self.bot.add_reaction(msg, '🍭')
+        res = await self.bot.wait_for_reaction(user=ctx.message.author, timeout=30.0, message=msg)
+        await self.bot.say(f'{res.user} reacted with {res.reaction.emoji}!')
 
     @test.error
     async def test_error(self, error, ctx):

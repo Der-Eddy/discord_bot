@@ -5,6 +5,7 @@ import asyncio
 import aiohttp
 import discord
 from discord.ext import commands
+import xml.etree.ElementTree as ET
 import loadconfig
 
 class anime():
@@ -180,6 +181,25 @@ class anime():
 
         msg = f'{emoji} Ich bewerte **{waifuName}** als **{rating}/10**'
         await self.bot.say(msg)
+
+    @commands.command(pass_context=True, aliases=['anime', 'mal', 'myanimelist'])
+    async def animesearch(self, ctx, *animeName: str):
+        '''Sucht auf myanimelist.net nach einem Anime und gibt die Basis-Informationen zurück
+
+        Beispiel:
+        -----------
+
+        :anime Mushishi
+        '''
+        api = 'https://myanimelist.net/api/anime/search.xml?q='
+        url = api + '+'.join(animeName)
+        print(url)
+        auth = aiohttp.BasicAuth('DerEddy', '2asav32s3p2e2zk0hqs4e76eizn428gc')
+        async with aiohttp.post(url, auth=auth, headers = self.bot.userAgentHeaders) as r:
+            if r.status == 200:
+                root = ET.fromstring(await r.text())
+                import pprint
+                pprint.pprint(root)
 
     @commands.command(pass_context=True, hidden=True)
     async def imgur(self, ctx, amount: int = None):
