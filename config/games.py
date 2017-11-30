@@ -9,7 +9,7 @@ __games__ = [
     'try :kawaii',
     'with async',
     'with Karen-chan',
-    'on {servers} Server',
+    'on {guilds} Server',
     'with {members} Member'
 ]
 __gamesTimer__ = 2 * 60 #2 minutes
