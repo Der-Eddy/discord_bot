@@ -14,7 +14,7 @@ def _check_permissions(ctx, permissions_needed):
     return getattr(permission, permissions_needed, False)
 
 def _check_is_bot_server(msg):
-    return msg.server.id == loadconfig.__botserverid__
+    return msg.guild.id == loadconfig.__botserverid__
 
 # Actual functions for the descorators
 def is_bot_owner():

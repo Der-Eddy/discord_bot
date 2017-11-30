@@ -101,16 +101,15 @@ async def on_ready():
         bot.dev = False
     print(f'Dev Mode: {bot.dev}')
     print('------')
-    #for cog in loadconfig.__cogs__:
-    #    try:
-    #        bot.load_extension(cog)
-    #    except Exception:
-    #        print(f'Couldn\'t load cog {cog}')
+    for cog in loadconfig.__cogs__:
+        try:
+            bot.load_extension(cog)
+        except Exception:
+            print(f'Couldn\'t load cog {cog}')
     bot.commands_used = Counter()
     bot.startTime = time.time()
     bot.botVersion = __version__
     bot.userAgentHeaders = {'User-Agent': f'linux:shinobu_discordbot:v{__version__} (by Der-Eddy)'}
-    bot.owner = discord.utils.find(lambda u: u.id == loadconfig.__adminid__, bot.get_all_members())
     bot.gamesLoop = asyncio.ensure_future(_randomGame())
     _setupDatabase('reaction.db')
 
@@ -135,7 +134,7 @@ async def on_message(message):
     if isinstance(message.channel, discord.DMChannel):
         await message.author.send(':x: Sorry, but I don\'t accept commands through direct messages! Please use the `#bots` channel of your corresponding server!')
         return
-    if bot.dev and message.author.id != loadconfig.__adminid__:
+    if bot.dev and not await bot.is_owner(message.author):
         return
     if bot.user.mentioned_in(message) and message.mention_everyone is False:
         if 'help' in message.content.lower():
@@ -161,7 +160,7 @@ async def on_member_join(member):
             await bot.owner.send(f'Benutzer **{member}** automatisch gekickt')
         memberExtra = '{0} - *{1} ({2})*'.format(member.mention, member, member.id)
         if loadconfig.__greetmsg__ != 0:
-            channel = discord.utils.get(member.guild.channels, id=loadconfig.__greetmsg__)
+            channel = member.guild.get_channel(loadconfig.__greetmsg__)
             emojis = [':wave:', ':congratulations:', ':wink:', ':new:', ':cool:', ':white_check_mark:', ':tada:']
             await channel.send('{0} Willkommen {1} auf Der-Eddys Discord Server! Für weitere Informationen, wie unsere nsfw Channel :underage: , besuche unseren <#165973433086115840> Channel.'.format(random.choice(emojis), member.mention))
     elif member.guild.id == 161637499939192832:
@@ -173,7 +172,7 @@ async def on_member_remove(member):
     if member.guild.id == loadconfig.__botserverid__ and not bot.dev:
         memberExtra = '{0} - *{1} ({2})*'.format(member.mention, member, member.id)
         if loadconfig.__greetmsg__ != 0:
-            channel = discord.utils.get(member.guild.channels, id=loadconfig.__greetmsg__)
+            channel = member.guild.get_channel(loadconfig.__greetmsg__)
             await channel.send(f'<:faeSad:298772756127023104> **{member.name}** verließ unseren Server.')
 
 @bot.event
@@ -239,7 +238,7 @@ async def on_command_error(error, ctx):
 @bot.command(hidden=True, aliases=['quit_backup'])
 async def shutdown_backup(ctx):
     '''Fallback if mod cog couldn't load'''
-    if ctx.author.id == loadconfig.__adminid__:
+    if await ctx.bot.is_owner(ctx.author):
         await ctx.send('**:ok:** Bye!')
         bot.logout()
         sys.exit(0)

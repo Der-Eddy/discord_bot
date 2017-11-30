@@ -1,12 +1,11 @@
 try:
-    from config.config import __token__, __prefix__, __adminid__, __kawaiichannel__, __botlogchannel__, __botserverid__, __greetmsg__, __selfassignrole__, __cookieJar__, __discourseAPIKey__
+    from config.config import __token__, __prefix__, __kawaiichannel__, __botlogchannel__, __botserverid__, __greetmsg__, __selfassignrole__, __cookieJar__, __discourseAPIKey__
 except ImportError:
     #Heorku stuff
     import os
     __token__ = os.environ.get('DISCORD_TOKEN')
     __prefix__ = os.environ.get('DISCORD_PREFIX')
     __botserverid__ = int(os.environ.get('DISCORD_BOTSERVERID'))
-    __adminid__ = int(os.environ.get('DISCORD_ADMINID'))
     __kawaiichannel__ = int(os.environ.get('DISCORD_KAWAIICHANNEL'))
     __botlogchannel__ = int(os.environ.get('DISCORD_BOTLOGCHANNEL'))
     __greetmsg__ = os.environ.get('DISCORD_GREETMSG')
