@@ -2,5 +2,6 @@
 __cogs__ = [
     'cogs.admin',
     'cogs.mod',
-    'cogs.fun'
+    'cogs.fun',
+    'cogs.anime'
     ]
