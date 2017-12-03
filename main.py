@@ -96,7 +96,7 @@ async def on_connect():
         bot.dev = True
     else:
         bot.dev = False
-        
+
 @bot.event
 async def on_ready():
     print('Logged in as')
@@ -219,7 +219,7 @@ async def on_error(event, *args, **kwargs):
 @bot.event
 async def on_command_error(error, ctx):
     if isinstance(error, commands.NoPrivateMessage):
-        await ctx.message.author.send('This command cannot be used in private messages.')
+        await ctx.author.send('This command cannot be used in private messages.')
     elif isinstance(error, commands.DisabledCommand):
         await ctx.channel.send(':x: Dieser Command wurde deaktiviert')
     elif isinstance(error, commands.CommandInvokeError):

@@ -136,31 +136,12 @@ class admin():
         msg = f'Invite für **{guild.name}** ({guild.id})\n{invite.url}'
         await ctx.author.send(msg)
 
-    # @commands.command(pass_context=True, hidden=True)
-    # @commands.cooldown(1, 10, commands.cooldowns.BucketType.channel)
-    # @checks.is_bot_owner()
-    # async def test(self, ctx):
-    #     '''Test Test Test'''
-    #
-    #     #bReturn = self.bot.gamesLoop.cancel()
-    #     #await self.bot.say(bReturn)
-    #
-    #     #mem_usage = memory_usage(-1)
-    #     #await self.bot.say(mem_usage)
-    #     #await self.bot.say('<:faeSad:298772756127023104>')
-    #
-    #     msg = await self.bot.say('Reaction Test')
-    #     await self.bot.add_reaction(msg, '👀')
-    #     await self.bot.add_reaction(msg, '🍭')
-    #     res = await self.bot.wait_for_reaction(user=ctx.message.author, timeout=30.0, message=msg)
-    #     await self.bot.say(f'{res.user} reacted with {res.reaction.emoji}!')
-    #
-    # @test.error
-    # async def test_error(self, error, ctx):
-    #     if isinstance(error, commands.errors.CommandOnCooldown):
-    #         #await self.bot.say(str(error))
-    #         seconds = str(error)[34:]
-    #         await self.bot.say(f':alarm_clock: Cooldown! Versuche es in {seconds} erneut')
+    @commands.command(hidden=True)
+    @commands.cooldown(1, 10, commands.cooldowns.BucketType.channel)
+    async def test(self, ctx):
+        '''Test Test Test'''
+        ctx.send('Test')
+        raise discord.GatewayNotFound()
 
 def setup(bot):
     bot.add_cog(admin(bot))
