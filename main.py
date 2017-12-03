@@ -91,14 +91,17 @@ async def _fileCheck(msg):
         return msg
 
 @bot.event
-async def on_ready():
-    print('Logged in as')
-    print(f'Bot-Name: {bot.user.name}')
-    print(f'Bot-ID: {bot.user.id}')
+async def on_connect():
     if bot.user.id == 204966267147255808:
         bot.dev = True
     else:
         bot.dev = False
+        
+@bot.event
+async def on_ready():
+    print('Logged in as')
+    print(f'Bot-Name: {bot.user.name}')
+    print(f'Bot-ID: {bot.user.id}')
     print(f'Dev Mode: {bot.dev}')
     print('------')
     for cog in loadconfig.__cogs__:

@@ -6,7 +6,6 @@ import aiohttp
 from discord.ext import commands
 from memory_profiler import profile, memory_usage
 import loadconfig
-import checks
 
 class admin():
     '''Befehle für den Bot Admin'''

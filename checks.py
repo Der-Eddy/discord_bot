@@ -5,6 +5,7 @@ import loadconfig
 # Internal Checks
 def _check_is_owner(msg):
     return msg.author.id == loadconfig.__adminid__
+    #return await msg.guild.me.is_owner(msg.author)
 
 def _check_permissions(ctx, permissions_needed):
     msg = ctx.message
