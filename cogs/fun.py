@@ -56,12 +56,11 @@ class fun():
     async def neko(self, ctx):
         '''Zufällige Katzen Bilder nyan~'''
         #http://discordpy.readthedocs.io/en/latest/faq.html#what-does-blocking-mean
-        async with aiohttp.get('http://random.cat/meow') as r:
-            if r.status == 200:
-                js = await r.json()
+        async with aiohttp.ClientSession() as cs:
+            async with cs.get('http://random.cat/meow') as r:
+                res = await r.json()
                 emojis = [':cat2: ', ':cat: ', ':heart_eyes_cat: ']
-                msg = random.choice(emojis) + js['file']
-                await ctx.send(msg)
+                await ctx.send(random.choice(emojis) + res['file'])
 
 
     @commands.command(aliases=['rand'])
@@ -142,13 +141,13 @@ class fun():
         :xkcd random
         '''
         apiUrl = 'https://xkcd.com{}info.0.json'
-        async with aiohttp.get(apiUrl.format('/')) as r:
-            if r.status == 200:
+        async with aiohttp.ClientSession() as cs:
+            async with cs.get(apiUrl.format('/')) as r:
                 js = await r.json()
                 if ''.join(searchterm) == 'random':
                     randomComic = random.randint(0, js['num'])
                     print(apiUrl.format('/' + str(randomComic) + '/'))
-                    async with aiohttp.get(apiUrl.format('/' + str(randomComic) + '/')) as r:
+                    async with cs.get(apiUrl.format('/' + str(randomComic) + '/')) as r:
                         if r.status == 200:
                             js = await r.json()
                 comicUrl = 'https://xkcd.com/{}/'.format(js['num'])

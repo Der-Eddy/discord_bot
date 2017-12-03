@@ -222,7 +222,8 @@ Weitere Tipps folgen
 Full list of requirements
 -------------
 
-    discord.py
+    python>=3.6.0
+    discord.py>=1.0.0
     aiohttp
     websockets
     chardet
