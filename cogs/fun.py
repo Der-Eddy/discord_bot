@@ -146,7 +146,6 @@ class fun():
                 js = await r.json()
                 if ''.join(searchterm) == 'random':
                     randomComic = random.randint(0, js['num'])
-                    print(apiUrl.format('/' + str(randomComic) + '/'))
                     async with cs.get(apiUrl.format('/' + str(randomComic) + '/')) as r:
                         if r.status == 200:
                             js = await r.json()
