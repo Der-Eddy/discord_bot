@@ -13,8 +13,8 @@ class fun():
     def __init__(self, bot):
         self.bot = bot
 
-    async def __error(self, ctx, error):
-        print('Error in {0.command.qualified_name}: {1}'.format(ctx, error))
+    # async def __error(self, ctx, error):
+    #     print('Error in {0.command.qualified_name}: {1}'.format(ctx, error))
 
     def userOnline(self, memberList):
         online = []

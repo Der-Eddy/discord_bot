@@ -15,8 +15,8 @@ class forum():
         self.bot = bot
         self.discourseURL = 'https://www.kokoro-ko.de'
 
-    async def __error(self, ctx, error):
-        print('Error in {0.command.qualified_name}: {1}'.format(ctx, error))
+    # async def __error(self, ctx, error):
+    #     print('Error in {0.command.qualified_name}: {1}'.format(ctx, error))
 
     @staticmethod
     async def _getDiscordTag(username, userAgentHeaders):
