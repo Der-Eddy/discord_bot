@@ -86,6 +86,9 @@ class utility():
     def __init__(self, bot):
         self.bot = bot
 
+    async def __error(self, ctx, error):
+        print('Error in {0.command.qualified_name}: {1}'.format(ctx, error))
+
     @staticmethod
     def _newImage(width, height, color):
         return Image.new("L", (width, height), color)
@@ -94,7 +97,7 @@ class utility():
     def _getRoles(roles):
         string = ''
         for role in roles:
-            if not role.is_everyone:
+            if not role.is_default():
                 string += f'{role.mention}, '
         if string is '':
             return 'None'
@@ -111,7 +114,7 @@ class utility():
         else:
             return string[:1000] #The maximum allowed charcter amount for embed fields
 
-    @commands.command(pass_context=True, aliases=['s', 'uptime', 'up'])
+    @commands.command(aliases=['s', 'uptime', 'up'])
     async def status(self, ctx):
         '''Infos über den Bot'''
         timeUp = time.time() - self.bot.startTime
@@ -119,78 +122,78 @@ class utility():
         minutes = (timeUp / 60) % 60
         seconds = timeUp % 60
 
-        admin = ''
+        admin = self.bot.get_user(self.bot.owner_id)
         users = 0
         channel = 0
-        try:
+        if len(self.bot.commands_used.items()):
             commandsChart = sorted(self.bot.commands_used.items(), key=lambda t: t[1], reverse=False)
             topCommand = commandsChart.pop()
             commandsInfo = '{} (Top-Command: {} x {})'.format(sum(self.bot.commands_used.values()), topCommand[1], topCommand[0])
-        except IndexError:
+        else:
             commandsInfo = str(sum(self.bot.commands_used.values()))
-        botMember = ctx.message.server.get_member(self.bot.user.id)
-        for s in self.bot.servers:
-            users += len(s.members)
-            channel += len(s.channels)
-            if not admin: admin = s.get_member(loadconfig.__adminid__)
+        for guild in self.bot.guilds:
+            users += len(guild.members)
+            channel += len(guild.channels)
 
-        embed = discord.Embed(color=botMember.top_role.colour)
+        embed = discord.Embed(color=ctx.me.top_role.colour)
         embed.set_footer(text='Dieser Bot ist Open-Source auf GitHub: https://github.com/Der-Eddy/discord_bot')
-        embed.set_thumbnail(url=self.bot.user.avatar_url)
+        embed.set_thumbnail(url=ctx.me.avatar_url)
         embed.add_field(name='Admin', value=admin, inline=False)
         embed.add_field(name='Uptime', value='{0:.0f} Stunden, {1:.0f} Minuten und {2:.0f} Sekunden\n'.format(hours, minutes, seconds), inline=False)
         embed.add_field(name='Beobachtete Benutzer', value=users, inline=True)
-        embed.add_field(name='Beobachtete Server', value=len(self.bot.servers), inline=True)
+        embed.add_field(name='Beobachtete Server', value=len(self.bot.guilds), inline=True)
         embed.add_field(name='Beobachtete Channel', value=channel, inline=True)
         embed.add_field(name='Ausgeführte Commands', value=commandsInfo, inline=True)
         embed.add_field(name='Bot Version', value=self.bot.botVersion, inline=True)
         embed.add_field(name='Discord.py Version', value=discord.__version__, inline=True)
         embed.add_field(name='Python Version', value=platform.python_version(), inline=True)
-        embed.add_field(name='Speicher Auslastung', value='{} MB'.format(round(memory_usage(-1)[0], 3)), inline=True)
-        embed.add_field(name='Betriebssystem', value='{} {} {}'.format(platform.system(), platform.release(), platform.version()), inline=False)
-        await self.bot.say('**:information_source:** Informationen über diesen Bot:', embed=embed)
+        # embed.add_field(name='Speicher Auslastung', value=f'{round(memory_usage(-1)[0], 3)} MB', inline=True)
+        embed.add_field(name='Betriebssystem', value=f'{platform.system()} {platform.release()} {platform.version()}', inline=False)
+        await ctx.send('**:information_source:** Informationen über diesen Bot:', embed=embed)
 
-    @commands.command(pass_context=True)
+    @commands.command()
     async def ping(self, ctx):
         '''Misst die Response Time'''
         ping = ctx.message
-        pong = await self.bot.say('**:ping_pong:** Pong!')
-        delta = pong.timestamp - ping.timestamp
+        pong = await ctx.send('**:ping_pong:** Pong!')
+        delta = pong.created_at - ping.created_at
         delta = int(delta.total_seconds() * 1000)
-        await self.bot.edit_message(pong, '**:ping_pong:** Pong! (%d ms)' % delta)
+        await pong.edit(content=f':ping_pong: Pong! ({delta} ms)\n*Discord WebSocket Latenz: {round(self.bot.latency, 5)} ms*')
 
-    @commands.command()
-    @commands.cooldown(1, 2, commands.cooldowns.BucketType.server)
-    async def github(self):
-        '''In progress'''
-        url = 'https://api.github.com/repos/Der-Eddy/discord_bot/stats/commit_activity'
-        async with aiohttp.get(url) as r:
-            if r.status == 200:
-                content = await r.json()
-                commitCount = 0
-                for week in content:
-                    commitCount += week['total']
+    # @commands.command()
+    # @commands.cooldown(1, 2, commands.cooldowns.BucketType.guild)
+    # async def github(self, ctx):
+    #     '''In progress'''
+    #     url = 'https://api.github.com/repos/Der-Eddy/discord_bot/stats/commit_activity'
+    #     async with aiohttp.get(url) as r:
+    #         if r.status == 200:
+    #             content = await r.json()
+    #             commitCount = 0
+    #             for week in content:
+    #                 commitCount += week['total']
+    #
+    #             embed = discord.Embed(title='GitHub Repo Stats', type='rich', color=0xf1c40f) #Golden
+    #             embed.set_thumbnail(url='https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png')
+    #             embed.add_field(name='Commits', value=commitCount, inline=True)
+    #             embed.add_field(name='Link', value='https://github.com/Der-Eddy/discord_bot')
+    #             await ctx.send(embed=embed)
+    #         else:
+    #             await ctx.send(':x: Konnte nicht aufs GitHub API zugreifen\nhttps://github.com/Der-Eddy/discord_bot')
 
-                embed = discord.Embed(title='GitHub Repo Stats', type='rich', color=0xf1c40f) #Golden
-                embed.set_thumbnail(url='https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png')
-                embed.add_field(name='Commits', value=commitCount, inline=True)
-                embed.add_field(name='Link', value='https://github.com/Der-Eddy/discord_bot')
-                await self.bot.say(embed=embed)
-            else:
-                await self.bot.say(':x: Konnte nicht aufs GitHub API zugreifen\nhttps://github.com/Der-Eddy/discord_bot')
-
-    @commands.command(pass_context=True, aliases=['info'])
+    @commands.command(aliases=['info'])
     async def about(self, ctx):
         '''Info über mich'''
-        msg = '**:information_source: Shinobu Oshino (500 Jahre alt)**\n'
-        msg += '```Shinobu Oshino gehört wohl zu den mysteriösesten Charakteren in Bakemonogatari. Sie war bis vorletzten Frühling ein hochangesehener, adeliger, skrupelloser Vampir, der weit über 500 Jahre alt ist. Gnadenlos griff sie Menschen an und massakrierte sie nach Belieben. Auch Koyomi Araragi wurde von ihr attackiert und schwer verwundet. Nur durch das Eingreifen des Exorzisten Meme Oshino konnte Kiss-shot Acerola-orion Heart-under-blade, wie sie damals bekannt war, bezwungen werden. Dabei verlor sie jedoch all ihre Erinnerungen und wurde von einer attraktiven, erwachsenen Frau in einen unschuldigen Mädchenkörper verwandelt.\n\n'
-        msg += 'Seitdem lebt sie zusammen mit Meme in einem verlassenen Gebäude und wurde von ihm aufgenommen. Er gab ihr auch ihren Namen Shinobu. Wann immer man Shinobu sehen sollte, sitzt sie nur mit traurigem Gesicht in einer Ecke und träumt vor sich hin. Sie spricht nicht und wirkt auch sonst meistens sehr abwesend. Einzig und allein zu Koyomi scheint sie ein freundschaftliches Verhältnis zu haben. Das Vampirblut in ihr verlangt immer noch nach Opfern und da sich Koyomi in gewisser Art und Weise schuldig fühlt, stellt er sich regelmäßig als Nahrungsquelle für Shinobu zur Verfügung.\n\n'
-        msg += 'Quelle: http://www.anisearch.de/character/6598,shinobu-oshino/```\n\n'
-        msg += 'Dieser Bot ist außerdem **:free:**, Open-Source, in Python und mit Hilfe von discord.py geschrieben! <https://github.com/Der-Eddy/discord_bot>\n'
-        with open('img/ava.png', 'rb') as f:
-            await self.bot.send_file(ctx.message.channel, f, content=msg)
+        msg = 'Shinobu Oshino gehört wohl zu den mysteriösesten Charakteren in Bakemonogatari. Sie war bis vorletzten Frühling ein hochangesehener, adeliger, skrupelloser Vampir, der weit über 500 Jahre alt ist. Gnadenlos griff sie Menschen an und massakrierte sie nach Belieben. Auch Koyomi Araragi wurde von ihr attackiert und schwer verwundet. Nur durch das Eingreifen des Exorzisten Meme Oshino konnte Kiss-shot Acerola-orion Heart-under-blade, wie sie damals bekannt war, bezwungen werden. Dabei verlor sie jedoch all ihre Erinnerungen und wurde von einer attraktiven, erwachsenen Frau in einen unschuldigen Mädchenkörper verwandelt.\n\n'
+        msg += 'Seitdem lebt sie zusammen mit Meme in einem verlassenen Gebäude und wurde von ihm aufgenommen. Er gab ihr auch ihren Namen Shinobu. Das Vampirblut in ihr verlangt immer noch nach Opfern und da sich Koyomi in gewisser Art und Weise schuldig fühlt, stellt er sich regelmäßig als Nahrungsquelle für Shinobu zur Verfügung.\n\n'
+        msg += 'Quelle: http://www.anisearch.de/character/6598,shinobu-oshino/\n\n'
 
-    @commands.command(pass_context=True, aliases=['archive'])
+        embed = discord.Embed(color=ctx.me.top_role.colour)
+        embed.set_footer(text='Dieser Bot ist außerdem free, Open-Source, in Python und mit Hilfe von discord.py geschrieben! https://github.com/Der-Eddy/discord_bot\n')
+        embed.set_thumbnail(url=ctx.me.avatar_url)
+        embed.add_field(name='**:information_source: Shinobu Oshino (500 Jahre alt)**', value=msg, inline=False)
+        await ctx.send(embed=embed)
+
+    @commands.command(aliases=['archive'])
     @commands.cooldown(1, 60, commands.cooldowns.BucketType.channel)
     async def log(self, ctx, *limit: int):
         '''Archiviert den Log des derzeitigen Channels und läd diesen als Attachment hoch
@@ -200,40 +203,40 @@ class utility():
 
         :log 100
         '''
-        try:
-            limit = int(limit[0])
-        except IndexError:
+        if not limit:
             limit = 10
-        logFile = '{}.log'.format(ctx.message.channel)
+        else:
+            limit = limit[0]
+        logFile = f'{ctx.channel}.log'
         counter = 0
         with open(logFile, 'w', encoding='UTF-8') as f:
-            f.write('Archivierte Nachrichten vom Channel: {} am {}\n'.format(ctx.message.channel, ctx.message.timestamp.strftime('%d.%m.%Y %H:%M:%S')))
-            async for message in self.bot.logs_from(ctx.message.channel, limit=limit, before=ctx.message):
+            f.write(f'Archivierte Nachrichten vom Channel: {ctx.channel} am {ctx.message.created_at.strftime("%d.%m.%Y %H:%M:%S")}\n')
+            async for message in ctx.channel.history(limit=limit, before=ctx.message):
                 try:
-                    attachment = '[Angehängte Datei: {}]'.format(message.attachments[0]['url'])
+                    attachment = '[Angehängte Datei: {}]'.format(message.attachments[0].url)
                 except IndexError:
                     attachment = ''
-                f.write('{} {!s:20s}: {} {}\r\n'.format(message.timestamp.strftime('%d.%m.%Y %H:%M:%S'), message.author, message.clean_content, attachment))
+                f.write('{} {!s:20s}: {} {}\r\n'.format(message.created_at.strftime('%d.%m.%Y %H:%M:%S'), message.author, message.clean_content, attachment))
                 counter += 1
-        msg = ':ok: {} Nachrichten wurden archiviert!'.format(counter)
-        with open(logFile, 'rb') as f:
-            await self.bot.send_file(ctx.message.channel, f, content=msg)
+        msg = f':ok: {counter} Nachrichten wurden archiviert!'
+        f = discord.File(logFile)
+        await ctx.send(file=f, content=msg)
         os.remove(logFile)
 
     @log.error
     async def log_error(self, error, ctx):
         if isinstance(error, commands.errors.CommandOnCooldown):
             seconds = str(error)[34:]
-            await self.bot.say(f':alarm_clock: Cooldown! Versuche es in {seconds} erneut')
+            await ctx.send(f':alarm_clock: Cooldown! Versuche es in {seconds} erneut')
 
-    @commands.command(pass_context=True)
+    @commands.command()
     async def invite(self, ctx):
         '''Erstellt einen Invite Link für den derzeitigen Channel'''
-        invite = await self.bot.create_invite(ctx.message.channel, unique=False)
-        msg = f'Invite Link für **#{ctx.message.channel.name}** auf Server **{ctx.message.server.name}**:\n{invite}'
-        await self.bot.say(msg)
+        invite = await ctx.channel.create_invite(unique=False)
+        msg = f'Invite Link für **#{ctx.channel.name}** auf Server **{ctx.guild.name}**:\n`{invite}`'
+        await ctx.send(msg)
 
-    @commands.command(pass_context=True)
+    @commands.command()
     async def whois(self, ctx, member: discord.Member=None):
         '''Gibt Informationen über einen Benutzer aus
 
@@ -243,9 +246,9 @@ class utility():
         :whois @Der-Eddy#6508
         '''
         if member == None:
-            member = ctx.message.author
+            member = ctx.author
 
-        if member.top_role.is_everyone:
+        if member.top_role.is_default():
             topRole = 'everyone' #to prevent @everyone spam
             topRoleColour = '#000000'
         else:
@@ -254,10 +257,10 @@ class utility():
 
         if member is not None:
             embed = discord.Embed(color=member.top_role.colour)
-            embed.set_footer(text='UserID: {}'.format(member.id))
+            embed.set_footer(text=f'UserID: {member.id}')
             embed.set_thumbnail(url=member.avatar_url)
             if member.name != member.display_name:
-                fullName = '{} ({})'.format(member, member.display_name)
+                fullName = f'{member} ({member.display_name})'
             else:
                 fullName = member
             embed.add_field(name=member.name, value=fullName, inline=False)
@@ -267,12 +270,12 @@ class utility():
             embed.add_field(name='Rollen', value=self._getRoles(member.roles), inline=True)
             embed.add_field(name='Rollenfarbe', value='{} ({})'.format(topRoleColour, topRole), inline=True)
             embed.add_field(name='Status', value=member.status, inline=True)
-            await self.bot.say('', embed=embed)
+            await ctx.send(embed=embed)
         else:
-            msg = '**:no_entry:** Du hast keinen Benutzer angegeben!'
-            await self.bot.say(msg)
+            msg = ':no_entry: Du hast keinen Benutzer angegeben!'
+            await ctx.send(msg)
 
-    @commands.command(pass_context=True, aliases=['e'])
+    @commands.command(aliases=['e'])
     async def emoji(self, ctx, emojiname: str):
         '''Gibt eine vergrößerte Version eines angegebenen Emojis zurück
 
@@ -281,52 +284,55 @@ class utility():
 
         :emoji Emilia
         '''
-        emoji = discord.utils.find(lambda e: e.name.lower() == emojiname.lower(), self.bot.get_all_emojis())
+        emoji = discord.utils.find(lambda e: e.name.lower() == emojiname.lower(), self.bot.emojis)
         if emoji:
             tempEmojiFile = 'tempEmoji.png'
-            async with aiohttp.get(emoji.url) as img:
-                with open(tempEmojiFile, 'wb') as f:
-                    f.write(await img.read())
-            with open(tempEmojiFile, 'rb') as f:
-                await self.bot.send_file(ctx.message.channel, f)
-            os.remove(tempEmojiFile)
+            async with aiohttp.ClientSession() as cs:
+                async with cs.get(emoji.url) as img:
+                    with open(tempEmojiFile, 'wb') as f:
+                        f.write(await img.read())
+                f = discord.File(tempEmojiFile)
+                await ctx.send(file=f)
+                os.remove(tempEmojiFile)
         else:
-            await self.bot.say(':x: Konnte das angegebene Emoji leider nicht finden :(')
+            await ctx.send(':x: Konnte das angegebene Emoji leider nicht finden :(')
 
     @commands.command(aliases=['emotes'])
-    async def emojis(self):
+    async def emojis(self, ctx):
         '''Gibt alle Emojis aus auf welche der Bot Zugriff hat'''
         msg = ''
-        for emoji in self.bot.get_all_emojis():
+        for emoji in self.bot.emojis:
             if len(msg) + len(str(emoji)) > 1000:
-                await self.bot.say(msg)
+                await ctx.send(msg)
                 msg = ''
             msg += str(emoji)
-        await self.bot.say(msg)
+        await ctx.send(msg)
 
     @commands.command(pass_context=True, aliases=['serverinfo', 'guild', 'membercount'])
     async def server(self, ctx):
         '''Gibt Informationen über die derzeitge Discord Guild aus'''
-        emojis = self._getEmojis(ctx.message.server.emojis)
-        print(emojis)
-        roles = self._getRoles(ctx.message.server.role_hierarchy)
+        emojis = self._getEmojis(ctx.guild.emojis)
+        #print(emojis)
+        roles = self._getRoles(ctx.guild.role_hierarchy)
         embed = discord.Embed(color=0xf1c40f) #Golden
-        embed.set_thumbnail(url=ctx.message.server.icon_url)
+        embed.set_thumbnail(url=ctx.guild.icon_url)
         embed.set_footer(text='Es können evtl. Emojis fehlen')
-        embed.add_field(name='Name', value=ctx.message.server.name, inline=True)
-        embed.add_field(name='ID', value=ctx.message.server.id, inline=True)
-        embed.add_field(name='Besitzer', value=ctx.message.server.owner, inline=True)
-        embed.add_field(name='Region', value=ctx.message.server.region, inline=True)
-        embed.add_field(name='Mitglieder', value=ctx.message.server.member_count, inline=True)
-        embed.add_field(name='Erstellt am', value=ctx.message.server.created_at.strftime('%d.%m.%Y'), inline=True)
-        embed.add_field(name='Standard Channel', value=f'#{ctx.message.server.default_channel}', inline=True)
-        embed.add_field(name='AFK Voice Timeout', value=f'{int(ctx.message.server.afk_timeout / 60)} min', inline=True)
+        embed.add_field(name='Name', value=ctx.guild.name, inline=True)
+        embed.add_field(name='ID', value=ctx.guild.id, inline=True)
+        embed.add_field(name='Besitzer', value=ctx.guild.owner, inline=True)
+        embed.add_field(name='Region', value=ctx.guild.region, inline=True)
+        embed.add_field(name='Mitglieder', value=ctx.guild.member_count, inline=True)
+        embed.add_field(name='Erstellt am', value=ctx.guild.created_at.strftime('%d.%m.%Y'), inline=True)
+        if ctx.guild.system_channel:
+            embed.add_field(name='Standard Channel', value=f'#{ctx.guild.system_channel}', inline=True)
+        embed.add_field(name='AFK Voice Timeout', value=f'{int(ctx.guild.afk_timeout / 60)} min', inline=True)
+        embed.add_field(name='Guild Shard', value=ctx.guild.shard_id, inline=True)
         embed.add_field(name='Rollen', value=roles, inline=True)
         embed.add_field(name='Custom Emojis', value=emojis, inline=True)
-        await self.bot.say(embed=embed)
+        await ctx.send(embed=embed)
 
     #Shameful copied from https://github.com/Rapptz/RoboDanny/blob/b513a32dfbd4fdbd910f7f56d88d1d012ab44826/cogs/meta.py
-    @commands.command(pass_context=True, aliases=['reminder'])
+    @commands.command(aliases=['reminder'])
     @commands.cooldown(1, 30, commands.cooldowns.BucketType.user)
     async def timer(self, ctx, time : TimeParser, *, message=''):
         '''Setzt einen Timer und benachrichtigt dann einen
@@ -338,7 +344,6 @@ class utility():
 
         :timer 2h Stream startet
         '''
-        author = ctx.message.author
         reminder = None
         completed = None
         message = message.replace('@everyone', '@\u200beveryone').replace('@here', '@\u200bhere')
@@ -352,21 +357,21 @@ class utility():
 
         human_time = datetime.utcnow() - timedelta(seconds=time.seconds)
         human_time = TimeParser.human_timedelta(human_time)
-        await self.bot.say(reminder.format(author, human_time, message))
+        await ctx.send(reminder.format(ctx.author, human_time, message))
         await asyncio.sleep(time.seconds)
-        await self.bot.say(completed.format(author, message, human_time))
+        await ctx.send(completed.format(ctx.author, message, human_time))
 
     @timer.error
     async def timer_error(self, error, ctx):
         if isinstance(error, commands.BadArgument):
-            await self.bot.say(str(error))
+            await ctx.send(str(error))
         elif isinstance(error, commands.errors.CommandOnCooldown):
             seconds = str(error)[34:]
-            await self.bot.say(f':alarm_clock: Cooldown! Versuche es in {seconds} erneut')
+            await ctx.send(f':alarm_clock: Cooldown! Versuche es in {seconds} erneut')
 
     #Stolen from https://github.com/Rapptz/RoboDanny/blob/b513a32dfbd4fdbd910f7f56d88d1d012ab44826/cogs/meta.py
     @commands.command()
-    async def source(self, *, command: str = None):
+    async def source(self, ctx, *, command: str = None):
         '''Zeigt den Quellcode für einen Befehl auf GitHub an
 
         Beispiel:
@@ -376,12 +381,12 @@ class utility():
         '''
         source_url = 'https://github.com/Der-Eddy/discord_bot'
         if command is None:
-            await self.bot.say(source_url)
+            await ctx.send(source_url)
             return
 
         obj = self.bot.get_command(command.replace('.', ' '))
         if obj is None:
-            return await self.bot.say(':x: Konnte den Befehl nicht finden')
+            return await ctx.send(':x: Konnte den Befehl nicht finden')
 
         # since we found the command we're looking for, presumably anyway, let's
         # try to access the code itself
@@ -400,28 +405,28 @@ class utility():
         else:
             final_url = '<{}/blob/master/{}#L{}-L{}>\n```Python\n{}```'.format(source_url, location, firstlineno, firstlineno + len(lines) - 1, sourcecode)
 
-        await self.bot.say(final_url)
+        await ctx.send(final_url)
 
-    @commands.command(pass_context=True, hidden=True)
+    @commands.command(hidden=True)
     async def roleUsers(self, ctx, *roleName: str):
         '''Listet alle Benutzer einer Rolle auf'''
         roleName = ' '.join(roleName)
-        role = discord.utils.get(ctx.message.server.roles, name=roleName)
+        role = discord.utils.get(ctx.guild.roles, name=roleName)
         msg = ''
-        for member in ctx.message.server.members:
+        for member in ctx.guild.members:
             if role in member.roles:
                 msg += f'{member.id} | {member}\n'
 
         if msg == '':
-            await self.bot.say(':x: Konnte keinen Benutzer mit dieser Rolle finden!')
+            await ctx.send(':x: Konnte keinen Benutzer mit dieser Rolle finden!')
         else:
-            await self.bot.say(msg)
+            await ctx.send(msg)
 
-    @commands.command(pass_context=True)
+    @commands.command()
     async def games(self, ctx, *scope):
         '''Zeigt welche Spiele wie oft auf dem Server gerade gespielt werden'''
         games = Counter()
-        for member in ctx.message.server.members:
+        for member in ctx.guild.members:
             if member.game != None:
                 games[member.game] += 1
         msg = ':chart: Spiele die derzeit auf diesem Server gespielt werden\n'
@@ -436,16 +441,15 @@ class utility():
                 msg += f'+ {amount} andere'
                 break
         msg += '```'
-        await self.bot.say(msg)
+        await ctx.send(msg)
 
-    @commands.command(pass_context=True)
+    @commands.command()
     async def spoiler(self, ctx, *, text: str):
         '''Erstellt ein GIF Bild welches beim Hover einen Spoiler Text anzeigt'''
         #https://github.com/flapjax/FlapJack-Cogs/blob/master/spoiler/spoiler.py
-        message = ctx.message
-        content = '**' + message.author.display_name + '** hat einen Text gespoilert:'
+        content = '**' + ctx.author.display_name + '** hat einen Text gespoilert:'
         try:
-            await self.bot.delete_message(ctx.message)
+            await ctx.message.delete()
         except discord.errors.Forbidden:
             content += '\n*(Bitte lösche deinen eigenen Beitrag)*'
 
@@ -482,61 +486,62 @@ class utility():
             canvas = ImageDraw.Draw(img)
             canvas.multiline_text(margin, txt, font=font, fill=fontColor, spacing=4)
 
-        path = f'tmp\\{message.id}.gif'
+        path = f'tmp\\{ctx.message.id}.gif'
 
         spoilIMG[0].save(path, format='GIF', save_all=True, append_images=[spoilIMG[1]], duration=[0, 0xFFFF], loop=0)
-        await self.bot.send_file(ctx.message.channel, path, content=content)
+        f = discord.File(path)
+        await ctx.send(file=f, content=content)
 
         os.remove(path)
 
-    @commands.command(pass_context=True, aliases=['rank', 'role', 'roles'])
+    @commands.command(aliases=['rank', 'role', 'roles'])
     async def ranks(self, ctx, *rankName: str):
         '''Auflistung aller Ränge oder beitritt eines bestimmten Ranges
 
         Beispiel:
         -----------
 
-        :ranks
+        :rank
 
-        :ranks Python
+        :rank Python
         '''
-        codingLoungeID = '161637499939192832'
+        codingLoungeID = 161637499939192832
         rankList = ['HTML + CSS', 'Javascript', 'C++ / C', '.NET', 'PHP', 'NSFW',
                     'Java', 'Gourmet', 'Assembler', 'Python', 'Math', 'AutoIt',
-                    'Member', 'Clash']
+                    'Member', 'Clash', 'Books']
 
-        if len(rankName) == 0 and ctx.message.server.id != codingLoungeID or ''.join(rankName) == 'all':
+        if len(rankName) == 0 and ctx.guild.id != codingLoungeID or ''.join(rankName) == 'all':
             rolesList = '`'
-            for roleServer in ctx.message.server.roles:
-                if not roleServer.is_everyone:
+            for roleServer in ctx.guild.roles:
+                if not roleServer.is_default():
                     count = 0
-                    for member in ctx.message.server.members:
+                    for member in ctx.guild.members:
                         if roleServer in member.roles:
                             count += 1
                     rolesList += f'{roleServer.name:30}{count} Members\n'
             embed = discord.Embed(color=0xf1c40f) #Golden
-            embed.set_thumbnail(url=ctx.message.server.icon_url)
+            embed.set_thumbnail(url=ctx.guild.icon_url)
             embed.add_field(name='Ranks', value=rolesList + '`', inline=True)
-            await self.bot.say(embed=embed)
-        elif len(rankName) == 0 and ctx.message.server.id == codingLoungeID:
+            await ctx.send(embed=embed)
+        elif len(rankName) == 0 and ctx.guild.id == codingLoungeID:
             rolesList = '`'
             for role in rankList:
                 count = 0
-                roleServer = discord.utils.get(ctx.message.server.roles, name=role)
-                for member in ctx.message.server.members:
+                roleServer = discord.utils.get(ctx.guild.roles, name=role)
+                for member in ctx.guild.members:
                     if roleServer in member.roles:
                         count += 1
                 rolesList += f'{role:20}{count} Members\n'
             embed = discord.Embed(color=0x3498db) #Blue
-            embed.set_thumbnail(url=ctx.message.server.icon_url)
+            embed.set_thumbnail(url=ctx.guild.icon_url)
             embed.set_footer(text='Use the ":rank RANKNAME" command to join a rank')
             embed.add_field(name='Ranks', value=rolesList + '`', inline=True)
-            await self.bot.say(embed=embed)
-        elif ctx.message.server.id != codingLoungeID:
-            await self.bot.say(':x: This command only works on the Coding Lounge Server!')
-        elif ctx.message.server.id == codingLoungeID:
+            await ctx.send(embed=embed)
+        elif ctx.guild.id != codingLoungeID:
+            await ctx.send(':x: This command only works on the Coding Lounge Server!')
+        elif ctx.guild.id == codingLoungeID:
             rankName = ' '.join(rankName)
-            #Avoiding some common pitfalls ... and some if checks ...
+            #Isn't the best, but gets the job done
             rankName = rankName.replace('HTML / CSS', 'HTML + CSS')
             rankName = rankName.replace('javascript', 'Javascript')
             rankName = rankName.replace('js', 'Javascript')
@@ -547,28 +552,29 @@ class utility():
             rankName = rankName.replace('ASM', 'assembler')
             rankName = rankName.replace('python', 'Python')
             rankName = rankName.replace('Autoit', 'AutoIt')
+            rankName = rankName.replace('books', 'Books')
 
             if not rankName in rankList:
-                await self.bot.say(':x: Couldn\'t find that rank! Use `:ranks` to list all available ranks')
+                await ctx.send(':x: Couldn\'t find that rank! Use `:ranks` to list all available ranks')
                 return
 
-            rank = discord.utils.get(ctx.message.server.roles, name=rankName)
+            rank = discord.utils.get(ctx.guild.roles, name=rankName)
             if rank in ctx.message.author.roles:
                 try:
-                    await self.bot.remove_roles(ctx.message.author, rank)
+                    await ctx.author.remove_roles(rank)
                 except:
                     pass
-                await self.bot.say(f':negative_squared_cross_mark: Rank **{rank}** removed from **{ctx.message.author.mention}**')
+                await ctx.send(f':negative_squared_cross_mark: Rank **{rank}** removed from **{ctx.author.mention}**')
             else:
                 try:
-                    await self.bot.add_roles(ctx.message.author, rank)
+                    await ctx.author.add_roles(rank)
                 except:
                     pass
-                await self.bot.say(f':white_check_mark: Rank **{rank}** added to **{ctx.message.author.mention}**')
+                await ctx.send(f':white_check_mark: Rank **{rank}** added to **{ctx.author.mention}**')
 
     # This command needs to be at the end due to this name
     @commands.command()
-    async def commands(self):
+    async def commands(self, ctx):
         '''Zeigt an wie oft welcher Command benutzt wurde seit dem letzten Startup'''
         msg = ':chart: Liste der ausgeführten Befehle (seit letztem Startup)\n'
         msg += 'Insgesamt: {}\n'.format(sum(self.bot.commands_used.values()))
@@ -578,7 +584,7 @@ class utility():
         for name, amount in chart:
             msg += '{!s:15s}: {!s:>4s}\n'.format(name, amount)
         msg += '```'
-        await self.bot.say(msg)
+        await ctx.send(msg)
 
 def setup(bot):
     bot.add_cog(utility(bot))

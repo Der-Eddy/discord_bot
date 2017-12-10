@@ -38,8 +38,8 @@ class admin():
         async with aiohttp.get(''.join(url)) as img:
             with open(tempAvaFile, 'wb') as f:
                 f.write(await img.read())
-        with open(tempAvaFile, 'rb') as f:
-            await self.bot.edit_profile(avatar=f.read())
+        f = discord.File(tempAvaFile)
+        await self.bot.edit_profile(avatar=f.read())
         os.remove(tempAvaFile)
         asyncio.sleep(2)
         await ctx.send('**:ok:** Mein neuer Avatar!\n %s' % self.bot.user.avatar_url)

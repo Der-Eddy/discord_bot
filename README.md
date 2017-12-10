@@ -26,7 +26,6 @@ Command und Aliases | Beschreibung | Nutzung
 ----------------|--------------|-------
 `:epvpis`, `:epvp` | Sucht nach einem Benutzernamen auf Elitepvpers | `:epvpis Der-Eddy`
 `:epvpverify`, `:verify` | Verifiziert einen Discord Benutzer über Elitepvpers | `:epvpverify`, `:epvpverify Der-Eddy`
-`:kokoro`, `:search` | Gibt Informationen über einen Benutzer von kokoro-ko.de aus | `:kokoro`, `:kokoro Eddy`
 
 ### Utility ###
 
@@ -79,18 +78,6 @@ Command und Aliases | Beschreibung | Nutzung
 `:pun`, `:witz`, `:joke` | Weil jeder schlechte Witze mag | `:pun`
 `:tags`, `:tag` | Erstellt tags oder gibt diese aus | `:tags new hentai https://youtu.be/tg3rG-e6haw`, `:tags del 2`, `:tags hentai`
 
-### Steam ###
-
-Command und Aliases | Beschreibung | Nutzung
-----------------|--------------|-------
-`:steam` | Gibt Informationen zu einem Spiel bei Steam aus | `:steam 570`
-
-### Gwent ###
-
-Command und Aliases | Beschreibung | Nutzung
-----------------|--------------|-------
-`:gwent`, `:gwint`, `:gwentcard`| Gibt Informationen zu einer Gwent Karte aus | `:gwent Decoy`
-
 ### Mod ###
 
 Command und Aliases | Beschreibung | Nutzung
@@ -124,14 +111,6 @@ Command und Aliases | Beschreibung | Nutzung
 `:geninvite` | Generiert einen Invite für einen Server wenn möglich. **BOT OWNER ONLY** | `:geninvite 102817255661772800`
 
 
-
-
-Requirements
--------------
-Ihr benötigt mindestens Python 3.6 + [discord.py](https://github.com/Rapptz/discord.py) für diesen Bot und einen Discord Bot Account (siehe weiter unten).
-Zusätzlich wird `pytz` aus [PyPI](https://pypi.python.org/pypi/pytz/2016.6.1) benötigt.
-
-
 Run
 -------------
 Entweder ihr startet das Script direkt über `python3 main.py` oder erstellt eine systemd unit, ein Beispiel findet ihr unter `discord.service.example`:
@@ -153,12 +132,6 @@ Entweder ihr startet das Script direkt über `python3 main.py` oder erstellt ein
     WantedBy=multi-user.target
 
 Nach `/etc/systemd/system/discord.service` kopieren und anpassen. Nicht vergessen die Unit zu starten via `sudo systemctl start discord.service` bzw. Autostart via `sudo systemctl enable discord.service`.
-
-Bot Accounts
--------------
-Allgemeine Infos zu Discord Bot Accounts gibt es bei [discordapp.com/developers/](https://discordapp.com/developers/applications/me).  
-Einen Bot Account fügt man dann über diesen Link hinzu (CLIENT ID einfügen nicht vergessen):  
-`https://discordapp.com/oauth2/authorize?client_id=CLIENTID&scope=bot&permissions=0`
 
 
 Einstellungen
@@ -204,8 +177,7 @@ Erweiterungen (Cogs) die beim starten aktiviert werden sollen, kann man in `cogs
         'cogs.fun',
         'cogs.anime',
         'cogs.utility',
-        'cogs.forum',
-        'cogs.gwent'
+        'cogs.forum'
         ]
 
 
