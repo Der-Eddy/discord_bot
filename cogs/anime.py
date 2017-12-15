@@ -14,8 +14,8 @@ class anime():
     def __init__(self, bot):
         self.bot = bot
 
-    async def __error(self, ctx, error):
-        print('Error in {0.command.qualified_name}: {1}'.format(ctx, error))
+    # async def __error(self, ctx, error):
+    #     print('Error in {0.command.qualified_name}: {1}'.format(ctx, error))
 
     def checkRole(self, user, roleRec):
         ok = False
@@ -153,7 +153,7 @@ class anime():
         waifu = waifuName.lower()
         bestWaifus = ['kobeni', 'emilia', 'shinobu', 'karen', 'shouko', 'shoko',
                       'minori', 'chidori', 'sagiri', 'mashiro', 'last order',
-                      'saki', 'makoto', 'yui', 'nep', 'neptunia', 'taiga']
+                      'saki', 'makoto', 'yui', 'nep', 'nepgear', 'taiga']
         trashWaifus = ['shino', 'rikka']
         #this lists are highly biased, but who cares ¯\_(ツ)_/¯
         if waifu in bestWaifus:
