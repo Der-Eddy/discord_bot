@@ -551,7 +551,6 @@ class utility():
             rankName = rankName.replace('ASM', 'assembler')
             rankName = rankName.replace('python', 'Python')
             rankName = rankName.replace('Autoit', 'AutoIt')
-            rankName = rankName.replace('books', 'Books')
 
             if not rankName in rankList:
                 await ctx.send(':x: Couldn\'t find that rank! Use `:ranks` to list all available ranks')
