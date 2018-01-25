@@ -539,20 +539,40 @@ class utility():
         elif ctx.guild.id != codingLoungeID:
             await ctx.send(':x: This command only works on the Coding Lounge Server!')
         elif ctx.guild.id == codingLoungeID:
-            rankName = ' '.join(rankName)
-            #Isn't the best, but gets the job done
-            rankName = rankName.replace('HTML / CSS', 'HTML + CSS')
-            rankName = rankName.replace('javascript', 'Javascript')
-            rankName = rankName.replace('js', 'Javascript')
-            rankName = rankName.replace('C / C++', 'C++ / C')
-            rankName = rankName.replace('C#', '.NET')
-            rankName = rankName.replace('php', 'PHP')
-            rankName = rankName.replace('nsfw', 'NSFW')
-            rankName = rankName.replace('ASM', 'assembler')
-            rankName = rankName.replace('python', 'Python')
-            rankName = rankName.replace('Autoit', 'AutoIt')
-            rankName = rankName.replace('chess', 'Chess')
-            rankName = rankName.replace('books', 'Books')
+            synonyms = []
+            synonyms.append(['html / css', 'HTML + CSS'])
+            synonyms.append(['html + css', 'HTML + CSS'])
+            synonyms.append(['html', 'HTML + CSS'])
+            synonyms.append(['css', 'HTML + CSS'])
+            synonyms.append(['javascript', 'Javascript'])
+            synonyms.append(['js', 'Javascript'])
+            synonyms.append(['c / c++', 'C++ / C'])
+            synonyms.append(['c++', 'C++ / C'])
+            synonyms.append(['c', 'C++ / C'])
+            synonyms.append(['c#', '.NET'])
+            synonyms.append(['.net', '.NET'])
+            synonyms.append(['vs', '.NET'])
+            synonyms.append(['php', 'PHP'])
+            synonyms.append(['nsfw', 'NSFW'])
+            synonyms.append(['porn', 'NSFW'])
+            synonyms.append(['java', 'Java'])
+            synonyms.append(['gourmet', 'Gourmet'])
+            synonyms.append(['assembler', 'Assembler'])
+            synonyms.append(['asm', 'Assembler'])
+            synonyms.append(['python', 'Python'])
+            synonyms.append(['math', 'Math'])
+            synonyms.append(['autoit', 'AutoIt'])
+            synonyms.append(['clash', 'Clash'])
+            synonyms.append(['chess', 'Chess'])
+            synonyms.append(['books', 'Books'])
+            synonyms.append(['free games', 'Free Games'])
+
+            synonyms_dict = dict(synonyms)
+
+            try:
+                rankName = synonyms_dict[' '.join(rankName).lower()]
+            except KeyError:
+                rankName = ' '.join(rankName)
 
             if not rankName in rankList:
                 await ctx.send(':x: Couldn\'t find that rank! Use `:ranks` to list all available ranks')
