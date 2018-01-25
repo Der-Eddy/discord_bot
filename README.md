@@ -6,7 +6,8 @@
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/Der-Eddy/discord_bot/master/LICENSE)
 [![Discord Server](https://img.shields.io/badge/Support-Discord%20Server-blue.svg)](https://discord.gg/kPMbPDc)
 
-**ATTENTION:** This is mostly a german discord chat bot made with [discord.py](https://github.com/Rapptz/discord.py).  
+**ATTENTION: This bot uses the new rewriten version of [discord.py v1.0](https://github.com/Rapptz/discord.py/tree/rewrite), if you want to use my bot with the old legacy discord.py version check out the [legacy branch](https://github.com/Der-Eddy/discord_bot/tree/0.18.10-legacy).**
+This is mostly a german discord chat bot made with [discord.py v1.0](https://github.com/Rapptz/discord.py).  
 If you are looking for a python discord bot to host for yourself, you should rather take a look at [Red Bot](https://github.com/Twentysix26/Red-DiscordBot) if you want a highly customizable self-hosted python bot. Shinobu is only meant to be run on my own server.
 
 Commands List
@@ -25,7 +26,6 @@ Command und Aliases | Beschreibung | Nutzung
 ----------------|--------------|-------
 `:epvpis`, `:epvp` | Sucht nach einem Benutzernamen auf Elitepvpers | `:epvpis Der-Eddy`
 `:epvpverify`, `:verify` | Verifiziert einen Discord Benutzer über Elitepvpers | `:epvpverify`, `:epvpverify Der-Eddy`
-`:kokoro`, `:search` | Gibt Informationen über einen Benutzer von kokoro-ko.de aus | `:kokoro`, `:kokoro Eddy`
 
 ### Utility ###
 
@@ -78,24 +78,12 @@ Command und Aliases | Beschreibung | Nutzung
 `:pun`, `:witz`, `:joke` | Weil jeder schlechte Witze mag | `:pun`
 `:tags`, `:tag` | Erstellt tags oder gibt diese aus | `:tags new hentai https://youtu.be/tg3rG-e6haw`, `:tags del 2`, `:tags hentai`
 
-### Steam ###
-
-Command und Aliases | Beschreibung | Nutzung
-----------------|--------------|-------
-`:steam` | Gibt Informationen zu einem Spiel bei Steam aus | `:steam 570`
-
-### Gwent ###
-
-Command und Aliases | Beschreibung | Nutzung
-----------------|--------------|-------
-`:gwent`, `:gwint`, `:gwentcard`| Gibt Informationen zu einer Gwent Karte aus | `:gwent Decoy`
-
 ### Mod ###
 
 Command und Aliases | Beschreibung | Nutzung
 ----------------|--------------|-------
 `:purge`, `:prune` | Löscht mehere Nachrichten auf einmal. **MOD ONLY** | `:purge 100`
-`:nickname` | Ändert den Server Nickname vom Bot. **ADMIN ONLY** | `:nickname Shinobu`
+`:nickname` | Ändert den Server Nickname vom Bot. **MOD ONLY** | `:nickname Shinobu`
 `:kick` | Kickt ein Mitglied mit einer Begründung. **MOD ONLY** | `:kick @Der-Eddy#6508`, `:kick @Der-Eddy#6508 Spammt Werbung`
 `:ban` | Bannt ein Mitglied mit einer Begründung. **MOD ONLY** | `:ban @Der-Eddy#6508`, `:ban @Der-Eddy#6508 Spammt Werbung`
 `:unban` | Entbannt ein Mitglied mit einer Begründung. **MOD ONLY** | `:unban 102815825781596160`
@@ -103,8 +91,8 @@ Command und Aliases | Beschreibung | Nutzung
 `:removereactions` | Entfernt alle Emoji Reactions von einer Nachricht. **MOD ONLY** | `:removereactions 247386709505867776`
 `:permissions` | Listet alle Rechte des Bots auf. **ADMIN OR BOT OWNER ONLY** | `:permissions`
 `:hierarchy` | Listet die Rollen-Hierarchie des derzeitigen Servers auf. **ADMIN OR BOT OWNER ONLY** | `:hierarchy`
-`:setrank`, `:setrole` | Vergibt einen Rang an einem Benutzer. **MOD ONLY** | `:setrole @Der-Eddy#6508 Member`
-`:rmrank`, `:rmrole` | Entfernt einen Rang von einem Benutzer. **MOD ONLY** | `:rmrole @Der-Eddy#6508 Member`
+`:setrank`, `:setrole`, `:sr` | Vergibt einen Rang an einem Benutzer. **MOD ONLY** | `:setrole @Der-Eddy#6508 Member`
+`:rmrank`, `:rmrole`, `:removerole`, `:removerank` | Entfernt einen Rang von einem Benutzer. **MOD ONLY** | `:rmrole @Der-Eddy#6508 Member`
 
 ### Admin ###
 
@@ -121,14 +109,6 @@ Command und Aliases | Beschreibung | Nutzung
 `:echo` | Gibt eine Nachricht als Bot auf einem bestimmten Channel aus. **BOT OWNER ONLY** | `:echo 102817255661772800 Ich bin ein Bot!`
 `:discriminator` | Gibt Benutzer mit dem jeweiljigen Discriminator zurück. **BOT OWNER ONLY** | `:discriminator 6508`
 `:geninvite` | Generiert einen Invite für einen Server wenn möglich. **BOT OWNER ONLY** | `:geninvite 102817255661772800`
-
-
-
-
-Requirements
--------------
-Ihr benötigt mindestens Python 3.6 + [discord.py](https://github.com/Rapptz/discord.py) für diesen Bot und einen Discord Bot Account (siehe weiter unten).
-Zusätzlich wird `pytz` aus [PyPI](https://pypi.python.org/pypi/pytz/2016.6.1) benötigt.
 
 
 Run
@@ -153,12 +133,6 @@ Entweder ihr startet das Script direkt über `python3 main.py` oder erstellt ein
 
 Nach `/etc/systemd/system/discord.service` kopieren und anpassen. Nicht vergessen die Unit zu starten via `sudo systemctl start discord.service` bzw. Autostart via `sudo systemctl enable discord.service`.
 
-Bot Accounts
--------------
-Allgemeine Infos zu Discord Bot Accounts gibt es bei [discordapp.com/developers/](https://discordapp.com/developers/applications/me).  
-Einen Bot Account fügt man dann über diesen Link hinzu (CLIENT ID einfügen nicht vergessen):  
-`https://discordapp.com/oauth2/authorize?client_id=CLIENTID&scope=bot&permissions=0`
-
 
 Einstellungen
 -------------
@@ -166,11 +140,10 @@ Vor dem Start muss im Ordner `config` eine Datei namens `config.py` angelegt wer
 
     __token__ = 'INSERT BOT TOKEN HERE'
     __prefix__ = ':'
-    __botserverid__ = '102817255661772800' #Specifies the serverid from which the server-/modlog should be taken + some other nito features
-    __adminid__ = 'YOUR USERID i.e. 102815825781596160'
-    __kawaiichannel__ = '207909155556687872' #OPTIONAL specified a channel where the :kawaii commands gets this pinned messages
-    __greetmsg__ = 'False' #HARDCODED Enable/Disable greetmsg at the entry channel of __botserverid__
-    __selfassignrole__ = 'Blighttown' #OPTIONAL set to a role to be self assign-able
+    __botserverid__ = 102817255661772800 #Specifies the serverid from which the server-/modlog should be taken + some other nito features
+    __kawaiichannel__ = 207909155556687872 #OPTIONAL specified a channel where the :kawaii commands gets this pinned messages
+    __greetmsg__ = 102817255661772800 #HARDCODED Enable/Disable greetmsg at the default channel of my server
+    __selfassignrole__ = 'NSFW' #OPTIONAL set to a role to be self assign-able
     __discourseAPIKey__ = {'api_key': '9f0be26ea6a4f47dba6c627ee2f5aa139caa29f8b899bc96c3b7b94755a9363f', 'api_username': 'Eddy'} #OPTIONAL Needed for all discourse related commands
     __cookieJar__ = {'loginuuid': 'löaskdjfölkdfa65sdf46a5s4df56e1f23s1df32asd1f5ef1325s11bSJ9.ImRXcWNHeWI98sd5f4s65ef6s31h1fgjdfg6h54sdfasdfcvbcvb2465UrYlRORDYyTWREQThtYjBrcFEzd1wvbXZJRiswdlwvaWc5YkZSdDlMQUYzZEJIeE03SitsTFZhSFh5cGgrcHducXdzYjVMMTU5U0lGenNITitsYmdSSWIremlNU01UeVM5XC9ZaVpLSFBmaEkyU3NsZjQ1MVNDeHBvOGdaWWxGRlhmZ28raTlcL0RTYzlQaUJkc2N1alp4VW00dXJHMkd5UUttTnZQekZPa2Y1aE1qUjdHNVRwNkdyakhtNUtWc3VWYmUySVc0bkUyQ0pSWVMi.b6nMo5Q3hBMLauEsePPVNSdTJ8I5CqbZFDLrrln-oag', 'bbuserid': '5660970', 'bbpassword': '1753ec1889f70aa87845cc5bfd3b4409'} #OPTIONAL Needed for all elitepvpers related commands
 
@@ -203,8 +176,7 @@ Erweiterungen (Cogs) die beim starten aktiviert werden sollen, kann man in `cogs
         'cogs.fun',
         'cogs.anime',
         'cogs.utility',
-        'cogs.forum',
-        'cogs.gwent'
+        'cogs.forum'
         ]
 
 
@@ -221,7 +193,8 @@ Weitere Tipps folgen
 Full list of requirements
 -------------
 
-    discord.py
+    python>=3.6.0
+    discord.py>=1.0.0
     aiohttp
     websockets
     chardet
@@ -253,5 +226,3 @@ License
     LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
-
-Versions prior to 0.6.8 used the Unlicense <http://unlicense.org> license.

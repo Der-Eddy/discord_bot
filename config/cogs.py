@@ -1,10 +1,9 @@
 #Cogs to enable on Startup
 __cogs__ = [
-    'cogs.mod',
     'cogs.admin',
+    'cogs.mod',
     'cogs.fun',
     'cogs.anime',
-    'cogs.utility',
     'cogs.forum',
-    'cogs.steam'
+    'cogs.utility'
     ]
