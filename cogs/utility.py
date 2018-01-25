@@ -507,7 +507,7 @@ class utility():
         codingLoungeID = 161637499939192832
         rankList = ['HTML + CSS', 'Javascript', 'C++ / C', '.NET', 'PHP', 'NSFW',
                     'Java', 'Gourmet', 'Assembler', 'Python', 'Math', 'AutoIt',
-                    'Member', 'Clash', 'Books', 'Free Games']
+                    'Member', 'Clash', 'Books', 'Chess', 'Free Games']
 
         if len(rankName) == 0 and ctx.guild.id != codingLoungeID or ''.join(rankName) == 'all':
             rolesList = '`'
