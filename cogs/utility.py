@@ -566,6 +566,7 @@ class utility():
             synonyms.append(['chess', 'Chess'])
             synonyms.append(['books', 'Books'])
             synonyms.append(['free games', 'Free Games'])
+            synonyms.append(['free game', 'Free Games'])
 
             synonyms_dict = dict(synonyms)
 
