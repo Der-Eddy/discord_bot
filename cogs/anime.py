@@ -169,7 +169,9 @@ class anime():
             emoji = '<:Shinobu:303302053688770561>'
         elif waifu == 'mashiro':
             emoji = '<:mashiro:266233568626343936>'
-        elif waifu == 'nep' or waifu == 'neptunia':
+        elif waifu == 'sagiri':
+            emoji = '<:Sagiri:407630432319045634>'
+        elif waifu == 'nep' or waifu == 'neptunia' or waifu == 'nepgear':
             emoji = '<:nep:261230988758220822>'
         elif rating < 2:
             emoji = ':put_litter_in_its_place:'
