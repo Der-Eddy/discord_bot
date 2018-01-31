@@ -505,11 +505,17 @@ class utility():
         :rank Python
         '''
         codingLoungeID = 161637499939192832
-        rankList = ['HTML + CSS', 'Javascript', 'C++ / C', '.NET', 'PHP', 'NSFW',
+        wshbrID = 247830763649761282
+        codingRankList = ['HTML + CSS', 'Javascript', 'C++ / C', '.NET', 'PHP', 'NSFW',
                     'Java', 'Gourmet', 'Assembler', 'Python', 'Math', 'AutoIt',
                     'Member', 'Clash', 'Books', 'Chess', 'Free Games']
+        wshbrRankList = ['Chuunin', 'Genin']
+        if ctx.guild.id == codingLoungeID:
+            rankList = codingRankList
+        elif ctx.guild.id == wshbrID:
+            rankList = wshbrRankList
 
-        if len(rankName) == 0 and ctx.guild.id != codingLoungeID or ''.join(rankName) == 'all':
+        if len(rankName) == 0 and ctx.guild.id not in [codingLoungeID, wshbrID] or ''.join(rankName) == 'all':
             rolesList = '`'
             for roleServer in ctx.guild.roles:
                 if not roleServer.is_default():
@@ -522,7 +528,7 @@ class utility():
             embed.set_thumbnail(url=ctx.guild.icon_url)
             embed.add_field(name='Ranks', value=rolesList + '`', inline=True)
             await ctx.send(embed=embed)
-        elif len(rankName) == 0 and ctx.guild.id == codingLoungeID:
+        elif len(rankName) == 0 and ctx.guild.id in [codingLoungeID, wshbrID]:
             rolesList = '`'
             for role in rankList:
                 count = 0
@@ -536,9 +542,9 @@ class utility():
             embed.set_footer(text='Use the ":rank RANKNAME" command to join a rank')
             embed.add_field(name='Ranks', value=rolesList + '`', inline=True)
             await ctx.send(embed=embed)
-        elif ctx.guild.id != codingLoungeID:
+        elif ctx.guild.id not in [codingLoungeID, wshbrID]:
             await ctx.send(':x: This command only works on the Coding Lounge Server!')
-        elif ctx.guild.id == codingLoungeID:
+        elif ctx.guild.id in [codingLoungeID, wshbrID]:
             synonyms = []
             synonyms.append(['html / css', 'HTML + CSS'])
             synonyms.append(['html + css', 'HTML + CSS'])
@@ -567,6 +573,8 @@ class utility():
             synonyms.append(['books', 'Books'])
             synonyms.append(['free games', 'Free Games'])
             synonyms.append(['free game', 'Free Games'])
+            synonyms.append(['genin', 'Genin'])
+            synonyms.append(['chuunin', 'Chuunin'])
 
             synonyms_dict = dict(synonyms)
 
