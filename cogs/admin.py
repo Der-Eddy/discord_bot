@@ -113,7 +113,7 @@ class admin():
 
     @commands.command(hidden=True)
     async def discriminator(self, ctx, disc: str):
-        '''Gibt Benutzer mit dem jeweiljigen Discriminator zurück'''
+        '''Gibt Benutzer mit dem jeweiligen Discriminator zurück'''
 
         discriminator = disc
         memberList = ''
@@ -127,6 +127,18 @@ class admin():
             await ctx.send(memberList)
         else:
             await ctx.send(':x: Konnte niemanden finden')
+
+    @commands.command(hidden=True)
+    @commands.bot_has_permissions(manage_nicknames = True)
+    async def nickname(self, ctx, *name):
+        '''Ändert den Server Nickname vom Bot (BOT OWNER ONLY)'''
+        nickname = ' '.join(name)
+        await ctx.me.edit(nick=nickname)
+        if nickname:
+            msg = f':ok: Ändere meinen Server Nickname zu: **{nickname}**'
+        else:
+            msg = f':ok: Reset von meinem Server Nickname auf: **{ctx.me.name}**'
+        await ctx.send(msg)
 
     @commands.command(hidden=True)
     async def geninvite(self, ctx, serverid: str):

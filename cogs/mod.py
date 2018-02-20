@@ -40,20 +40,6 @@ class mod():
         await tmp.delete()
         await ctx.message.delete()
 
-
-    @commands.command(hidden=True)
-    @commands.has_permissions(manage_nicknames = True)
-    @commands.bot_has_permissions(manage_nicknames = True)
-    async def nickname(self, ctx, *name):
-        '''Ändert den Server Nickname vom Bot (MOD ONLY)'''
-        nickname = ' '.join(name)
-        await ctx.me.edit(nick=nickname)
-        if nickname:
-            msg = f':ok: Ändere meinen Server Nickname zu: **{nickname}**'
-        else:
-            msg = f':ok: Reset von meinem Server Nickname auf: **{ctx.me.name}**'
-        await ctx.send(msg)
-
     @commands.command(hidden=True)
     @commands.has_permissions(kick_members = True)
     @commands.bot_has_permissions(kick_members = True)

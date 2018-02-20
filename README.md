@@ -83,7 +83,6 @@ Command und Aliases | Beschreibung | Nutzung
 Command und Aliases | Beschreibung | Nutzung
 ----------------|--------------|-------
 `:purge`, `:prune` | Löscht mehere Nachrichten auf einmal. **MOD ONLY** | `:purge 100`
-`:nickname` | Ändert den Server Nickname vom Bot. **MOD ONLY** | `:nickname Shinobu`
 `:kick` | Kickt ein Mitglied mit einer Begründung. **MOD ONLY** | `:kick @Der-Eddy#6508`, `:kick @Der-Eddy#6508 Spammt Werbung`
 `:ban` | Bannt ein Mitglied mit einer Begründung. **MOD ONLY** | `:ban @Der-Eddy#6508`, `:ban @Der-Eddy#6508 Spammt Werbung`
 `:unban` | Entbannt ein Mitglied mit einer Begründung. **MOD ONLY** | `:unban 102815825781596160`
@@ -107,7 +106,8 @@ Command und Aliases | Beschreibung | Nutzung
 `:servers` | Listet die aktuellen verbundenen Server auf. **BOT OWNER ONLY** | `:servers`
 `:leaveserver` | Schaltet den Bot aus. **BOT OWNER ONLY** | `:leaveserver 102817255661772800`
 `:echo` | Gibt eine Nachricht als Bot auf einem bestimmten Channel aus. **BOT OWNER ONLY** | `:echo 102817255661772800 Ich bin ein Bot!`
-`:discriminator` | Gibt Benutzer mit dem jeweiljigen Discriminator zurück. **BOT OWNER ONLY** | `:discriminator 6508`
+`:discriminator` | Gibt Benutzer mit dem jeweiligen Discriminator zurück. **BOT OWNER ONLY** | `:discriminator 6508`
+`:nickname` | Ändert den Server Nickname vom Bot. **BOT OWNER ONLY** | `:nickname Shinobu`
 `:geninvite` | Generiert einen Invite für einen Server wenn möglich. **BOT OWNER ONLY** | `:geninvite 102817255661772800`
 
 
@@ -120,6 +120,7 @@ Entweder ihr startet das Script direkt über `python3 main.py` oder erstellt ein
     After=multi-user.target
     [Service]
     WorkingDirectory=/home/eddy/discord_bot
+    Environment="PYTHONHASHSEED=0"
     User=eddy
     Group=eddy
     ExecStart=/usr/bin/python3.6 /home/eddy/discord_bot/main.py
@@ -207,7 +208,7 @@ License
 -------------
     MIT License
 
-    Copyright (c) 2016 - 2017 Eduard Nikoleisen
+    Copyright (c) 2016 - 2018 Eduard Nikoleisen
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
