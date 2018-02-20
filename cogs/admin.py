@@ -141,6 +141,20 @@ class admin():
         await ctx.send(msg)
 
     @commands.command(hidden=True)
+    @commands.bot_has_permissions(manage_nicknames = True)
+    async def setnickname(self, ctx, member: discord.Member=None, *name):
+        '''Ändert den Nickname eines Benutzer (BOT OWNER ONLY)'''
+        if member == None:
+            member = ctx.author
+        nickname = ' '.join(name)
+        await member.edit(nick=nickname)
+        if nickname:
+            msg = f':ok: Ändere Nickname von {member} zu: **{nickname}**'
+        else:
+            msg = f':ok: Reset von Nickname für {member} auf: **{member.name}**'
+        await ctx.send(msg)
+
+    @commands.command(hidden=True)
     async def geninvite(self, ctx, serverid: str):
         '''Generiert einen Invite für eine Guild wenn möglich (BOT OWNER ONLY)'''
         guild = self.bot.get_guild(int(serverid))

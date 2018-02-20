@@ -108,6 +108,7 @@ Command und Aliases | Beschreibung | Nutzung
 `:echo` | Gibt eine Nachricht als Bot auf einem bestimmten Channel aus. **BOT OWNER ONLY** | `:echo 102817255661772800 Ich bin ein Bot!`
 `:discriminator` | Gibt Benutzer mit dem jeweiligen Discriminator zurück. **BOT OWNER ONLY** | `:discriminator 6508`
 `:nickname` | Ändert den Server Nickname vom Bot. **BOT OWNER ONLY** | `:nickname Shinobu`
+`:setnickname` | Ändert den Nickname eines Benutzer. **BOT OWNER ONLY** | `:setnickname @Der-Eddy#6508 Shinobu`
 `:geninvite` | Generiert einen Invite für einen Server wenn möglich. **BOT OWNER ONLY** | `:geninvite 102817255661772800`
 
 
