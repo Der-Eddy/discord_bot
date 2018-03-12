@@ -113,7 +113,7 @@ class utility():
         else:
             return string[:1000] #The maximum allowed charcter amount for embed fields
 
-    @commands.command(aliases=['s', 'uptime', 'up'])
+    @commands.command(aliases=['uptime', 'up'])
     async def status(self, ctx):
         '''Infos über den Bot'''
         timeUp = time.time() - self.bot.startTime
