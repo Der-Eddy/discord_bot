@@ -508,7 +508,7 @@ class utility():
         wshbrID = 247830763649761282
         codingRankList = ['HTML + CSS', 'Javascript', 'C++ / C', '.NET', 'PHP', 'NSFW',
                     'Java', 'Gourmet', 'Assembler', 'Python', 'Math', 'AutoIt',
-                    'Member', 'Clash', 'Books', 'Chess', 'Free Games']
+                    'Member', 'Clash', 'Books', 'Chess', 'Free Games', 'macOS', 'Linux', 'Windows']
         wshbrRankList = ['Chuunin', 'Genin']
         if ctx.guild.id == codingLoungeID:
             rankList = codingRankList
@@ -575,6 +575,11 @@ class utility():
             synonyms.append(['free game', 'Free Games'])
             synonyms.append(['genin', 'Genin'])
             synonyms.append(['chuunin', 'Chuunin'])
+            synonyms.append(['linux', 'Linux'])
+            synonyms.append(['macos', 'macOS'])
+            synonyms.append(['mac', 'macOS'])
+            synonyms.append(['osx', 'macOS'])
+            synonyms.append(['windows', 'Windows'])
 
             synonyms_dict = dict(synonyms)
 
