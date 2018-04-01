@@ -16,7 +16,7 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '1.0.8'
+__version__ = '1.1.0'
 
 logger = logging.getLogger('discord')
 #logger.setLevel(logging.DEBUG)
@@ -37,9 +37,8 @@ async def _randomGame():
     while True:
         guildCount = len(bot.guilds)
         memberCount = len(list(bot.get_all_members()))
-        randomGame = random.choice(loadconfig.__games__).format(guilds = guildCount, members = memberCount)
-        logging.info(f'Changing name to {randomGame}')
-        await bot.change_presence(game=discord.Game(name=randomGame))
+        randomGame = random.choice(loadconfig.__games__)
+        await bot.change_presence(activity=discord.Activity(type=randomGame[0], name=randomGame[1].format(guilds = guildCount, members = memberCount)))
         await asyncio.sleep(loadconfig.__gamesTimer__)
 
 def _setupDatabase(db):
@@ -54,55 +53,19 @@ def _setupDatabase(db):
         con.commit()
         c.close()
 
-def _getHash(downloadedFile, hashAlgorithm=hashlib.sha256()):
-        blocksize = 65536
-        algo = hashAlgorithm
-        with open(downloadedFile, 'rb') as file:
-            buffer = file.read(blocksize)
-            while len(buffer) > 0:
-                algo.update(buffer)
-                buffer = file.read(blocksize)
-        return algo.hexdigest()
-
-async def _fileCheck(msg):
-    url = msg.attachments[0]['url']
-    allowedExtension = ['.exe', '.zip', '.rar']
-    if url[-4:] in allowedExtension:
-        name = os.path.basename(url)
-        downloadPath = 'tmp\\' + name
-        async with aiohttp.get(url) as download:
-            with open(downloadPath, 'wb') as f:
-                f.write(await download.read())
-        stats = os.stat(downloadPath)
-        size = stats.st_size
-        KBSize = round(size / 1024, 3)
-        MBSize = round(size / 1024 / 1024, 3)
-        MD5 = _getHash(downloadPath, hashlib.md5())
-        SHA1 = _getHash(downloadPath, hashlib.sha1())
-        SHA256 = _getHash(downloadPath, hashlib.sha256())
-        SHA512 = _getHash(downloadPath, hashlib.sha512())
-        msg = f'**Name:** {name}\n'
-        msg += f'**Size:** {MBSize} MB ({size} Bytes)\n'
-        msg += f'**MD5:** `{MD5}`\n'
-        msg += f'**SHA1:** `{SHA1}`\n'
-        msg += f'**SHA256:** `{SHA256}`\n'
-        msg += f'**SHA512:** `{SHA512}`\n'
-        os.remove(downloadPath)
-        return msg
-
 @bot.event
-async def on_connect():
+async def on_ready():
     if bot.user.id == 204966267147255808:
         bot.dev = True
     else:
         bot.dev = False
 
-@bot.event
-async def on_ready():
     print('Logged in as')
     print(f'Bot-Name: {bot.user.name}')
     print(f'Bot-ID: {bot.user.id}')
     print(f'Dev Mode: {bot.dev}')
+    print(f'Discord Version: {discord.__version__}')
+    print(f'Bot Version: {__version__}')
     print('------')
     for cog in loadconfig.__cogs__:
         try:
@@ -120,15 +83,16 @@ async def on_ready():
 async def on_command(ctx):
     bot.commands_used[ctx.command.name] += 1
     msg = ctx.message
-    if isinstance(msg.channel, discord.TextChannel):
-        dest = f'#{msg.channel.name} ({msg.guild.name})'
-    elif isinstance(msg.channel, discord.DMChannel):
-        dest = 'Direct Message'
-    elif isinstance(msg.channel, discord.GroupChannel):
-        dest = 'Group Message'
-    else:
-        dest = 'Voice Channel'
-    logging.info(f'{msg.created_at}: {msg.author.name} in {dest}: {msg.content}')
+    # if isinstance(msg.channel, discord.Channel):
+    #     #dest = f'#{msg.channel.name} ({msg.guild.name})'
+    #     dest = f'#{msg.channel.name}'
+    # elif isinstance(msg.channel, discord.DMChannel):
+    #     dest = 'Direct Message'
+    # elif isinstance(msg.channel, discord.GroupChannel):
+    #     dest = 'Group Message'
+    # else:
+    #     dest = 'Voice Channel'
+    # logging.info(f'{msg.created_at}: {msg.author.name} in {dest}: {msg.content}')
 
 @bot.event
 async def on_message(message):
@@ -148,11 +112,6 @@ async def on_message(message):
         await message.add_reaction('🍭') # :lollipop:
     if 'instagram.com' in message.clean_content.lower():
         await message.add_reaction('💩') # :poop:
-    if len(message.attachments) > 0:
-        try:
-            await message.channel.send(await _fileCheck(message))
-        except:
-            pass
     await bot.process_commands(message)
 
 @bot.event

@@ -45,14 +45,22 @@ class admin():
         await ctx.send('**:ok:** Mein neuer Avatar!\n %s' % self.bot.user.avatar_url)
 
     @commands.command(hidden=True, aliases=['game'])
-    async def changegame(self, ctx, gameType, *, gameName: str):
+    async def changegame(self, ctx, gameType: str, *, gameName: str):
         '''Ändert das derzeit spielende Spiel (BOT OWNER ONLY)'''
-        gameType = int(gameType)
+        gameType = gameType.lower()
+        if gameType == 'playing':
+            type = discord.Activity.playing
+        elif gameType == 'watching':
+            type = discord.Activity.watching
+        elif gameType == 'listening':
+            type = discord.Activity.listening
+        elif gameType == 'streaming':
+            type = discord.Activity.streaming
         guildsCount = len(self.bot.guilds)
         memberCount = len(list(self.bot.get_all_members()))
         gameName = gameName.format(guilds = guildsCount, members = memberCount)
-        await self.bot.change_presence(game=discord.Game(name=gameName), type=gameType)
-        await ctx.send(f'**:ok:** Ändere das Spiel zu: Playing **{gameName}**')
+        await self.bot.change_presence(activity=discord.Activity(type=type, name=gameName))
+        await ctx.send(f'**:ok:** Ändere das Spiel zu: {gameType} **{gameName}**')
 
     @commands.command(hidden=True)
     async def changestatus(self, ctx, status: str):

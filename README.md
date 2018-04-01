@@ -152,23 +152,21 @@ Vor dem Start muss im Ordner `config` eine Datei namens `config.py` angelegt wer
 In `games.py` kann man die Titel der "Playing-" Rotation anpassen. Platzhalter wie `{servers}` oder `{members}` sind möglich.
 
     __games__ = [
-        'with Eddy-Senpai',
-        'with Neko-chan',
-        'with Cats',
-        'try :help',
-        'try :status',
-        'with Atom.io',
-        'with Python',
-        'HuniePop',
-        'try :about',
-        'try :kawaii',
-        'with async',
-        'with Karen-chan',
-        'with Rara-chan',
-        '{servers} Server',
-        '{members} Member'
+        (discord.ActivityType.playing, 'with Eddy-Senpai'),
+        (discord.ActivityType.playing, 'with Cats'),
+        (discord.ActivityType.playing, 'try :help'),
+        (discord.ActivityType.playing, 'try :about'),
+        (discord.ActivityType.playing, 'with Atom.io'),
+        (discord.ActivityType.playing, 'with Python'),
+        (discord.ActivityType.playing, 'with async'),
+        (discord.ActivityType.playing, 'with Karen-chan'),
+        (discord.ActivityType.watching, 'over {guilds} Server'),
+        (discord.ActivityType.watching, 'over {members} Members'),
+        (discord.ActivityType.watching, 'Trash Animes'),
+        (discord.ActivityType.watching, 'Hentai'),
+        (discord.ActivityType.listening, 'Podcasts')
     ]
-    __gamesTimer__ = 10 * 60
+    __gamesTimer__ = 2 * 60 #2 minutes
 
 Erweiterungen (Cogs) die beim starten aktiviert werden sollen, kann man in `cogs.py` einstellen:
 
@@ -196,7 +194,7 @@ Full list of requirements
 -------------
 
     python>=3.6.0
-    discord.py>=1.0.0
+    discord.py>=1.0.0a
     aiohttp
     websockets
     chardet
