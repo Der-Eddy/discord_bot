@@ -20,8 +20,11 @@ class forum():
 
     @staticmethod
     async def _getDiscordTag(username, userAgentHeaders):
+        checkUsername = False
+        epvpusername = username
         if username.startswith('https://www.elitepvpers.com/forum/'):
             url = username
+            checkUsername = True
         else:
             url = f'https://www.elitepvpers.com/forum/member.php?username={username}'
         async with aiohttp.ClientSession(cookies = loadconfig.__cookieJar__, headers = userAgentHeaders) as cs:
@@ -31,10 +34,13 @@ class forum():
                 #    file_.write(content)
                 regex = r"<dt class=\"shade\">Discord<\/dt>\n<dd>(?P<username>.+)#(?P<discriminator>\d{4})<\/dd>"
                 match = re.search(regex, content)
+                if checkUsername:
+                    usernameregex = r"<title>View Profile: (.*?)<\/title>"
+                    epvpusername = re.search(usernameregex, content)
                 try:
-                    return match.group(1) + '#' + match.group(2)
+                    return (match.group(1) + '#' + match.group(2), epvpusername.group(1))
                 except AttributeError:
-                    return ''
+                    return ('', epvpusername.group(1))
 
     @commands.command(aliases=['epvp'])
     @commands.cooldown(1, 5, commands.cooldowns.BucketType.guild)
@@ -114,7 +120,8 @@ class forum():
                 username = ' '.join(user)
         tmp = await ctx.send(f':ok: Trying to verify Discord user **{ctx.author}** with Elitepvpers user **{username}**...')
         async with ctx.channel.typing():
-            if str(ctx.author) == await self._getDiscordTag(username, self.bot.userAgentHeaders):
+            discriminator, username = await self._getDiscordTag(username, self.bot.userAgentHeaders)
+            if str(ctx.author) == discriminator:
                 if role in ctx.message.author.roles:
                     await tmp.edit(content = f':negative_squared_cross_mark: You already have the role **{role}**!')
                 else:
@@ -134,12 +141,12 @@ class forum():
                                        '\n\nAlso don\'t forget to add your Discord username + discriminator in your elitepvpers settings! ' +
                                        '(<https://www.elitepvpers.com/forum/profile.php?do=editprofile>) \nhttps://i.imgur.com/4ckQsjX.png')
 
-    # @epvpverify.error
-    # async def epvpverify_error(self, error, ctx):
-    #     if isinstance(error, commands.errors.CommandOnCooldown):
-    #         await ctx.send(str(error))
-    #     else:
-    #         await ctx.send('Having currently difficulties to reach elitepvpers. Try it again in some hours.')
+    @epvpverify.error
+    async def epvpverify_error(self, ctx, error):
+        if isinstance(error, commands.errors.CommandOnCooldown):
+            await ctx.send(str(error))
+        else:
+            await ctx.send('Having currently difficulties to reach elitepvpers. Try it again in some hours.')
 
     # @commands.command(aliases=['user'])
     # @commands.cooldown(2, 1, commands.cooldowns.BucketType.guild)

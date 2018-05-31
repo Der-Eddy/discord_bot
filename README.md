@@ -10,6 +10,12 @@
 This is mostly a german discord chat bot made with [discord.py v1.0](https://github.com/Rapptz/discord.py).  
 If you are looking for a python discord bot to host for yourself, you should rather take a look at [Red Bot](https://github.com/Twentysix26/Red-DiscordBot) if you want a highly customizable self-hosted python bot. Shinobu is only meant to be run on my own server.
 
+To install the rewrite version of discord.py, run:
+
+    python3 -m pip install -U https://github.com/Rapptz/discord.py/archive/rewrite.zip#egg=discord.py[voice]
+
+Using `pip3 install discord.py` will install the legacy version which won't work with this code repository.
+
 Commands List
 -------------
 **Info:** Diese Liste gilt für den Standardprefix `:`
