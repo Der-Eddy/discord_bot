@@ -16,7 +16,7 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '1.1.1'
+__version__ = '1.1.2'
 
 logger = logging.getLogger('discord')
 #logger.setLevel(logging.DEBUG)
@@ -161,19 +161,19 @@ async def on_guild_remove(guild):
     embed.add_field(name='Erstellt am', value=guild.created_at, inline=True)
     await bot.owner.send(embed=embed)
 
-# @bot.event
-# async def on_error(event, *args, **kwargs):
-#     if bot.dev:
-#         traceback.print_exc()
-#     else:
-#         embed = discord.Embed(title=':x: Event Error', colour=0xe74c3c) #Red
-#         embed.add_field(name='Event', value=event)
-#         embed.description = '```py\n%s\n```' % traceback.format_exc()
-#         embed.timestamp = datetime.datetime.utcnow()
-#         try:
-#             await bot.owner.send(embed=embed)
-#         except:
-#             pass
+@bot.event
+async def on_error(event, *args, **kwargs):
+    if bot.dev:
+        traceback.print_exc()
+    else:
+        embed = discord.Embed(title=':x: Event Error', colour=0xe74c3c) #Red
+        embed.add_field(name='Event', value=event)
+        embed.description = '```py\n%s\n```' % traceback.format_exc()
+        embed.timestamp = datetime.datetime.utcnow()
+        try:
+            await bot.owner.send(embed=embed)
+        except:
+            pass
 
 @bot.event
 async def on_command_error(error, ctx):

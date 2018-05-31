@@ -54,6 +54,7 @@ Command und Aliases | Beschreibung | Nutzung
 `:games` | Zeigt welche Spiele wie oft auf dem Server gerade gespielt werden | `:games`
 `:spoiler` | Erstellt ein GIF Bild welches beim Hover einen Spoiler Text anzeigt | `:spoiler`
 `:ranks`, `:rank`, `:role`, `:roles` | Auflistung aller Ränge oder beitritt eines bestimmten Ranges | `:ranks`, `:ranks Python'`
+`:addvote` | Fügt Emotes als Reactions hinzu für Abstimmungen/Umfragen | `:addvotes`, `:vote`, `:votes`
 
 ### Anime ###
 

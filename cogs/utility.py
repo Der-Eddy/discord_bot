@@ -361,7 +361,7 @@ class utility():
         await ctx.send(completed.format(ctx.author, message, human_time))
 
     @timer.error
-    async def timer_error(self, error, ctx):
+    async def timer_error(self, ctx, error):
         if isinstance(error, commands.BadArgument):
             await ctx.send(str(error))
         elif isinstance(error, commands.errors.CommandOnCooldown):
@@ -606,7 +606,28 @@ class utility():
                     pass
                 await ctx.send(f':white_check_mark: Rank **{rank}** added to **{ctx.author.mention}**')
 
-    # This command needs to be at the end due to this name
+    @commands.command(aliases=['vote', 'addvotes', 'votes'])
+    async def addvote(self, ctx, votecount = 'bool'):
+        '''Fügt Emotes als Reactions hinzu für Abstimmungen/Umfragen'''
+        if votecount.lower() == 'bool':
+            emote_list = ['✅', '❌']
+        elif votecount in ['2', '3', '4', '5', '6', '7', '8', '9', '10']:
+            #emotes = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣', '🔟']
+            emotes = ['1\u20e3', '2\u20e3', '3\u20e3', '4\u20e3', '5\u20e3', '6\u20e3', '7\u20e3', '8\u20e3', '9\u20e3', '\U0001f51f']
+            emote_list = []
+            for i in range (0, int(votecount)):
+                emote_list.append(emotes[i])
+        else:
+            ctx.say(':x: Bitte gib eine Zahl zwischen 2 und 10 an')
+
+        message = await ctx.channel.history(limit=1, before=ctx.message).flatten()
+        await ctx.message.delete()
+
+        for emote in emote_list:
+            await message[0].add_reaction(emote)
+
+
+    # This command needs to be at the end due to it's name
     @commands.command()
     async def commands(self, ctx):
         '''Zeigt an wie oft welcher Command benutzt wurde seit dem letzten Startup'''
