@@ -613,6 +613,7 @@ class utility():
             emote_list = ['✅', '❌']
         elif votecount in ['2', '3', '4', '5', '6', '7', '8', '9', '10']:
             #emotes = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣', '🔟']
+            #for whatever reason, the above won't work
             emotes = ['1\u20e3', '2\u20e3', '3\u20e3', '4\u20e3', '5\u20e3', '6\u20e3', '7\u20e3', '8\u20e3', '9\u20e3', '\U0001f51f']
             emote_list = []
             for i in range (0, int(votecount)):
@@ -621,7 +622,10 @@ class utility():
             ctx.say(':x: Bitte gib eine Zahl zwischen 2 und 10 an')
 
         message = await ctx.channel.history(limit=1, before=ctx.message).flatten()
-        await ctx.message.delete()
+        try:
+            await ctx.message.delete()
+        except:
+            pass
 
         for emote in emote_list:
             await message[0].add_reaction(emote)
