@@ -580,6 +580,7 @@ class utility():
             synonyms.append(['mac', 'macOS'])
             synonyms.append(['osx', 'macOS'])
             synonyms.append(['windows', 'Windows'])
+            synonyms.append(['rust', 'Rust'])
 
             synonyms_dict = dict(synonyms)
 
