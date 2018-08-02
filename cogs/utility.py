@@ -508,7 +508,7 @@ class utility():
         wshbrID = 247830763649761282
         codingRankList = ['HTML + CSS', 'Javascript', 'C++ / C', '.NET', 'PHP', 'NSFW',
                     'Java', 'Gourmet', 'Assembler', 'Python', 'Math', 'AutoIt',
-                    'Member', 'Clash', 'Books', 'Chess', 'Free Games', 'macOS', 'Linux', 'Windows']
+                    'Member', 'Clash', 'Books', 'Chess', 'Free Games', 'macOS', 'Linux', 'Windows', 'Rust']
         wshbrRankList = ['Chuunin', 'Genin']
         if ctx.guild.id == codingLoungeID:
             rankList = codingRankList
