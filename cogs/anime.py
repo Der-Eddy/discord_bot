@@ -192,24 +192,95 @@ class anime():
         msg = f'{emoji} Ich bewerte **{waifuName}** als **{rating}/10**'
         await ctx.send(msg)
 
-    # @commands.command(aliases=['anime', 'mal', 'myanimelist'])
-    # async def animesearch(self, ctx, *animeName: str):
-    #     '''Sucht auf myanimelist.net nach einem Anime und gibt die Basis-Informationen zurück
-    #
-    #     Beispiel:
-    #     -----------
-    #
-    #     :anime Mushishi
-    #     '''
-    #     api = 'https://myanimelist.net/api/anime/search.xml?q='
-    #     url = api + '+'.join(animeName)
-    #     print(url)
-    #     auth = aiohttp.BasicAuth('DerEddy', '2asav32s3p2e2zk0hqs4e76eizn428gc')
-    #     async with aiohttp.post(url, auth=auth, headers = self.bot.userAgentHeaders) as r:
-    #         if r.status == 200:
-    #             root = ET.fromstring(await r.text())
-    #             import pprint
-    #             pprint.pprint(root)
+    @commands.command(aliases=['anilist'])
+    async def anime(self, ctx, *, animeName: str):
+        '''Sucht auf AniList.co nach einem Anime und gibt die Basis-Informationen zurück
+
+        Beispiel:
+        -----------
+
+        :anime Mushishi
+        '''
+        api = 'https://graphql.anilist.co'
+        query = '''
+        query ($name: String){
+          Media(search: $name, type: ANIME) {
+            id
+            idMal
+            description
+            title {
+              romaji
+              english
+            }
+            coverImage {
+              large
+            }
+            startDate {
+              year
+              month
+              day
+            }
+            endDate {
+              year
+              month
+              day
+            }
+            status
+            episodes
+            duration
+            averageScore
+            meanScore
+            genres
+            tags {
+              name
+            }
+            studios(isMain: true) {
+              nodes {
+                name
+              }
+            }
+            siteUrl
+          }
+        }
+        '''
+        variables = {
+            'name': animeName
+        }
+
+        async with aiohttp.ClientSession() as session:
+            async with session.post(api, json={'query': query, 'variables': variables}, headers = self.bot.userAgentHeaders) as r:
+                if r.status == 200:
+                    json = await r.json()
+                    data = json['data']['Media']
+
+                    embed = discord.Embed(color=ctx.author.top_role.colour)
+                    embed.set_footer(text='API provided by AniList.co | ID: {}'.format(str(data['id'])))
+                    embed.set_thumbnail(url=data['coverImage']['large'])
+                    if data['title']['english'] == None or data['title']['english'] == data['title']['romaji']:
+                        embed.add_field(name='Name', value=data['title']['romaji'], inline=False)
+                    else:
+                        embed.add_field(name='Name', value='{} ({})'.format(data['title']['english'], data['title']['romaji']), inline=False)
+                    #embed.add_field(name='Beschreibung', value=data['description'], inline=False)
+                    embed.add_field(name='Status', value=data['status'], inline=True)
+                    embed.add_field(name='Folgen', value='{} à {} min'.format(data['episodes'], data['duration']), inline=True)
+                    embed.add_field(name='Gestartet', value='{}.{}.{}'.format(data['startDate']['day'], data['startDate']['month'], data['startDate']['year']), inline=True)
+                    embed.add_field(name='Beendet', value='{}.{}.{}'.format(data['endDate']['day'], data['endDate']['month'], data['endDate']['year']), inline=True)
+                    try:
+                        embed.add_field(name='Haupt-Studio', value=data['studios']['nodes'][0]['name'], inline=True)
+                    except IndexError:
+                        pass
+                    embed.add_field(name='Ø Score', value=data['averageScore'], inline=True)
+                    embed.add_field(name='Genres', value=', '.join(data['genres']), inline=False)
+                    tags = ''
+                    for tag in data['tags']:
+                        tags += tag['name'] + ', '
+                    embed.add_field(name='Tags', value=tags[:-2], inline=False)
+                    embed.add_field(name='AniList Link', value=data['siteUrl'], inline=False)
+                    embed.add_field(name='MyAnimeList Link', value='https://myanimelist.net/anime/' + str(data['idMal']), inline=False)
+                    await ctx.send(embed=embed)
+
+                else:
+                    await ctx.send(':x: Konnte keinen passenden Anime finden!')
 
     # @commands.command(pass_context=True, hidden=True)
     # async def imgur(self, ctx, amount: int = None):
