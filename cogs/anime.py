@@ -14,8 +14,8 @@ class anime():
     def __init__(self, bot):
         self.bot = bot
 
-    # async def __error(self, ctx, error):
-    #     print('Error in {0.command.qualified_name}: {1}'.format(ctx, error))
+    async def __error(self, ctx, error):
+        print('Error in {0.command.qualified_name}: {1}'.format(ctx, error))
 
     def checkRole(self, user, roleRec):
         ok = False
@@ -225,6 +225,8 @@ class anime():
               month
               day
             }
+            synonyms
+            format
             status
             episodes
             duration
@@ -264,14 +266,25 @@ class anime():
                         embed.add_field(name='Titel', value=data['title']['romaji'], inline=False)
                     else:
                         embed.add_field(name='Titel', value='{} ({})'.format(data['title']['english'], data['title']['romaji']), inline=False)
+
                     #embed.add_field(name='Beschreibung', value=data['description'], inline=False)
-                    embed.add_field(name='Status', value=data['status'].replace('_', ' ').title(), inline=True)
-                    embed.add_field(name='Folgen', value='{} à {} min'.format(data['episodes'], data['duration']), inline=True)
+                    if data['synonyms'] != []:
+                        embed.add_field(name='Synonyme', value=', '.join(data['synonyms']), inline=True)
+
+                    embed.add_field(name='Typ', value=data['format'].replace('_', ' ').title().replace('Tv', 'TV'), inline=True)
+                    if data['episodes'] > 1:
+                        embed.add_field(name='Folgen', value='{} à {} min'.format(data['episodes'], data['duration']), inline=True)
+                    else:
+                        embed.add_field(name='Dauer', value=str(data['duration']) + ' min', inline=True)
+
                     embed.add_field(name='Gestartet', value='{}.{}.{}'.format(data['startDate']['day'], data['startDate']['month'], data['startDate']['year']), inline=True)
                     if data['endDate']['day'] == None:
-                        embed.add_field(name='Released Folgen', value=data['nextAiringEpisode']['episode'] -1, inline=True)
-                    else:
+                        embed.add_field(name='Released Folgen', value=data['nextAiringEpisode']['episode'] - 1, inline=True)
+                    elif data['episodes'] > 1:
                         embed.add_field(name='Beendet', value='{}.{}.{}'.format(data['endDate']['day'], data['endDate']['month'], data['endDate']['year']), inline=True)
+
+                    embed.add_field(name='Status', value=data['status'].replace('_', ' ').title(), inline=True)
+
                     try:
                         embed.add_field(name='Haupt-Studio', value=data['studios']['nodes'][0]['name'], inline=True)
                     except IndexError:
@@ -281,8 +294,12 @@ class anime():
                     tags = ''
                     for tag in data['tags']:
                         tags += tag['name'] + ', '
-                    embed.add_field(name='Tags', value=tags[:-2], inline=True)
-                    embed.add_field(name='Adaptiert von', value=data['source'].replace('_', ' ').title(), inline=True)
+                    embed.add_field(name='Tags', value=tags[:-2], inline=False)
+                    try:
+                        embed.add_field(name='Adaptiert von', value=data['source'].replace('_', ' ').title(), inline=True)
+                    except AttributeError:
+                        pass
+
                     embed.add_field(name='AniList Link', value=data['siteUrl'], inline=False)
                     embed.add_field(name='MyAnimeList Link', value='https://myanimelist.net/anime/' + str(data['idMal']), inline=False)
                     await ctx.send(embed=embed)
@@ -357,10 +374,10 @@ class anime():
                     embed.add_field(name='Kapitel', value=data['chapters'], inline=True)
                     embed.add_field(name='Bände', value=data['volumes'], inline=True)
                     embed.add_field(name='Gestartet', value='{}.{}.{}'.format(data['startDate']['day'], data['startDate']['month'], data['startDate']['year']), inline=True)
-                    embed.add_field(name='Beendet', value='{}.{}.{}'.format(data['endDate']['day'], data['endDate']['month'], data['endDate']['year']), inline=True)
+                    if data['endDate']['day'] != None:
+                        embed.add_field(name='Beendet', value='{}.{}.{}'.format(data['endDate']['day'], data['endDate']['month'], data['endDate']['year']), inline=True)
                     embed.add_field(name='Status', value=data['status'].replace('_', ' ').title(), inline=True)
                     embed.add_field(name='Ø Score', value=data['averageScore'], inline=True)
-                    embed.add_field(name='Adaptiert von', value=data['source'].replace('_', ' ').title(), inline=True)
                     embed.add_field(name='Genres', value=', '.join(data['genres']), inline=False)
                     tags = ''
                     for tag in data['tags']:
