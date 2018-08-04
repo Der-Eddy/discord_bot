@@ -67,6 +67,7 @@ Command und Aliases | Beschreibung | Nutzung
 `:pat` | /r/headpats Pat Pat Pat :3 | `:pat @Der-Eddy#6508`
 `:ratewaifu`, `:rate`, `:waifu` | Bewertet deine Waifu | `:ratewaifu Shinobu`
 `:anime`, `:anilist` | Sucht auf AniList.co nach einem Anime und gibt die Basis-Informationen zurück | `:anime Mushishi`
+`:manga` | Sucht auf AniList.co nach einem Manga und gibt die Basis-Informationen zurück | `:manga Air Gear`
 
 ### Fun ###
 
