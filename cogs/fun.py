@@ -57,7 +57,7 @@ class fun():
         '''Zufällige Katzen Bilder nyan~'''
         #http://discordpy.readthedocs.io/en/latest/faq.html#what-does-blocking-mean
         async with aiohttp.ClientSession() as cs:
-            async with cs.get('http://random.cat/meow') as r:
+            async with cs.get('http://aws.random.cat/meow') as r:
                 res = await r.json()
                 emojis = [':cat2: ', ':cat: ', ':heart_eyes_cat: ']
                 await ctx.send(random.choice(emojis) + res['file'])
