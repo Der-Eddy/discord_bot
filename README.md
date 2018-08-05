@@ -82,7 +82,7 @@ Command und Aliases | Beschreibung | Nutzung
 `:random`, `:rand` | Gibt eine zufällige Zahl oder Member aus | `:random`, `:random coin`, `:random 6`, `:random 10 20`, `:random user`
 `:steinigt` | Monty Python | `:steinigt @Ravenstorm#1191`
 `:hype`, `:hypu`, `:train` | HYPE TRAIN CHOO CHOO | `:hype`
-`:xkcd` | Zeigt den letzten oder zufääligen XKCD Comic | `:xkcd`, `:xkcd random`
+`:xkcd` | Zeigt den letzten oder zufälligen XKCD Comic | `:xkcd`, `:xkcd random`
 `:reaction`, `:r`, `:addreaction` | Fügt der letzten Nachricht ein Emoji als Reaction hinzu oder einer bestimmten Nachricht | `:reaction ok_hand`, `:reaction sunglasses 247386709505867776`
 `:pun`, `:witz`, `:joke` | Weil jeder schlechte Witze mag | `:pun`
 `:tags`, `:tag` | Erstellt tags oder gibt diese aus | `:tags new hentai https://youtu.be/tg3rG-e6haw`, `:tags del 2`, `:tags hentai`
@@ -156,7 +156,7 @@ Vor dem Start muss im Ordner `config` eine Datei namens `config.py` angelegt wer
     __greetmsg__ = 102817255661772800 #HARDCODED Enable/Disable greetmsg at the default channel of my server
     __selfassignrole__ = 'NSFW' #OPTIONAL set to a role to be self assign-able
     __discourseAPIKey__ = {'api_key': '9f0be26ea6a4f47dba6c627ee2f5aa139caa29f8b899bc96c3b7b94755a9363f', 'api_username': 'Eddy'} #OPTIONAL Needed for all discourse related commands
-    __cookieJar__ = {'loginuuid': 'löaskdjfölkdfa65sdf46a5s4df56e1f23s1df32asd1f5ef1325s11bSJ9.ImRXcWNHeWI98sd5f4s65ef6s31h1fgjdfg6h54sdfasdfcvbcvb2465UrYlRORDYyTWREQThtYjBrcFEzd1wvbXZJRiswdlwvaWc5YkZSdDlMQUYzZEJIeE03SitsTFZhSFh5cGgrcHducXdzYjVMMTU5U0lGenNITitsYmdSSWIremlNU01UeVM5XC9ZaVpLSFBmaEkyU3NsZjQ1MVNDeHBvOGdaWWxGRlhmZ28raTlcL0RTYzlQaUJkc2N1alp4VW00dXJHMkd5UUttTnZQekZPa2Y1aE1qUjdHNVRwNkdyakhtNUtWc3VWYmUySVc0bkUyQ0pSWVMi.b6nMo5Q3hBMLauEsePPVNSdTJ8I5CqbZFDLrrln-oag', 'bbuserid': '5660970', 'bbpassword': '1753ec1889f70aa87845cc5bfd3b4409'} #OPTIONAL Needed for all elitepvpers related commands
+    __cookieJar__ = {'loginuuid': 'löaskdjfölkdfa65sdf46a5s4df56e1f23s1df32asd1f5ef1325s11bSJ9.ImRXcWNHeWI98sd5f4s65ef6s31h1fgjdfg6h54sdfasdfcvbcvb2465UrYlRORDYyTWREQThtYjBrcFEzd1wvbXZJRiswdlwvaWc5YkZSdDlMQUYzZEJIeE03SitsTFZhSFh5cGgrcHducXdzYjVMMTU5U0lGenNITitsYmdSSWIremlNU01UeVM5XC9ZaVpLSFBmaEkyU3NsZjQ1MVNDeHBvOGdaWWxGRlhmZ28raTlcL0RTYzlQaUJkc2N1alp4VW00dXJHMkd5UUttTnZQekZPa2Y1aE1qUjdHNVRwNkdyakhtNUtWc3VWYmUySVc0bkUyQ0pSWVMi.b6nMo5Q3hBMLauEsePPVNSdTJ8I5CqbZFDLrrln-oag', 'bbuserid': '5660970', 'bbpassword': '1753ec1889f70aa87845cc5bfd3b4409'} #OPTIONAL Needed for all elitepvpers.com related commands
 
 In `games.py` kann man die Titel der "Playing-" Rotation anpassen. Platzhalter wie `{servers}` oder `{members}` sind möglich.
 

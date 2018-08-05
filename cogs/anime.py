@@ -371,8 +371,10 @@ class anime():
                     else:
                         embed.add_field(name='Titel', value='{} ({})'.format(data['title']['english'], data['title']['romaji']), inline=False)
                     #embed.add_field(name='Beschreibung', value=data['description'], inline=False)
-                    embed.add_field(name='Kapitel', value=data['chapters'], inline=True)
-                    embed.add_field(name='Bände', value=data['volumes'], inline=True)
+                    if data['chapters'] != None:
+                        # https://github.com/AniList/ApiV2-GraphQL-Docs/issues/47
+                        embed.add_field(name='Kapitel', value=data['chapters'], inline=True)
+                        embed.add_field(name='Bände', value=data['volumes'], inline=True)
                     embed.add_field(name='Gestartet', value='{}.{}.{}'.format(data['startDate']['day'], data['startDate']['month'], data['startDate']['year']), inline=True)
                     if data['endDate']['day'] != None:
                         embed.add_field(name='Beendet', value='{}.{}.{}'.format(data['endDate']['day'], data['endDate']['month'], data['endDate']['year']), inline=True)

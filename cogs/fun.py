@@ -131,7 +131,7 @@ class fun():
 
     @commands.command()
     async def xkcd(self, ctx,  *searchterm: str):
-        '''Zeigt den letzten oder zufääligen XKCD Comic
+        '''Zeigt den letzten oder zufälligen XKCD Comic
 
         Beispiel:
         -----------
