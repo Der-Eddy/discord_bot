@@ -15,8 +15,8 @@ class forum():
         self.bot = bot
         self.discourseURL = 'https://www.kokoro-ko.de'
 
-    # async def __error(self, ctx, error):
-    #     print('Error in {0.command.qualified_name}: {1}'.format(ctx, error))
+    async def __error(self, ctx, error):
+        print('Error in {0.command.qualified_name}: {1}'.format(ctx, error))
 
     @staticmethod
     async def _getDiscordTag(username, userAgentHeaders):
@@ -37,10 +37,14 @@ class forum():
                 if checkUsername:
                     usernameregex = r"<title>View Profile: (.*?)<\/title>"
                     epvpusername = re.search(usernameregex, content)
+                    epvpusername = epvpusername.group(1)
+                print(match.group(1))
+                print(match.group(2))
+                print(epvpusername)
                 try:
-                    return (match.group(1) + '#' + match.group(2), epvpusername.group(1))
+                    return (match.group(1) + '#' + match.group(2), epvpusername)
                 except AttributeError:
-                    return ('', epvpusername.group(1))
+                    return ('', epvpusername)
 
     @commands.command(aliases=['epvp'])
     @commands.cooldown(1, 5, commands.cooldowns.BucketType.guild)
