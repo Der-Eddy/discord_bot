@@ -21,14 +21,14 @@ class admin():
         '''Schaltet mich ab :( (BOT OWNER ONLY)'''
         await ctx.send('**:ok:** Bye!')
         #self.bot.gamesLoop.cancel()
-        self.bot.logout()
+        await self.bot.logout()
         sys.exit(0)
 
     @commands.command(hidden=True)
     async def restart(self, ctx):
         '''Startet mich neu (BOT OWNER ONLY)'''
         await ctx.send('**:ok:** Bis gleich!')
-        self.bot.logout()
+        await self.bot.logout()
         sys.exit(6)
 
     @commands.command(hidden=True)

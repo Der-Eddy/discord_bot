@@ -392,6 +392,73 @@ class anime():
                 else:
                     await ctx.send(':x: Konnte keinen passenden Manga finden!')
 
+    @commands.command(aliases=['sauce', 'iqdb'])
+    async def saucenao(self, ctx, url: str = None):
+        '''Versucht die Quelle eines Anime Bildes zu finden
+
+        Beispiel:
+        -----------
+
+        :saucenao
+
+        :saucenao https://i.imgur.com/nmnVtgs.jpg
+        '''
+        
+        if url == None:
+            async for message in ctx.channel.history(before=ctx.message):
+                try:
+                    url = message.attachments[0].url
+                    continue
+                except IndexError:
+                    pass
+        elif not url.endswith(('.jpg', '.png', '.bmp', '.gif', '.jpeg')):
+            await ctx.send(':x: Keine korrekte URL angegeben!')
+            return
+
+        tmp = await ctx.send(f'Versuche die Quelle des Bildes <{url}> zu finden ...')
+        saucenao = f'http://saucenao.com/search.php?db=999&url={url}'
+        async with aiohttp.ClientSession(headers = self.bot.userAgentHeaders) as cs:
+            async with cs.get(saucenao) as r:
+                #Thanks to https://github.com/MistressMamiya/hsauce_bot/blob/master/get_source.py
+                content = await r.text()
+                content = content.split('Low similarity results')[0] # Get rid of the low similarity results
+                artist = re.search(r'<strong>Creator: <\/strong>(.*?)<br', content)
+                anime = re.search(r'<strong>Material: <\/strong>(.*?)<br', content)
+                characters = re.search(r'<strong>Characters: <\/strong><br \/>(.*?)<br \/></div>', content)
+                pixiv = re.search(r'<strong>Pixiv ID: </strong><a href=\"(.*?)\" class', content)
+                danbooru = re.search(r'<a href=\"https://danbooru\.donmai\.us/post/show/(\d+)\">', content)
+                gelbooru = re.search(r'<a href=\"https://gelbooru\.com/index\.php\?page=post&s=view&id=(\d+)\">', content)
+                yandere = re.search(r'<a href=\"https://yande\.re/post/show/(\d+)\">', content)
+                konachan = re.search(r'<a href=\"http://konachan\.com/post/show/(\d+)\">', content)
+                sankaku = re.search(r'<a href=\"https://chan\.sankakucomplex\.com/post/show/(\d+)\">', content)
+
+        embed = discord.Embed()
+        embed.set_footer(text='Provided by https://saucenao.com')
+        embed.set_thumbnail(url=url)
+        if anime:
+            embed.add_field(name='Anime', value=anime.group(1), inline=True)
+        if artist:
+            embed.add_field(name='Artist', value=artist.group(1), inline=True)
+        if characters:
+            embed.add_field(name='Charaktere', value=str(characters.group(1)).replace('<br />', ', '), inline=True)
+        if pixiv:
+            embed.add_field(name='Pixiv Link', value=pixiv.group(1), inline=False)
+        if danbooru:
+            embed.add_field(name='Danbooru Link', value='https://danbooru.donmai.us/post/show/' + danbooru.group(1), inline=False)
+        if gelbooru:
+            embed.add_field(name='Gelbooru Link', value='https://gelbooru.com/index.php?page=post&s=view&id=' + gelbooru.group(1), inline=False)
+        if yandere:
+            embed.add_field(name='Yande.re Link', value='https://yande.re/post/show/' + yandere.group(1), inline=False)
+        if konachan:
+            embed.add_field(name='Konachan Link', value='http://konachan.com/post/show/' + konachan.group(1), inline=False)
+        if sankaku:
+            embed.add_field(name='Sankaku Link', value='https://chan.sankakucomplex.com/post/show/' + sankaku.group(1), inline=False)
+
+        if anime or artist or characters or pixiv or danbooru or gelbooru or yandere or konachan or sankaku:
+            await tmp.edit(content='', embed=embed)
+        else:
+            await tmp.edit(content=':x: Konnte nichts finden!')
+
     # @commands.command(pass_context=True, hidden=True)
     # async def imgur(self, ctx, amount: int = None):
     #     '''Lädt eine bestimmte Anzahl der letzten hochgeladenen Bilder im Channel bei Imgur hoch'''
