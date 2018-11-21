@@ -170,9 +170,12 @@ In `games.py` kann man die Titel der "Playing-" Rotation anpassen. Platzhalter w
         (discord.ActivityType.playing, 'with Python'),
         (discord.ActivityType.playing, 'with async'),
         (discord.ActivityType.playing, 'with Karen-chan'),
+        (discord.ActivityType.playing, 'with Hinata-chan'),
+        (discord.ActivityType.playing, 'with Eduard-Laser'),
         (discord.ActivityType.watching, 'over {guilds} Server'),
         (discord.ActivityType.watching, 'over {members} Members'),
         (discord.ActivityType.watching, 'Trash Animes'),
+        (discord.ActivityType.watching, 'you right now'),
         (discord.ActivityType.watching, 'Hentai'),
         (discord.ActivityType.listening, 'Podcasts')
     ]
