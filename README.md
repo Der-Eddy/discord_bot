@@ -212,7 +212,6 @@ Full list of requirements
     websockets
     chardet
     pytz
-    memory_profiler
     pillow
 
 
