@@ -1,5 +1,6 @@
 import sys
 import os
+import random
 import discord
 import asyncio
 import aiohttp
@@ -11,6 +12,9 @@ class admin():
 
     def __init__(self, bot):
         self.bot = bot
+
+    async def __error(self, ctx, error):
+        print('Error in {0.command.qualified_name}: {1}'.format(ctx, error))
 
     async def __local_check(self, ctx):
         return await ctx.bot.is_owner(ctx.author)
@@ -168,6 +172,21 @@ class admin():
         invite = await self.bot.create_invite(guild, max_uses=1, unique=False)
         msg = f'Invite für **{guild.name}** ({guild.id})\n{invite.url}'
         await ctx.author.send(msg)
+
+    @commands.command(hidden=True, aliases=['wichteln'])
+    async def wichtel(self, ctx, *participants: str):
+        '''Nützlich für das Community Wichtel Event 2018 (BOT OWNER ONLY)'''
+        participantsList = list(participants)
+        random.shuffle(participantsList)
+        msg = 'Wichtelpartner stehen fest:\n```'
+        for i, val in enumerate(participantsList):
+            if i == len(participantsList) - 1:
+                msg += f'{val.ljust(10)} ===> {participantsList[0]}\n'
+            else:
+                msg += f'{val.ljust(10)} ===> {participantsList[i + 1]}\n'
+
+        msg += '```'
+        await ctx.send(msg)
 
     @commands.command(hidden=True)
     @commands.cooldown(1, 10, commands.cooldowns.BucketType.channel)

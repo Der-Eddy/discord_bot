@@ -13,8 +13,8 @@ class fun():
     def __init__(self, bot):
         self.bot = bot
 
-    # async def __error(self, ctx, error):
-    #     print('Error in {0.command.qualified_name}: {1}'.format(ctx, error))
+    async def __error(self, ctx, error):
+        print('Error in {0.command.qualified_name}: {1}'.format(ctx, error))
 
     def userOnline(self, memberList):
         online = []
@@ -84,6 +84,9 @@ class fun():
 
         :random user
             Gibt einen zufällige Benutzer der gerade online ist aus
+        
+        :random choice Dani Eddy Shinobu
+            Wählt aus der vorgegebenen Liste einen Namen aus
         '''
         if ctx.invoked_subcommand is None:
             if not arg:
@@ -93,6 +96,11 @@ class fun():
                 coin = ['Kopf', 'Zahl']
                 await ctx.send(f':arrows_counterclockwise: {random.choice(coin)}')
                 return
+            elif arg[0] == 'choice':
+                choices = list(arg)
+                choices.pop(0)
+                await ctx.send(f':congratulations: The winner is {random.choice(choices)}')
+                return
             elif arg[0] == 'user':
                 online = self.userOnline(ctx.guild.members)
                 randomuser = random.choice(online)
@@ -100,12 +108,12 @@ class fun():
                     user = randomuser.mention
                 else:
                     user = randomuser.display_name
-                await ctx.send(f':congratulations: {user}')
+                await ctx.send(f':congratulations: The winner is {user}')
                 return
             elif len(arg) == 1:
                 start = 1
                 end = int(arg[0])
-            elif len(arg) > 1:
+            elif len(arg) == 2:
                 start = int(arg[0])
                 end = int(arg[1])
             await ctx.send(f'**:arrows_counterclockwise:** Zufällige Zahl ({start} - {end}): {random.randint(start, end)}')
