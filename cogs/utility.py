@@ -78,13 +78,13 @@ class Plural:
             return '%s %sn' % (v, self.name)
         return '%s %s' % (v, self.name)
 
-class utility():
+class utility(commands.Cog):
     '''Allgemeine/nützliche Befehle welche nirgendwo sonst reinpassen'''
 
     def __init__(self, bot):
         self.bot = bot
 
-    async def __error(self, ctx, error):
+    async def cog_command_error(self, ctx, error):
         print('Error in {0.command.qualified_name}: {1}'.format(ctx, error))
 
     @staticmethod

@@ -8,13 +8,13 @@ from discord.ext import commands
 import xml.etree.ElementTree as ET
 import loadconfig
 
-class anime():
+class anime(commands.Cog):
     '''Alles rund um Animes'''
 
     def __init__(self, bot):
         self.bot = bot
 
-    async def __error(self, ctx, error):
+    async def cog_command_error(self, ctx, error):
         print('Error in {0.command.qualified_name}: {1}'.format(ctx, error))
 
     def checkRole(self, user, roleRec):

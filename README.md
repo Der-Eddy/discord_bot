@@ -14,6 +14,12 @@ To install the rewrite version of discord.py, run:
 
     python3 -m pip install -U https://github.com/Rapptz/discord.py/archive/rewrite.zip#egg=discord.py[voice]
 
+or alternatively
+
+    git clone https://github.com/Rapptz/discord.py
+    cd discord.py
+    python3 -m pip install -U .[voice]
+
 Using `pip3 install discord.py` will install the legacy version which won't work with this code repository.
 
 Commands List

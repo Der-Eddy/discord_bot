@@ -8,14 +8,14 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-class forum():
+class forum(commands.Cog):
     '''Forum spezifische Commands'''
 
     def __init__(self, bot):
         self.bot = bot
         self.discourseURL = 'https://www.kokoro-ko.de'
 
-    async def __error(self, ctx, error):
+    async def cog_command_error(self, ctx, error):
         print('Error in {0.command.qualified_name}: {1}'.format(ctx, error))
 
     @staticmethod

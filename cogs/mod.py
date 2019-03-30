@@ -6,7 +6,7 @@ from discord.ext import commands
 from pytz import timezone
 import loadconfig
 
-class mod():
+class mod(commands.Cog):
     '''Praktische Befehle für Administratoren und Moderatoren'''
 
     def __init__(self, bot):

@@ -7,16 +7,16 @@ import aiohttp
 from discord.ext import commands
 import loadconfig
 
-class admin():
+class admin(commands.Cog):
     '''Befehle für den Bot Admin'''
 
     def __init__(self, bot):
         self.bot = bot
 
-    async def __error(self, ctx, error):
+    async def cog_command_error(self, ctx, error):
         print('Error in {0.command.qualified_name}: {1}'.format(ctx, error))
 
-    async def __local_check(self, ctx):
+    async def cog_check(self, ctx):
         return await ctx.bot.is_owner(ctx.author)
 
     @commands.command(aliases=['quit'], hidden=True)
@@ -192,8 +192,8 @@ class admin():
     @commands.cooldown(1, 10, commands.cooldowns.BucketType.channel)
     async def test(self, ctx):
         '''Test Test Test'''
-        ctx.send('Test')
-        raise discord.GatewayNotFound()
+        await ctx.send('Test')
+        await self.bot.owner.send('Test')
 
 def setup(bot):
     bot.add_cog(admin(bot))

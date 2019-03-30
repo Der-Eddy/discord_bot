@@ -4,7 +4,7 @@ import aiohttp
 import discord
 from discord.ext import commands
 
-class steam():
+class steam(commands.Cog):
     '''Steam spezifische Commands'''
 
     def __init__(self, bot):

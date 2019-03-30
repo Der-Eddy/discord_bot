@@ -4,7 +4,7 @@ import aiohttp
 import discord
 from discord.ext import commands
 
-class gwent():
+class gwent(commands.Cog):
     '''Gwent: The Witcher 3 Card Game spezifische Commands'''
 
     def __init__(self, bot):
