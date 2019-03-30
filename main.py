@@ -16,7 +16,7 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '1.2.5'
+__version__ = '1.2.7'
 
 logger = logging.getLogger('discord')
 #logger.setLevel(logging.DEBUG)
@@ -66,6 +66,8 @@ async def on_ready():
     print(f'Dev Mode: {bot.dev}')
     print(f'Discord Version: {discord.__version__}')
     print(f'Bot Version: {__version__}')
+    bot.AppInfo = await bot.application_info()
+    print(f'Owner: {bot.AppInfo.owner}')
     print('------')
     for cog in loadconfig.__cogs__:
         try:

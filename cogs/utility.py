@@ -120,7 +120,7 @@ class utility(commands.Cog):
         minutes = (timeUp / 60) % 60
         seconds = timeUp % 60
 
-        admin = self.bot.get_user(self.bot.owner_id)
+        admin = self.bot.AppInfo.owner
         users = 0
         channel = 0
         if len(self.bot.commands_used.items()):
