@@ -15,7 +15,7 @@ class mod(commands.Cog):
     def _currenttime(self):
         return datetime.datetime.now(timezone('Europe/Berlin')).strftime("%H:%M:%S")
 
-    @commands.command(aliases=['prune'], hidden=True)
+    @commands.command(aliases=['prune'])
     @commands.has_permissions(ban_members = True)
     @commands.bot_has_permissions(manage_messages = True)
     async def purge(self, ctx, *limit):
@@ -40,7 +40,7 @@ class mod(commands.Cog):
         await tmp.delete()
         await ctx.message.delete()
 
-    @commands.command(hidden=True)
+    @commands.command()
     @commands.has_permissions(kick_members = True)
     @commands.bot_has_permissions(kick_members = True)
     async def kick(self, ctx, member: discord.Member = None, *reason):
@@ -60,7 +60,7 @@ class mod(commands.Cog):
         else:
             await ctx.send('**:no_entry:** Kein Benutzer angegeben!')
 
-    @commands.command(hidden=True)
+    @commands.command()
     @commands.has_permissions(ban_members = True)
     @commands.bot_has_permissions(ban_members = True)
     async def ban(self, ctx, member: discord.Member=None, *reason):
@@ -80,7 +80,7 @@ class mod(commands.Cog):
         else:
             await ctx.send('**:no_entry:** Kein Benutzer angegeben!')
 
-    @commands.command(hidden=True)
+    @commands.command()
     @commands.has_permissions(ban_members = True)
     @commands.bot_has_permissions(ban_members = True)
     async def unban(self, ctx, user: int=None, *reason):
@@ -102,7 +102,7 @@ class mod(commands.Cog):
         else:
             await ctx.send('**:no_entry:** Kein Benutzer angegeben!')
 
-    @commands.command(hidden=True)
+    @commands.command()
     @commands.has_permissions(kick_members = True)
     @commands.bot_has_permissions(ban_members = True)
     async def bans(self, ctx):
@@ -125,7 +125,7 @@ class mod(commands.Cog):
         else:
             await ctx.send('**:negative_squared_cross_mark:** Es gibt keine gebannten Nutzer!')
 
-    @commands.command(alias=['clearreactions'], hidden=True)
+    @commands.command(alias=['clearreactions'])
     @commands.has_permissions(manage_messages = True)
     @commands.bot_has_permissions(manage_messages = True)
     async def removereactions(self, ctx, messageid : str):
@@ -142,7 +142,7 @@ class mod(commands.Cog):
         else:
             await ctx.send('**:x:** Konnte keine Nachricht mit dieser ID finden!')
 
-    @commands.command(hidden=True)
+    @commands.command()
     async def permissions(self, ctx):
         '''Listet alle Rechte des Bots auf'''
         permissions = ctx.channel.permissions_for(ctx.me)
@@ -161,7 +161,7 @@ class mod(commands.Cog):
         embed.timestamp = datetime.datetime.utcnow()
         await ctx.send(embed=embed)
 
-    @commands.command(hidden=True)
+    @commands.command()
     async def hierarchy(self, ctx):
         '''Listet die Rollen-Hierarchie des derzeitigen Servers auf'''
         msg = f'Rollen-Hierarchie für Server **{ctx.guild}**:\n\n'
@@ -177,7 +177,7 @@ class mod(commands.Cog):
             msg += role[1] + '\n'
         await ctx.send(msg)
 
-    @commands.command(hidden=True, alies=['setrole', 'sr'])
+    @commands.command(alies=['setrole', 'sr'])
     @commands.has_permissions(manage_roles = True)
     @commands.bot_has_permissions(manage_roles = True)
     async def setrank(self, ctx, member: discord.Member=None, *rankName: str):
@@ -195,7 +195,7 @@ class mod(commands.Cog):
         else:
             await ctx.send(':no_entry: Du musst einen Benutzer angeben!')
 
-    @commands.command(pass_context=True, hidden=True, alies=['rmrole', 'removerole', 'removerank'])
+    @commands.command(pass_context=True, alies=['rmrole', 'removerole', 'removerank'])
     @commands.has_permissions(manage_roles = True)
     @commands.bot_has_permissions(manage_roles = True)
     async def rmrank(self, ctx, member: discord.Member=None, *rankName: str):

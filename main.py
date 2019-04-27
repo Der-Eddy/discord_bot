@@ -16,7 +16,7 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '1.2.7'
+__version__ = '1.3.0'
 
 logger = logging.getLogger('discord')
 #logger.setLevel(logging.DEBUG)
@@ -25,8 +25,8 @@ handler = RotatingFileHandler(filename='discordbot.log', maxBytes=1024*5, backup
 handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
 
-description = '''Der-Eddys deutscher Discord Bot, programmiert mit Discord.py\n
-                 Eine volle Liste aller Commands gibts hier: https://github.com/Der-Eddy/discord_bot#commands-list'''
+description = '''Der-Eddys anime discord bot, developed with discord.py\n
+                 A full list of all commands are available here: https://github.com/Der-Eddy/discord_bot#commands-list'''
 bot = commands.Bot(command_prefix=loadconfig.__prefix__, description=description)
 
 def _currenttime():

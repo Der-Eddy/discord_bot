@@ -2,25 +2,15 @@
 ![Slogan](https://i.imgur.com/vfEgGLU.png)
 =====================
 
-[![Python3](https://img.shields.io/badge/python-3.6-blue.svg)](https://github.com/Der-Eddy/discord_bot)
+[![Python3](https://img.shields.io/badge/python-3.7-blue.svg)](https://github.com/Der-Eddy/discord_bot)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/Der-Eddy/discord_bot/master/LICENSE)
 [![Discord Server](https://img.shields.io/badge/Support-Discord%20Server-blue.svg)](https://discord.gg/kPMbPDc)
 
-**ATTENTION: This bot uses the new rewriten version of [discord.py v1.0](https://github.com/Rapptz/discord.py/tree/rewrite), if you want to use my bot with the old legacy discord.py version check out the [legacy branch](https://github.com/Der-Eddy/discord_bot/tree/0.18.10-legacy).**
+**ATTENTION: This bot uses the new version of [discord.py v1.0](https://github.com/Rapptz/discord.py/tree/rewrite), if you want to use my bot with the old legacy discord.py version check out the [legacy branch](https://github.com/Der-Eddy/discord_bot/tree/0.18.10-legacy).**
 This is mostly a german discord chat bot made with [discord.py v1.0](https://github.com/Rapptz/discord.py).  
 If you are looking for a python discord bot to host for yourself, you should rather take a look at [Red Bot](https://github.com/Twentysix26/Red-DiscordBot) if you want a highly customizable self-hosted python bot. Shinobu is only meant to be run on my own server.
 
-To install the rewrite version of discord.py, run:
-
-    python3 -m pip install -U https://github.com/Rapptz/discord.py/archive/rewrite.zip#egg=discord.py[voice]
-
-or alternatively
-
-    git clone https://github.com/Rapptz/discord.py
-    cd discord.py
-    python3 -m pip install -U .[voice]
-
-Using `pip3 install discord.py` will install the legacy version which won't work with this code repository.
+Using `pip install discord.py` will install the latest discord.py version.
 
 Commands List
 -------------

@@ -194,6 +194,7 @@ class admin(commands.Cog):
         '''Test Test Test'''
         await ctx.send('Test')
         await self.bot.AppInfo.owner.send('Test')
+        await ctx.send(self.bot.cogs)
 
 def setup(bot):
     bot.add_cog(admin(bot))
