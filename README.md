@@ -43,7 +43,7 @@ Command und Aliases | Beschreibung | Nutzung
 `:emoji`, `:e` | Gibt eine vergrößerte Version eines angegebenen Emojis zurück | `:emoji Emilie`
 `:emojis`| Gibt alle Emojis aus auf welche der Bot Zugriff hat | `:emojis`
 `:server`, `:serverinfo`, `:guild`, `:membercount` | Gibt Informationen über die derzeitge Discord Guild aus | `:server`
-`:timer`, `:reminder` | Setzt einen Timer und benachrichtigt dann einen | `:timer 13m Pizza`, `:timer 2h`
+`:timer`, `:reminder` | Setzt einen Timer und benachrichtigt einen dann | `:timer 13m Pizza`, `:timer 2h`
 `:source`| Zeigt den Quellcode für einen Befehl auf GitHub an | `:source kawaii`
 `:commands`| Zeigt an wie oft welcher Command benutzt wurde seit dem letzten Startup | `:commands`
 `:roleUsers`| Listet alle Benutzer einer Rolle auf | `:roleUsers Admins`
