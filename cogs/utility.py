@@ -333,7 +333,7 @@ class utility(commands.Cog):
     @commands.command(aliases=['reminder'])
     @commands.cooldown(1, 30, commands.cooldowns.BucketType.user)
     async def timer(self, ctx, time : TimeParser, *, message=''):
-        '''Setzt einen Timer und benachrichtigt dann einen
+        '''Setzt einen Timer und benachrichtigt einen dann
 
         Beispiel:
         -----------
