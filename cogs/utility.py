@@ -94,7 +94,7 @@ class utility(commands.Cog):
     @staticmethod
     def _getRoles(roles):
         string = ''
-        for role in roles:
+        for role in roles[::-1]:
             if not role.is_default():
                 string += f'{role.mention}, '
         if string is '':
@@ -311,7 +311,7 @@ class utility(commands.Cog):
         '''Gibt Informationen über die derzeitge Discord Guild aus'''
         emojis = self._getEmojis(ctx.guild.emojis)
         #print(emojis)
-        roles = self._getRoles(ctx.guild.role_hierarchy)
+        roles = self._getRoles(ctx.guild.roles)
         embed = discord.Embed(color=0xf1c40f) #Golden
         embed.set_thumbnail(url=ctx.guild.icon_url)
         embed.set_footer(text='Es können evtl. Emojis fehlen')
