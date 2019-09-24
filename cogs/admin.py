@@ -106,12 +106,16 @@ class admin(commands.Cog):
 
         :leaveserver 102817255661772800
         '''
-        guild = self.bot.get_guild(guildid)
-        if guild:
-            await self.bot.leave_guild(guild)
-            msg = ':ok: Austritt aus {} erfolgreich!'.format(guild.name)
+        if guildid == 'this':
+            await ctx.guild.leave()
+            return
         else:
-            msg = ':x: Konnte keine passende Guild zu dieser ID finden!'
+            guild = self.bot.get_guild(guildid)
+            if guild:
+                await guild.leave()
+                msg = f':ok: Austritt aus {guild.name} erfolgreich!'
+            else:
+                msg = ':x: Konnte keine passende Guild zu dieser ID finden!'
         await ctx.send(msg)
 
     @commands.command(hidden=True)
