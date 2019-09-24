@@ -149,7 +149,7 @@ async def on_guild_join(guild):
     embed.add_field(name='Region', value=guild.region, inline=True)
     embed.add_field(name='Mitglieder', value=guild.member_count, inline=True)
     embed.add_field(name='Erstellt am', value=guild.created_at, inline=True)
-    await bot.owner.send(embed=embed)
+    await bot.AppInfo.owner.send(embed=embed)
 
 @bot.event
 async def on_guild_remove(guild):
@@ -161,7 +161,7 @@ async def on_guild_remove(guild):
     embed.add_field(name='Region', value=guild.region, inline=True)
     embed.add_field(name='Mitglieder', value=guild.member_count, inline=True)
     embed.add_field(name='Erstellt am', value=guild.created_at, inline=True)
-    await bot.owner.send(embed=embed)
+    await bot.AppInfo.owner.send(embed=embed)
 
 @bot.event
 async def on_error(event, *args, **kwargs):
@@ -173,7 +173,7 @@ async def on_error(event, *args, **kwargs):
         embed.description = '```py\n%s\n```' % traceback.format_exc()
         embed.timestamp = datetime.datetime.utcnow()
         try:
-            await bot.owner.send(embed=embed)
+            await bot.AppInfo.owner.send(embed=embed)
         except:
             pass
 
@@ -195,7 +195,7 @@ async def on_command_error(error, ctx):
             embed.add_field(name='Message', value=ctx.message.clean_content)
             embed.timestamp = datetime.datetime.utcnow()
             try:
-                await bot.owner.send(embed=embed)
+                await bot.AppInfo.owner.send(embed=embed)
             except:
                 pass
 
