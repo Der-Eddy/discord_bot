@@ -221,7 +221,8 @@ class fun(commands.Cog):
                 'Wenn ein Yogalehrer seine Beine senkrecht nach oben streckt und dabei furzt, welche Yoga Figur stellt er da?\n Eine Duftkerze',
                 'Warum ging der Luftballon kaputt?\n Aus Platzgründen.',
                 'Ich wollte Spiderman anrufen, aber er hatte kein Netz.',
-                'Was vermisst eine Schraube am meisten? Einen Vater']
+                'Was vermisst eine Schraube am meisten? Einen Vater',
+                'Geht ein Panda über die Straße. Bam....Bus!']
         emojis = [':laughing:', ':smile:', ':joy:', ':sob:', ':rofl:']
         msg = f'{random.choice(emojis)} {random.choice(puns)}'
         await ctx.send(msg)
