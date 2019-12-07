@@ -61,6 +61,27 @@ class fun(commands.Cog):
                 res = await r.json()
                 emojis = [':cat2: ', ':cat: ', ':heart_eyes_cat: ']
                 await ctx.send(random.choice(emojis) + res['file'])
+                
+    @commands.command()
+    async def otter(self, ctx):
+        async with aiohttp.ClientSession() as cs:
+            async with cs.get('https://api-otter--rexjohannes.repl.co/') as r:
+                res = await r.text()
+                await ctx.send(res)
+                
+    @commands.command()
+    async def dog(self, ctx):
+        async with aiohttp.ClientSession() as cs:
+            async with cs.get('https://api-dog--rexjohannes.repl.co/') as r:
+                res = await r.text()
+                await ctx.send(res)
+                
+    @commands.command()
+    async def squirrel(self, ctx):
+        async with aiohttp.ClientSession() as cs:
+            async with cs.get('https://api-squirrel--rexjohannes.repl.co/') as r:
+                res = await r.text()
+                await ctx.send(res)
 
 
     @commands.command(aliases=['rand'])
