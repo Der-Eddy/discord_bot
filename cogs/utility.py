@@ -97,7 +97,7 @@ class utility(commands.Cog):
         for role in roles[::-1]:
             if not role.is_default():
                 string += f'{role.mention}, '
-        if string is '':
+        if string == '':
             return 'None'
         else:
             return string[:-2]
@@ -107,7 +107,7 @@ class utility(commands.Cog):
         string = ''
         for emoji in emojis:
             string += str(emoji)
-        if string is '':
+        if string == '':
             return 'None'
         else:
             return string[:1000] #The maximum allowed charcter amount for embed fields

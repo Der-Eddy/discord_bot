@@ -130,7 +130,7 @@ Entweder ihr startet das Script direkt über `python3 main.py` oder erstellt ein
     Environment="PYTHONHASHSEED=0"
     User=eddy
     Group=eddy
-    ExecStart=/usr/bin/python3.6 /home/eddy/discord_bot/main.py
+    ExecStart=/usr/bin/python3 /home/eddy/discord_bot/main.py
     Type=idle
     Restart=on-failure
     RestartSec=15
@@ -151,9 +151,7 @@ Vor dem Start muss im Ordner `config` eine Datei namens `config.py` angelegt wer
     __botserverid__ = 102817255661772800 #Specifies the serverid from which the server-/modlog should be taken + some other nito features
     __kawaiichannel__ = 207909155556687872 #OPTIONAL specified a channel where the :kawaii commands gets this pinned messages
     __greetmsg__ = 102817255661772800 #HARDCODED Enable/Disable greetmsg at the default channel of my server
-    __selfassignrole__ = 'NSFW' #OPTIONAL set to a role to be self assign-able
-    __discourseAPIKey__ = {'api_key': '9f0be26ea6a4f47dba6c627ee2f5aa139caa29f8b899bc96c3b7b94755a9363f', 'api_username': 'Eddy'} #OPTIONAL Needed for all discourse related commands
-    __cookieJar__ = {'loginuuid': 'löaskdjfölkdfa65sdf46a5s4df56e1f23s1df32asd1f5ef1325s11bSJ9.ImRXcWNHeWI98sd5f4s65ef6s31h1fgjdfg6h54sdfasdfcvbcvb2465UrYlRORDYyTWREQThtYjBrcFEzd1wvbXZJRiswdlwvaWc5YkZSdDlMQUYzZEJIeE03SitsTFZhSFh5cGgrcHducXdzYjVMMTU5U0lGenNITitsYmdSSWIremlNU01UeVM5XC9ZaVpLSFBmaEkyU3NsZjQ1MVNDeHBvOGdaWWxGRlhmZ28raTlcL0RTYzlQaUJkc2N1alp4VW00dXJHMkd5UUttTnZQekZPa2Y1aE1qUjdHNVRwNkdyakhtNUtWc3VWYmUySVc0bkUyQ0pSWVMi.b6nMo5Q3hBMLauEsePPVNSdTJ8I5CqbZFDLrrln-oag', 'bbuserid': '5660970', 'bbpassword': '1753ec1889f70aa87845cc5bfd3b4409'} #OPTIONAL Needed for all elitepvpers.com related commands
+
 
 In `games.py` kann man die Titel der "Playing-" Rotation anpassen. Platzhalter wie `{servers}` oder `{members}` sind möglich.
 
@@ -180,12 +178,12 @@ In `games.py` kann man die Titel der "Playing-" Rotation anpassen. Platzhalter w
 Erweiterungen (Cogs) die beim starten aktiviert werden sollen, kann man in `cogs.py` einstellen:
 
     __cogs__ = [
-        'cogs.mod',
         'cogs.admin',
+        'cogs.mod',
         'cogs.fun',
         'cogs.anime',
         'cogs.utility',
-        'cogs.forum'
+        'cogs.help'
         ]
 
 
@@ -203,7 +201,7 @@ Full list of requirements
 -------------
 
     python>=3.6.0
-    discord.py>=1.0.0a
+    discord.py>=1.3.0
     aiohttp
     websockets
     chardet
@@ -215,7 +213,7 @@ License
 -------------
     MIT License
 
-    Copyright (c) 2016 - 2018 Eduard Nikoleisen
+    Copyright (c) 2016 Eduard Nikoleisen
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal

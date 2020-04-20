@@ -55,7 +55,7 @@ def _setupDatabase(db):
 
 @bot.event
 async def on_ready():
-    if bot.user.id == 204966267147255808:
+    if bot.user.id == 701915238488080457:
         bot.dev = True
     else:
         bot.dev = False
