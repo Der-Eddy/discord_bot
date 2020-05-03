@@ -27,7 +27,6 @@ class anime(commands.Cog):
     @commands.command()
     async def kawaii(self, ctx):
         '''Gibt ein zufälliges kawaii Bild aus'''
-        print(loadconfig.__kawaiichannel__)
         if loadconfig.__kawaiichannel__:
             pins = await self.bot.get_channel(loadconfig.__kawaiichannel__).pins()
             rnd = random.choice(pins)

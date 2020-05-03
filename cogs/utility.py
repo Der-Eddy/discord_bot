@@ -11,7 +11,6 @@ import aiohttp
 import discord
 from discord.ext import commands
 from PIL import Image, ImageDraw, ImageFont
-import loadconfig
 
 #Stolen from https://github.com/Rapptz/RoboDanny/blob/b513a32dfbd4fdbd910f7f56d88d1d012ab44826/cogs/meta.py
 class TimeParser:
@@ -41,6 +40,9 @@ class TimeParser:
 
         if self.seconds > 604800: # 7 days
             raise commands.BadArgument('7 Tage sind ne lange Zeit, denkste du nicht auch?')
+    
+    async def cog_command_error(self, ctx, error):
+        print('Error in {0.command.qualified_name}: {1}'.format(ctx, error))
 
     @staticmethod
     def human_timedelta(dt):
@@ -492,119 +494,119 @@ class utility(commands.Cog):
 
         os.remove(path)
 
-    @commands.command(aliases=['rank', 'role', 'roles'], enabled=False)
-    async def ranks(self, ctx, *rankName: str):
-        '''Auflistung aller Ränge oder beitritt eines bestimmten Ranges
+    # @commands.command(aliases=['rank', 'role', 'roles'], enabled=False)
+    # async def ranks(self, ctx, *rankName: str):
+    #     '''Auflistung aller Ränge oder beitritt eines bestimmten Ranges
 
-        Beispiel:
-        -----------
+    #     Beispiel:
+    #     -----------
 
-        :rank
+    #     :rank
 
-        :rank Python
-        '''
-        codingLoungeID = 161637499939192832
-        wshbrID = 247830763649761282
-        codingRankList = ['HTML + CSS', 'Javascript', 'C++ / C', '.NET', 'PHP', 'NSFW',
-                    'Java', 'Gourmet', 'Assembler', 'Python', 'Math', 'AutoIt',
-                    'Member', 'Clash', 'Books', 'Chess', 'Free Games', 'macOS', 'Linux', 'Windows', 'Rust']
-        wshbrRankList = ['Chuunin', 'Genin']
-        if ctx.guild.id == codingLoungeID:
-            rankList = codingRankList
-        elif ctx.guild.id == wshbrID:
-            rankList = wshbrRankList
+    #     :rank Python
+    #     '''
+    #     codingLoungeID = 161637499939192832
+    #     wshbrID = 247830763649761282
+    #     codingRankList = ['HTML + CSS', 'Javascript', 'C++ / C', '.NET', 'PHP', 'NSFW',
+    #                 'Java', 'Gourmet', 'Assembler', 'Python', 'Math', 'AutoIt',
+    #                 'Member', 'Clash', 'Books', 'Chess', 'Free Games', 'macOS', 'Linux', 'Windows', 'Rust']
+    #     wshbrRankList = ['Chuunin', 'Genin']
+    #     if ctx.guild.id == codingLoungeID:
+    #         rankList = codingRankList
+    #     elif ctx.guild.id == wshbrID:
+    #         rankList = wshbrRankList
 
-        if len(rankName) == 0 and ctx.guild.id not in [codingLoungeID, wshbrID] or ''.join(rankName) == 'all':
-            rolesList = '`'
-            for roleServer in ctx.guild.roles:
-                if not roleServer.is_default():
-                    count = 0
-                    for member in ctx.guild.members:
-                        if roleServer in member.roles:
-                            count += 1
-                    rolesList += f'{roleServer.name:30}{count} Members\n'
-            embed = discord.Embed(color=0xf1c40f) #Golden
-            embed.set_thumbnail(url=ctx.guild.icon_url)
-            embed.add_field(name='Ranks', value=rolesList + '`', inline=True)
-            await ctx.send(embed=embed)
-        elif len(rankName) == 0 and ctx.guild.id in [codingLoungeID, wshbrID]:
-            rolesList = '`'
-            for role in rankList:
-                count = 0
-                roleServer = discord.utils.get(ctx.guild.roles, name=role)
-                for member in ctx.guild.members:
-                    if roleServer in member.roles:
-                        count += 1
-                rolesList += f'{role:20}{count} Members\n'
-            embed = discord.Embed(color=0x3498db) #Blue
-            embed.set_thumbnail(url=ctx.guild.icon_url)
-            embed.set_footer(text='Use the ":rank RANKNAME" command to join a rank')
-            embed.add_field(name='Ranks', value=rolesList + '`', inline=True)
-            await ctx.send(embed=embed)
-        elif ctx.guild.id not in [codingLoungeID, wshbrID]:
-            await ctx.send(':x: This command only works on the Coding Lounge Server!')
-        elif ctx.guild.id in [codingLoungeID, wshbrID]:
-            synonyms = []
-            synonyms.append(['html / css', 'HTML + CSS'])
-            synonyms.append(['html + css', 'HTML + CSS'])
-            synonyms.append(['html', 'HTML + CSS'])
-            synonyms.append(['css', 'HTML + CSS'])
-            synonyms.append(['javascript', 'Javascript'])
-            synonyms.append(['js', 'Javascript'])
-            synonyms.append(['c / c++', 'C++ / C'])
-            synonyms.append(['c++', 'C++ / C'])
-            synonyms.append(['c', 'C++ / C'])
-            synonyms.append(['c#', '.NET'])
-            synonyms.append(['.net', '.NET'])
-            synonyms.append(['vs', '.NET'])
-            synonyms.append(['php', 'PHP'])
-            synonyms.append(['nsfw', 'NSFW'])
-            synonyms.append(['porn', 'NSFW'])
-            synonyms.append(['java', 'Java'])
-            synonyms.append(['gourmet', 'Gourmet'])
-            synonyms.append(['assembler', 'Assembler'])
-            synonyms.append(['asm', 'Assembler'])
-            synonyms.append(['python', 'Python'])
-            synonyms.append(['math', 'Math'])
-            synonyms.append(['autoit', 'AutoIt'])
-            synonyms.append(['clash', 'Clash'])
-            synonyms.append(['chess', 'Chess'])
-            synonyms.append(['books', 'Books'])
-            synonyms.append(['free games', 'Free Games'])
-            synonyms.append(['free game', 'Free Games'])
-            synonyms.append(['genin', 'Genin'])
-            synonyms.append(['chuunin', 'Chuunin'])
-            synonyms.append(['linux', 'Linux'])
-            synonyms.append(['macos', 'macOS'])
-            synonyms.append(['mac', 'macOS'])
-            synonyms.append(['osx', 'macOS'])
-            synonyms.append(['windows', 'Windows'])
-            synonyms.append(['rust', 'Rust'])
+    #     if len(rankName) == 0 and ctx.guild.id not in [codingLoungeID, wshbrID] or ''.join(rankName) == 'all':
+    #         rolesList = '`'
+    #         for roleServer in ctx.guild.roles:
+    #             if not roleServer.is_default():
+    #                 count = 0
+    #                 for member in ctx.guild.members:
+    #                     if roleServer in member.roles:
+    #                         count += 1
+    #                 rolesList += f'{roleServer.name:30}{count} Members\n'
+    #         embed = discord.Embed(color=0xf1c40f) #Golden
+    #         embed.set_thumbnail(url=ctx.guild.icon_url)
+    #         embed.add_field(name='Ranks', value=rolesList + '`', inline=True)
+    #         await ctx.send(embed=embed)
+    #     elif len(rankName) == 0 and ctx.guild.id in [codingLoungeID, wshbrID]:
+    #         rolesList = '`'
+    #         for role in rankList:
+    #             count = 0
+    #             roleServer = discord.utils.get(ctx.guild.roles, name=role)
+    #             for member in ctx.guild.members:
+    #                 if roleServer in member.roles:
+    #                     count += 1
+    #             rolesList += f'{role:20}{count} Members\n'
+    #         embed = discord.Embed(color=0x3498db) #Blue
+    #         embed.set_thumbnail(url=ctx.guild.icon_url)
+    #         embed.set_footer(text='Use the ":rank RANKNAME" command to join a rank')
+    #         embed.add_field(name='Ranks', value=rolesList + '`', inline=True)
+    #         await ctx.send(embed=embed)
+    #     elif ctx.guild.id not in [codingLoungeID, wshbrID]:
+    #         await ctx.send(':x: This command only works on the Coding Lounge Server!')
+    #     elif ctx.guild.id in [codingLoungeID, wshbrID]:
+    #         synonyms = []
+    #         synonyms.append(['html / css', 'HTML + CSS'])
+    #         synonyms.append(['html + css', 'HTML + CSS'])
+    #         synonyms.append(['html', 'HTML + CSS'])
+    #         synonyms.append(['css', 'HTML + CSS'])
+    #         synonyms.append(['javascript', 'Javascript'])
+    #         synonyms.append(['js', 'Javascript'])
+    #         synonyms.append(['c / c++', 'C++ / C'])
+    #         synonyms.append(['c++', 'C++ / C'])
+    #         synonyms.append(['c', 'C++ / C'])
+    #         synonyms.append(['c#', '.NET'])
+    #         synonyms.append(['.net', '.NET'])
+    #         synonyms.append(['vs', '.NET'])
+    #         synonyms.append(['php', 'PHP'])
+    #         synonyms.append(['nsfw', 'NSFW'])
+    #         synonyms.append(['porn', 'NSFW'])
+    #         synonyms.append(['java', 'Java'])
+    #         synonyms.append(['gourmet', 'Gourmet'])
+    #         synonyms.append(['assembler', 'Assembler'])
+    #         synonyms.append(['asm', 'Assembler'])
+    #         synonyms.append(['python', 'Python'])
+    #         synonyms.append(['math', 'Math'])
+    #         synonyms.append(['autoit', 'AutoIt'])
+    #         synonyms.append(['clash', 'Clash'])
+    #         synonyms.append(['chess', 'Chess'])
+    #         synonyms.append(['books', 'Books'])
+    #         synonyms.append(['free games', 'Free Games'])
+    #         synonyms.append(['free game', 'Free Games'])
+    #         synonyms.append(['genin', 'Genin'])
+    #         synonyms.append(['chuunin', 'Chuunin'])
+    #         synonyms.append(['linux', 'Linux'])
+    #         synonyms.append(['macos', 'macOS'])
+    #         synonyms.append(['mac', 'macOS'])
+    #         synonyms.append(['osx', 'macOS'])
+    #         synonyms.append(['windows', 'Windows'])
+    #         synonyms.append(['rust', 'Rust'])
 
-            synonyms_dict = dict(synonyms)
+    #         synonyms_dict = dict(synonyms)
 
-            try:
-                rankName = synonyms_dict[' '.join(rankName).lower()]
-            except KeyError:
-                rankName = ' '.join(rankName)
+    #         try:
+    #             rankName = synonyms_dict[' '.join(rankName).lower()]
+    #         except KeyError:
+    #             rankName = ' '.join(rankName)
 
-            if not rankName in rankList:
-                await ctx.send(':x: Couldn\'t find that rank! Use `:ranks` to list all available ranks')
-                return
+    #         if not rankName in rankList:
+    #             await ctx.send(':x: Couldn\'t find that rank! Use `:ranks` to list all available ranks')
+    #             return
 
-            rank = discord.utils.get(ctx.guild.roles, name=rankName)
-            if rank in ctx.message.author.roles:
-                try:
-                    await ctx.author.remove_roles(rank)
-                except:
-                    pass
-                await ctx.send(f':negative_squared_cross_mark: Rank **{rank}** removed from **{ctx.author.mention}**')
-            else:
-                try:
-                    await ctx.author.add_roles(rank)
-                except:
-                    pass
-                await ctx.send(f':white_check_mark: Rank **{rank}** added to **{ctx.author.mention}**')
+    #         rank = discord.utils.get(ctx.guild.roles, name=rankName)
+    #         if rank in ctx.message.author.roles:
+    #             try:
+    #                 await ctx.author.remove_roles(rank)
+    #             except:
+    #                 pass
+    #             await ctx.send(f':negative_squared_cross_mark: Rank **{rank}** removed from **{ctx.author.mention}**')
+    #         else:
+    #             try:
+    #                 await ctx.author.add_roles(rank)
+    #             except:
+    #                 pass
+    #             await ctx.send(f':white_check_mark: Rank **{rank}** added to **{ctx.author.mention}**')
 
     @commands.command(aliases=['vote', 'addvotes', 'votes'])
     async def addvote(self, ctx, votecount = 'bool'):

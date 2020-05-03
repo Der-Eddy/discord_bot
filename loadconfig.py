@@ -34,6 +34,7 @@ else:
     __botserverid__ = int(os.environ.get('DISCORD_BOTSERVERID'))
     __kawaiichannel__ = int(os.environ.get('DISCORD_KAWAIICHANNEL'))
     __greetmsg__ = os.environ.get('DISCORD_GREETMSG')
+    __leavemsg__ = os.environ.get('DISCORD_LEAVEMSG')
     
 
 from config.games import __games__, __gamesTimer__
