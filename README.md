@@ -6,8 +6,8 @@
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/Der-Eddy/discord_bot/master/LICENSE)
 [![Discord Server](https://img.shields.io/badge/Support-Discord%20Server-blue.svg)](https://discord.gg/kPMbPDc)
 
-**ATTENTION: This bot uses the new version of [discord.py v1.0](https://github.com/Rapptz/discord.py/tree/rewrite), if you want to use my bot with the old legacy discord.py version check out the [legacy branch](https://github.com/Der-Eddy/discord_bot/tree/0.18.10-legacy).**
-This is mostly a german discord chat bot made with [discord.py v1.0](https://github.com/Rapptz/discord.py).  
+**ATTENTION: This bot uses the new version of [discord.py v1.0+](https://github.com/Rapptz/discord.py/tree/rewrite), if you want to use my bot with the old legacy discord.py version check out the [legacy branch](https://github.com/Der-Eddy/discord_bot/tree/0.18.10-legacy).**
+This is mostly a german discord chat bot made with [discord.py v1.0+](https://github.com/Rapptz/discord.py).  
 If you are looking for a python discord bot to host for yourself, you should rather take a look at [Red Bot](https://github.com/Twentysix26/Red-DiscordBot) if you want a highly customizable self-hosted python bot. Shinobu is only meant to be run on my own server.
 
 Using `pip install discord.py` will install the latest discord.py version.
@@ -147,10 +147,11 @@ Einstellungen
 Vor dem Start muss im Ordner `config` eine Datei namens `config.py` angelegt werden, ein Beispiel einer solchen gibt es in `config.example.py` zu finden:
 
     __token__ = 'INSERT BOT TOKEN HERE'
-    __prefix__ = ':'
-    __botserverid__ = 102817255661772800 #Specifies the serverid from which the server-/modlog should be taken + some other nito features
+    __prefix__ = ':' #OPTIONAL Prefix for all commands, defaults to colon
+    __botserverid__ = 102817255661772800 #OPTIONAL Specifies the main serverid from which the server-/modlog should be taken + some other nito features
     __kawaiichannel__ = 207909155556687872 #OPTIONAL specified a channel where the :kawaii commands gets this pinned messages
-    __greetmsg__ = 102817255661772800 #HARDCODED Enable/Disable greetmsg at the default channel of my server
+    __greetmsg__ = '{emoji} Welcome {member} on my server!' #OPTIONAL sends a greet message to new user in the botserverid system channel
+    __leavemsg__ = ':sad: {member} left the server' #OPTIONAL sends a leave message to the botserverid system channel
 
 
 In `games.py` kann man die Titel der "Playing-" Rotation anpassen. Platzhalter wie `{servers}` oder `{members}` sind möglich.

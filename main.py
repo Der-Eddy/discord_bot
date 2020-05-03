@@ -16,7 +16,7 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '1.3.1'
+__version__ = '1.4.0'
 
 logger = logging.getLogger('discord')
 #logger.setLevel(logging.DEBUG)
@@ -122,22 +122,17 @@ async def on_member_join(member):
         if member.id in loadconfig.__blacklist__:
             member.kick()
             await bot.owner.send(f'Benutzer **{member}** automatisch gekickt')
-        memberExtra = '{0} - *{1} ({2})*'.format(member.mention, member, member.id)
-        if loadconfig.__greetmsg__ != 0:
-            channel = member.guild.get_channel(loadconfig.__greetmsg__)
+        if loadconfig.__greetmsg__ != '':
+            channel = member.guild.system_channel
             emojis = [':wave:', ':congratulations:', ':wink:', ':new:', ':cool:', ':white_check_mark:', ':tada:']
-            await channel.send('{0} Willkommen {1} auf Der-Eddys Discord Server! Für weitere Informationen, wie unsere nsfw Channel :underage: , besuche unseren <#165973433086115840> Channel.'.format(random.choice(emojis), member.mention))
-    elif member.guild.id == 161637499939192832:
-        rank = discord.utils.get(member.guild.roles, name='Member')
-        await member.add_roles(rank)
+            await channel.send(loadconfig.__greetmsg__.format(emoji = random.choice(emojis), member = member.mention))
 
 @bot.event
 async def on_member_remove(member):
     if member.guild.id == loadconfig.__botserverid__ and not bot.dev:
-        memberExtra = '{0} - *{1} ({2})*'.format(member.mention, member, member.id)
-        if loadconfig.__greetmsg__ != 0:
-            channel = member.guild.get_channel(loadconfig.__greetmsg__)
-            await channel.send(f'<:faeSad:298772756127023104> **{member.name}** verließ unseren Server.')
+        if loadconfig.__leavemsg__ != '':
+            channel = member.guild.system_channel
+            await channel.send(loadconfig.__leavemsg__.format(member = member.name))
 
 @bot.event
 async def on_guild_join(guild):
