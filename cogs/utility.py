@@ -492,7 +492,7 @@ class utility(commands.Cog):
 
         os.remove(path)
 
-    @commands.command(aliases=['rank', 'role', 'roles'])
+    @commands.command(aliases=['rank', 'role', 'roles'], enabled=False)
     async def ranks(self, ctx, *rankName: str):
         '''Auflistung aller Ränge oder beitritt eines bestimmten Ranges
 
