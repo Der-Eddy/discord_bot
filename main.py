@@ -16,7 +16,7 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '1.4.0'
+__version__ = '1.4.1'
 
 logger = logging.getLogger('discord')
 #logger.setLevel(logging.DEBUG)

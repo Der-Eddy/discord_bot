@@ -288,7 +288,7 @@ class utility(commands.Cog):
         if emoji:
             tempEmojiFile = 'tempEmoji.png'
             async with aiohttp.ClientSession() as cs:
-                async with cs.get(emoji.url) as img:
+                async with cs.get(str(emoji.url)) as img:
                     with open(tempEmojiFile, 'wb') as f:
                         f.write(await img.read())
                 f = discord.File(tempEmojiFile)
