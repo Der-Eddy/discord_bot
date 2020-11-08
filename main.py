@@ -16,7 +16,7 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '1.4.1'
+__version__ = '1.4.2'
 
 logger = logging.getLogger('discord')
 #logger.setLevel(logging.DEBUG)
@@ -27,7 +27,10 @@ logger.addHandler(handler)
 
 description = '''Der-Eddys anime discord bot, developed with discord.py\n
                  A full list of all commands are available here: https://github.com/Der-Eddy/discord_bot#commands-list'''
-bot = commands.Bot(command_prefix=loadconfig.__prefix__, description=description)
+intents = discord.Intents.default()
+intents.presences = True
+intents.members = True
+bot = commands.Bot(command_prefix=loadconfig.__prefix__, description=description, intents=intents)
 
 def _currenttime():
     return datetime.datetime.now(timezone('Europe/Berlin')).strftime('%H:%M:%S')
