@@ -422,13 +422,16 @@ class utility(commands.Cog):
         else:
             await ctx.send(msg)
 
-    @commands.command()
+    @commands.command(aliases=['activities'])
     async def games(self, ctx, *scope):
         '''Zeigt welche Spiele wie oft auf dem Server gerade gespielt werden'''
         games = Counter()
         for member in ctx.guild.members:
-            if member.game != None:
-                games[member.game] += 1
+            for activity in member.activities:
+                if isinstance(activity, discord.Game):
+                    games[str(activity)] += 1
+                elif isinstance(activity, discord.Activity):
+                    games[activity.name] += 1
         msg = ':chart: Spiele die derzeit auf diesem Server gespielt werden\n'
         msg += '```js\n'
         msg += '{!s:40s}: {!s:>3s}\n'.format('Name', 'Anzahl')
