@@ -97,3 +97,4 @@ tempAva.*
 *.db
 debug.html
 .vscode/
+docker-compose.yml
