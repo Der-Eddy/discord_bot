@@ -5,6 +5,7 @@
 [![Python3](https://img.shields.io/badge/python-3.7-blue.svg)](https://github.com/Der-Eddy/discord_bot)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/Der-Eddy/discord_bot/master/LICENSE)
 [![Discord Server](https://img.shields.io/badge/Support-Discord%20Server-blue.svg)](https://discord.gg/kPMbPDc)
+![Docker](https://github.com/Der-Eddy/discord_bot/workflows/Docker/badge.svg)
 
 **ATTENTION: This bot uses the new version of [discord.py v1.0+](https://github.com/Rapptz/discord.py/tree/rewrite), if you want to use my bot with the old legacy discord.py version check out the [legacy branch](https://github.com/Der-Eddy/discord_bot/tree/0.18.10-legacy).**
 This is mostly a german discord chat bot made with [discord.py v1.0+](https://github.com/Rapptz/discord.py).  
@@ -118,9 +119,36 @@ Command und Aliases | Beschreibung | Nutzung
 `:geninvite` | Generiert einen Invite für einen Server wenn möglich. **BOT OWNER ONLY** | `:geninvite 102817255661772800`
 
 
-Run
+Run (Docker method)
 -------------
-Entweder ihr startet das Script direkt über `python3 main.py` oder erstellt eine systemd unit, ein Beispiel findet ihr unter `discord.service.example`:
+
+GitHub Actions erstellt automatisch ein Docker image unter `docker.pkg.github.com/der-eddy/discord_bot/shinobu-discord-bot:latest`. Unter `docker-compose.examle.yml` findet ihr ein Beispiel wie man dieses einsetzt:
+
+    version: '3.9'
+
+    services:
+    discord_bot:
+        container_name: discord_bot
+        image: docker.pkg.github.com/der-eddy/discord_bot/shinobu-discord-bot
+        restart: always
+        volumes:
+        - discord_bot_data:/discord_bot
+        environment:
+        DISCORD_TOKEN: 'INSERT BOT TOKEN HERE'
+        DISCORD_PREFIX: ':' #OPTIONAL Prefix for all commands, defaults to colon
+        DISCORD_BOTSERVERID: '102817255661772800' #OPTIONAL Specifies the main serverid from which the server-/modlog should be taken + some other nito features
+        DISCORD_KAWAIICHANNEL: '207909155556687872' #OPTIONAL specified a channel where the :kawaii commands gets this pinned messages
+        DISCORD_GREETMSG: '{emoji} Welcome {member} on my server!' #OPTIONAL sends a greet message to new user in the botserverid system channel
+        DISCORD_LEAVEMSG: ':sad: {member} left the server' #OPTIONAL sends a leave message to the botserverid system channel
+
+    volumes:
+    discord_bot_data:
+
+Anzumerken ist dass das Docker Image [Googles distroless](https://github.com/GoogleContainerTools/distroless) python Basis benutzt, d.h. das nicht mal eine Shell vorinstalliert ist. Ihr könnt natürlich auch euer eigenes Docker Image anhand der `Dockerfile` selber bauen lassen-
+
+Run (old method)
+-------------
+Entweder ihr startet das Script direkt über `python3 main.py` oder erstellt eine systemd service unit, ein Beispiel findet ihr unter `discord.service.example`:
 
     [Unit]
     Description=Shinobu Discord Bot
