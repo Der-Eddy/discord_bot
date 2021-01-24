@@ -1,0 +1,19 @@
+version: '3.9'
+
+services:
+  discord_bot:
+    container_name: discord_bot
+    image: ghcr.io/Der-Eddy/shinobu-discord-bot
+    restart: always
+    volumes:
+      - discord_bot_data:/discord_bot
+    environment:
+      DISCORD_TOKEN: 'INSERT BOT TOKEN HERE'
+      DISCORD_PREFIX: ':' #OPTIONAL Prefix for all commands, defaults to colon
+      DISCORD_BOTSERVERID: '102817255661772800' #OPTIONAL Specifies the main serverid from which the server-/modlog should be taken + some other nito features
+      DISCORD_KAWAIICHANNEL: '207909155556687872' #OPTIONAL specified a channel where the :kawaii commands gets this pinned messages
+      DISCORD_GREETMSG: '{emoji} Welcome {member} on my server!' #OPTIONAL sends a greet message to new user in the botserverid system channel
+      DISCORD_LEAVEMSG: ':sad: {member} left the server' #OPTIONAL sends a leave message to the botserverid system channel
+
+volumes:
+  discord_bot_data:
