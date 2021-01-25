@@ -132,7 +132,7 @@ GitHub Actions erstellt automatisch ein Docker image unter `docker.pkg.github.co
         image: docker.pkg.github.com/der-eddy/discord_bot/shinobu-discord-bot
         restart: always
         volumes:
-        - discord_bot_data:/discord_bot
+        - discord_bot_data:/discord_bot/config
         environment:
         DISCORD_TOKEN: 'INSERT BOT TOKEN HERE'
         DISCORD_PREFIX: ':' #OPTIONAL Prefix for all commands, defaults to colon
