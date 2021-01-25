@@ -147,6 +147,7 @@ class utility(commands.Cog):
         embed.add_field(name='Bot Version', value=self.bot.botVersion, inline=True)
         embed.add_field(name='Discord.py Version', value=discord.__version__, inline=True)
         embed.add_field(name='Python Version', value=platform.python_version(), inline=True)
+        embed.add_field(name='Docker', value=str(self.bot.docker), inline=True)
         # embed.add_field(name='Speicher Auslastung', value=f'{round(memory_usage(-1)[0], 3)} MB', inline=True)
         embed.add_field(name='Betriebssystem', value=f'{platform.system()} {platform.release()} {platform.version()}', inline=False)
         await ctx.send('**:information_source:** Informationen über diesen Bot:', embed=embed)

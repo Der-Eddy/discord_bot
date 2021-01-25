@@ -16,7 +16,7 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '1.4.3'
+__version__ = '1.4.4'
 
 logger = logging.getLogger('discord')
 #logger.setLevel(logging.DEBUG)
@@ -62,11 +62,15 @@ async def on_ready():
         bot.dev = True
     else:
         bot.dev = False
+    
+    if os.environ.get('PYTHONUNBUFFERED') == '1':
+        bot.docker = True
+    else:
+        bot.docker = False
 
     print('Logged in as')
-    print(f'Bot-Name: {bot.user.name}')
-    print(f'Bot-ID: {bot.user.id}')
-    print(f'Dev Mode: {bot.dev}')
+    print(f'Bot-Name: {bot.user.name} | ID: {bot.user.id}')
+    print(f'Dev Mode: {bot.dev} | Docker: {bot.docker}')
     print(f'Discord Version: {discord.__version__}')
     print(f'Bot Version: {__version__}')
     bot.AppInfo = await bot.application_info()
