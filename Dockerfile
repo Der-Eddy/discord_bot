@@ -1,4 +1,4 @@
-FROM python:3.7-slim AS build
+FROM python:3.9.1-slim AS build
 #Update first
 RUN apt-get update && apt-get upgrade -y
 ADD . /build
