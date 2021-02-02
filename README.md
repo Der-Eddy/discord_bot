@@ -148,7 +148,10 @@ Anzumerken ist dass das Docker Image [Googles distroless](https://github.com/Goo
 
 Run (old method)
 -------------
-Entweder ihr startet das Script direkt über `python3 main.py` oder erstellt eine systemd service unit, ein Beispiel findet ihr unter `discord.service.example`:
+Erstellt zuerst ein virtuelles environment für Python über `python3.7 -m venv env` und aktiviert es über `source env/bin/activate` (Linux only). Anschließend könnt ihr alle benötigten Abhängikeiten über `pip install -r requirements.txt` installieren.
+(Um aus der virtuellen Umgebung wieder raus zu kommen einfach `deactivate` eintippen)
+
+Anschließend started ihr das Script direkt über `python3 main.py` oder erstellt eine systemd service unit, ein Beispiel findet ihr unter `discord.service.example`:
 
     [Unit]
     Description=Shinobu Discord Bot
@@ -226,16 +229,17 @@ Troubleshooting
 Sollte z.B. aus irgendeinem Grund die mod.py cog nicht geladen werden, kann der Bot vom Bot Besitzer über `:shutdown_backup` heruntergefahren werden.
 Weitere Tipps folgen
 
-Full list of requirements
+List of requirements
 -------------
 
-    python>=3.6.0
-    discord.py>=1.3.0
+    python>=3.7.0
+    discord.py
     aiohttp
     websockets
-    chardet
     pytz
     pillow
+
+For a pinned version check `requirements.txt`
 
 
 License
