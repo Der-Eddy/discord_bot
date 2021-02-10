@@ -21,6 +21,9 @@ ENV PYTHONFAULTHANDLER 1
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONHASHSEED 0
 
+#For https://github.com/users/der-eddy/packages/container/package/shinobu_bot
+LABEL org.opencontainers.image.source https://github.com/der-eddy/discord_bot
+
 #add user, don't run as root
 #distroless creates automatically a nonroot user with uid 65532:65532
 USER nonroot

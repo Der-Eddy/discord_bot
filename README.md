@@ -129,7 +129,7 @@ GitHub Actions erstellt automatisch ein Docker image unter `docker.pkg.github.co
     services:
     discord_bot:
         container_name: discord_bot
-        image: docker.pkg.github.com/der-eddy/discord_bot/shinobu-discord-bot
+        image: ghcr.io/der-eddy/shinobu_bot:latest
         restart: always
         volumes:
         - discord_bot_data:/discord_bot/config
