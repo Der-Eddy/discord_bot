@@ -7,7 +7,7 @@ RUN pip install --upgrade pip
 RUN pip install -r ./requirements.txt
 
 #Multistage build with distroless image
-FROM gcr.io/distroless/python3-debian10
+FROM gcr.io/distroless/python3-debian10:nonroot
 COPY --from=build --chown=nonroot:nonroot /build /discord_bot
 COPY --from=build /usr/local/lib/python3.7/site-packages /usr/local/lib/python3.7/site-packages
 WORKDIR /discord_bot
