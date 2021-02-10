@@ -122,7 +122,7 @@ Command und Aliases | Beschreibung | Nutzung
 Run (Docker method)
 -------------
 
-GitHub Actions erstellt automatisch ein Docker image unter `docker.pkg.github.com/der-eddy/discord_bot/shinobu-discord-bot:latest`. Unter `docker-compose.examle.yml` findet ihr ein Beispiel wie man dieses einsetzt:
+GitHub Actions erstellt automatisch ein Docker image unter `ghcr.io/der-eddy/shinobu_bot` (AMD64 und ARM64). Unter `docker-compose.examle.yml` findet ihr ein Beispiel wie man dieses einsetzt:
 
     version: '3.9'
 
@@ -144,7 +144,7 @@ GitHub Actions erstellt automatisch ein Docker image unter `docker.pkg.github.co
     volumes:
     discord_bot_data:
 
-Anzumerken ist dass das Docker Image [Googles distroless](https://github.com/GoogleContainerTools/distroless) python Basis benutzt, d.h. das nicht mal eine Shell vorinstalliert ist. Ihr könnt natürlich auch euer eigenes Docker Image anhand der `Dockerfile` selber bauen lassen-
+Anzumerken ist dass das Docker Image [Googles distroless](https://github.com/GoogleContainerTools/distroless) Python 3.7 Basis benutzt, d.h. das nicht mal eine Shell vorinstalliert ist. Ihr könnt natürlich auch euer eigenes Docker Image anhand der `Dockerfile` selber bauen lassen-
 
 Run (old method)
 -------------
