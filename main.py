@@ -1,5 +1,4 @@
 import logging
-from logging.handlers import RotatingFileHandler
 import random
 import sqlite3
 import traceback
@@ -16,14 +15,10 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '1.4.4'
+__version__ = '1.4.5'
 
-logger = logging.getLogger('discord')
-#logger.setLevel(logging.DEBUG)
-logger.setLevel(logging.WARNING)
-handler = RotatingFileHandler(filename='discordbot.log', maxBytes=1024*5, backupCount=2, encoding='utf-8', mode='w')
-handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
-logger.addHandler(handler)
+log = logging.getLogger('discord')
+logging.basicConfig(level=os.environ.get('LOGLEVEL', 'INFO'))
 
 description = '''Der-Eddys anime discord bot, developed with discord.py\n
                  A full list of all commands are available here: https://github.com/Der-Eddy/discord_bot#commands-list'''
@@ -62,25 +57,25 @@ async def on_ready():
         bot.dev = True
     else:
         bot.dev = False
-    
+
     if os.environ.get('PYTHONUNBUFFERED') == '1':
         bot.docker = True
     else:
         bot.docker = False
 
-    print('Logged in as')
-    print(f'Bot-Name: {bot.user.name} | ID: {bot.user.id}')
-    print(f'Dev Mode: {bot.dev} | Docker: {bot.docker}')
-    print(f'Discord Version: {discord.__version__}')
-    print(f'Bot Version: {__version__}')
+    log.info('Logged in as')
+    log.info(f'Bot-Name: {bot.user.name} | ID: {bot.user.id}')
+    log.info(f'Dev Mode: {bot.dev} | Docker: {bot.docker}')
+    log.info(f'Discord Version: {discord.__version__}')
+    log.info(f'Bot Version: {__version__}')
     bot.AppInfo = await bot.application_info()
-    print(f'Owner: {bot.AppInfo.owner}')
-    print('------')
+    log.info(f'Owner: {bot.AppInfo.owner}')
+    log.info('------')
     for cog in loadconfig.__cogs__:
         try:
             bot.load_extension(cog)
         except Exception:
-            print(f'Couldn\'t load cog {cog}')
+            log.warning(f'Couldn\'t load cog {cog}')
     bot.commands_used = Counter()
     bot.startTime = time.time()
     bot.botVersion = __version__
@@ -101,7 +96,7 @@ async def on_command(ctx):
     #     dest = 'Group Message'
     # else:
     #     dest = 'Voice Channel'
-    # logging.info(f'{msg.created_at}: {msg.author.name} in {dest}: {msg.content}')
+    # log.info(f'{msg.created_at}: {msg.author.name} in {dest}: {msg.content}')
 
 @bot.event
 async def on_message(message):
