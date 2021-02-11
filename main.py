@@ -15,7 +15,7 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '1.4.5'
+__version__ = '1.4.6'
 
 log = logging.getLogger('discord')
 logging.basicConfig(level=os.environ.get('LOGLEVEL', 'INFO'))
@@ -28,7 +28,7 @@ intents.members = True
 bot = commands.Bot(command_prefix=loadconfig.__prefix__, description=description, intents=intents)
 
 def _currenttime():
-    return datetime.datetime.now(timezone('Europe/Berlin')).strftime('%H:%M:%S')
+    return datetime.datetime.now(timezone(loadconfig.__timezone__)).strftime('%H:%M:%S')
 
 async def _randomGame():
     #Check games.py to change the list of "games" to be played

@@ -13,7 +13,7 @@ class mod(commands.Cog):
         self.bot = bot
 
     def _currenttime(self):
-        return datetime.datetime.now(timezone('Europe/Berlin')).strftime("%H:%M:%S")
+        return datetime.datetime.now(timezone(loadconfig.__timezone__)).strftime("%H:%M:%S")
 
     @commands.command(aliases=['prune'])
     @commands.has_permissions(ban_members = True)

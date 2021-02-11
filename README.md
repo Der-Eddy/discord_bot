@@ -179,10 +179,21 @@ Vor dem Start muss im Ordner `config` eine Datei namens `config.py` angelegt wer
 
     __token__ = 'INSERT BOT TOKEN HERE'
     __prefix__ = ':' #OPTIONAL Prefix for all commands, defaults to colon
+    __timezone__ = 'Europe/Berlin' #OPTIONAL
     __botserverid__ = 102817255661772800 #OPTIONAL Specifies the main serverid from which the server-/modlog should be taken + some other nito features
     __kawaiichannel__ = 207909155556687872 #OPTIONAL specified a channel where the :kawaii commands gets this pinned messages
     __greetmsg__ = '{emoji} Welcome {member} on my server!' #OPTIONAL sends a greet message to new user in the botserverid system channel
     __leavemsg__ = ':sad: {member} left the server' #OPTIONAL sends a leave message to the botserverid system channel
+
+Alternativ für Heroku oder Docker Umgebungen können environment variables statt einer `config.py` Datei genutzt werden:
+
+    DISCORD_TOKEN: 'INSERT BOT TOKEN HERE'
+    DISCORD_PREFIX: ':' #OPTIONAL Prefix for all commands, defaults to colon
+    DISCORD_TIMEZONE: 'Europe/Berlin' #OPTIONAL
+    DISCORD_BOTSERVERID: '102817255661772800' #OPTIONAL Specifies the main serverid from which the server-/modlog should be taken + some other nito features
+    DISCORD_KAWAIICHANNEL: '207909155556687872' #OPTIONAL specified a channel where the :kawaii commands gets this pinned messages
+    DISCORD_GREETMSG: '{emoji} Welcome {member} on my server!' #OPTIONAL sends a greet message to new user in the botserverid system channel
+    DISCORD_LEAVEMSG: ':sad: {member} left the server' #OPTIONAL sends a leave message to the botserverid system channel
 
 
 In `games.py` kann man die Titel der "Playing-" Rotation anpassen. Platzhalter wie `{servers}` oder `{members}` sind möglich.

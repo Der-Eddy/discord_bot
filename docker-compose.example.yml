@@ -10,6 +10,7 @@ services:
     environment:
       DISCORD_TOKEN: 'INSERT BOT TOKEN HERE'
       DISCORD_PREFIX: ':' #OPTIONAL Prefix for all commands, defaults to colon
+      DISCORD_TIMEZONE: 'Europe/Berlin' #OPTIONAL
       DISCORD_BOTSERVERID: '102817255661772800' #OPTIONAL Specifies the main serverid from which the server-/modlog should be taken + some other nito features
       DISCORD_KAWAIICHANNEL: '207909155556687872' #OPTIONAL specified a channel where the :kawaii commands gets this pinned messages
       DISCORD_GREETMSG: '{emoji} Welcome {member} on my server!' #OPTIONAL sends a greet message to new user in the botserverid system channel

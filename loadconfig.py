@@ -27,14 +27,21 @@ if os.path.isfile(configFile):
         from config.config import __kawaiichannel__
     except ImportError:
         __kawaiichannel__ = 0
+    try:
+        from config.config import __timezone__
+    except ImportError:
+        __timezone__ = 0
 else:
     #Fallback for Heroku or Docker environments
     __token__ = os.environ.get('DISCORD_TOKEN')
-    __prefix__ = os.environ.get('DISCORD_PREFIX')
-    __botserverid__ = int(os.environ.get('DISCORD_BOTSERVERID'))
-    __kawaiichannel__ = int(os.environ.get('DISCORD_KAWAIICHANNEL'))
-    __greetmsg__ = os.environ.get('DISCORD_GREETMSG')
-    __leavemsg__ = os.environ.get('DISCORD_LEAVEMSG')
+    if __token__ == '':
+        raise Exception('DISCORD_TOKEN environment variable MUST be set ')
+    __prefix__ = os.environ.get('DISCORD_PREFIX', ':')
+    __botserverid__ = int(os.environ.get('DISCORD_BOTSERVERID', 0))
+    __kawaiichannel__ = int(os.environ.get('DISCORD_KAWAIICHANNEL', 0))
+    __greetmsg__ = os.environ.get('DISCORD_GREETMSG', '')
+    __leavemsg__ = os.environ.get('DISCORD_LEAVEMSG', '')
+    __timezone__ = os.environ.get('DISCORD_TIMEZONE', 'Europe/London')
     
 
 from config.games import __games__, __gamesTimer__
