@@ -33,3 +33,11 @@ updates:
     # I want the specific Python version for the latest Debian stable release
     ignore:
       - dependency-name: "python"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "github workflow dependencies"
+    assignees:
+      - "Der-Eddy"
