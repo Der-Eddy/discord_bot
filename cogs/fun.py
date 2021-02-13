@@ -7,9 +7,7 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-class fun(commands.Cog):
-    db = 'reaction.db'
-
+class fun(commands.Cog)
     def __init__(self, bot):
         self.bot = bot
 
@@ -161,48 +159,6 @@ class fun(commands.Cog):
                 date = '{}.{}.{}'.format(js['day'], js['month'], js['year'])
                 msg = '**{}**\n{}\nAlt Text:```{}```XKCD Link: <{}> ({})'.format(js['safe_title'], js['img'], js['alt'], comicUrl, date)
                 await ctx.send(msg)
-
-    @commands.command(aliases=['tag'])
-    async def tags(self, ctx, command: str, *arg):
-        '''Erstellt tags oder gibt diese aus
-        Benutzung:
-        -----------
-        :tags COMMAND
-            Gibt ein zufälliges Bild unter dem command aus
-        :tags add COMMAND BILDURL
-            Fügt das jeweilige Bild zum jeweiligen command hinzu
-        :tags del ID
-            Löscht den Eintrag mit der jeweiligen ID, nur für Modaratoren und Ersteller des Eintrags
-        :tags list
-            Gibt die volle Liste an commands und jeweiligen Links
-        '''
-        with sqlite3.connect(self.db) as con:
-            c = con.cursor()
-            if command == 'add' or command == 'new':
-                if len(arg) > 1:
-                    command = arg[0].lower()
-                    content = list(arg[1:])
-                    c.execute('INSERT INTO "reactions" ("command","url","author") VALUES (?, ?, ?)', (command, ' '.join(content), str(ctx.message.author)))
-                    con.commit()
-                    await ctx.send(':ok: Tag **{}** hinzugefügt!'.format(arg[0].lower()))
-            elif command == 'del' or command == 'rm':
-                if await ctx.bot.is_owner(ctx.author):
-                    c.execute('DELETE FROM "reactions" WHERE "id" in (?)', (int(arg[0]), ))
-                else:
-                    c.execute('DELETE FROM "reactions" WHERE "id" in (?) AND "author" IN (?)', (int(arg[0]), str(ctx.message.author)))
-                con.commit()
-                await ctx.send(':put_litter_in_its_place: Tag-ID #{} gelöscht!'.format(arg[0].lower()))
-            elif command == 'list':
-                lst = c.execute('SELECT * FROM "reactions"')
-                msg = ''
-                for i in lst:
-                    msg += '**ID:** {:>3} | **Command:** {:>15} | **Author:** {}\n'.format(i[0], i[1], i[3])
-                await ctx.send(msg)
-            else:
-                lst = c.execute('SELECT * FROM "reactions" WHERE "command" LIKE (?)', (command,))
-                reaction = random.choice(lst.fetchall())
-                await ctx.send(reaction[2])
-            c.close()
 
     @commands.command(aliases=['witz', 'joke'])
     async def pun(self, ctx):

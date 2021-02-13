@@ -15,7 +15,7 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '1.4.6'
+__version__ = '1.4.7'
 
 log = logging.getLogger('discord')
 logging.basicConfig(level=os.environ.get('LOGLEVEL', 'INFO'))
@@ -38,18 +38,6 @@ async def _randomGame():
         randomGame = random.choice(loadconfig.__games__)
         await bot.change_presence(activity=discord.Activity(type=randomGame[0], name=randomGame[1].format(guilds = guildCount, members = memberCount)))
         await asyncio.sleep(loadconfig.__gamesTimer__)
-
-def _setupDatabase(db):
-    with sqlite3.connect(db) as con:
-        c = con.cursor()
-        c.execute('''CREATE TABLE IF NOT EXISTS `reactions` (
-                    	`id`	INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
-                    	`command`	TEXT NOT NULL,
-                    	`url`	TEXT NOT NULL UNIQUE,
-                    	`author`	TEXT
-                    );''')
-        con.commit()
-        c.close()
 
 @bot.event
 async def on_ready():
@@ -81,7 +69,6 @@ async def on_ready():
     bot.botVersion = __version__
     bot.userAgentHeaders = {'User-Agent': f'linux:shinobu_discordbot:v{__version__} (by Der-Eddy)'}
     bot.gamesLoop = asyncio.ensure_future(_randomGame())
-    _setupDatabase('reaction.db')
 
 @bot.event
 async def on_command(ctx):
