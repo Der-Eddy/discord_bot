@@ -13,15 +13,6 @@ updates:
       - "pip dependencies"
     assignees:
       - "Der-Eddy"
-    # These are all pulled as dependencies from other packages
-    ignore:
-      - dependency-name: "async-timeout"
-      - dependency-name: "attrs"
-      - dependency-name: "chardet"
-      - dependency-name: "idna"
-      - dependency-name: "multidict"
-      - dependency-name: "typing-extensions"
-      - dependency-name: "yarl"
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
@@ -30,9 +21,6 @@ updates:
       - "docker dependencies"
     assignees:
       - "Der-Eddy"
-    # I want the specific Python version for the latest Debian stable release
-    ignore:
-      - dependency-name: "python"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
