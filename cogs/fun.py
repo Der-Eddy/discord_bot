@@ -7,7 +7,7 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-class fun(commands.Cog)
+class fun(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 

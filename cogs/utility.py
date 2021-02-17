@@ -40,9 +40,6 @@ class TimeParser:
 
         if self.seconds > 604800: # 7 days
             raise commands.BadArgument('7 Tage sind ne lange Zeit, denkste du nicht auch?')
-    
-    async def cog_command_error(self, ctx, error):
-        print('Error in {0.command.qualified_name}: {1}'.format(ctx, error))
 
     @staticmethod
     def human_timedelta(dt):
