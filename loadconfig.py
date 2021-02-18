@@ -31,6 +31,10 @@ if os.path.isfile(configFile):
         from config.config import __timezone__
     except ImportError:
         __timezone__ = 0
+    try:
+        from config.config import __selfassignrole__
+    except ImportError:
+        __selfassignrole__ = 'NSFW'
 else:
     #Fallback for Heroku or Docker environments
     __token__ = os.environ.get('DISCORD_TOKEN')
@@ -42,6 +46,7 @@ else:
     __greetmsg__ = os.environ.get('DISCORD_GREETMSG', '')
     __leavemsg__ = os.environ.get('DISCORD_LEAVEMSG', '')
     __timezone__ = os.environ.get('DISCORD_TIMEZONE', 'Europe/London')
+    ___selfassignrole__ = os.environ.get('DISCORD_SELFASSIGNROLE', 'NSFW')
     
 
 from config.games import __games__, __gamesTimer__

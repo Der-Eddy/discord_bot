@@ -183,6 +183,7 @@ Vor dem Start muss im Ordner `config` eine Datei namens `config.py` angelegt wer
     __kawaiichannel__ = 207909155556687872 #OPTIONAL specified a channel where the :kawaii commands gets this pinned messages
     __greetmsg__ = '{emoji} Welcome {member} on my server!' #OPTIONAL sends a greet message to new user in the botserverid system channel
     __leavemsg__ = ':sad: {member} left the server' #OPTIONAL sends a leave message to the botserverid system channel
+    __selfassignrole__ = 'NSFW' #OPTIONAL allows to selfassign a role like NSFW on the BOTSERVERID
 
 Alternativ für Heroku oder Docker Umgebungen können environment variables statt einer `config.py` Datei genutzt werden:
 
@@ -193,6 +194,7 @@ Alternativ für Heroku oder Docker Umgebungen können environment variables stat
     DISCORD_KAWAIICHANNEL: '207909155556687872' #OPTIONAL specified a channel where the :kawaii commands gets this pinned messages
     DISCORD_GREETMSG: '{emoji} Welcome {member} on my server!' #OPTIONAL sends a greet message to new user in the botserverid system channel
     DISCORD_LEAVEMSG: ':sad: {member} left the server' #OPTIONAL sends a leave message to the botserverid system channel
+    DISCORD_SELFASSIGNROLE: 'NSFW' #OPTIONAL allows to selfassign a role like NSFW on the BOTSERVERID
 
 
 In `games.py` kann man die Titel der "Playing-" Rotation anpassen. Platzhalter wie `{servers}` oder `{members}` sind möglich.

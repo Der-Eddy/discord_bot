@@ -15,6 +15,7 @@ services:
       DISCORD_KAWAIICHANNEL: '207909155556687872' #OPTIONAL specified a channel where the :kawaii commands gets this pinned messages
       DISCORD_GREETMSG: '{emoji} Welcome {member} on my server!' #OPTIONAL sends a greet message to new user in the botserverid system channel
       DISCORD_LEAVEMSG: ':sad: {member} left the server' #OPTIONAL sends a leave message to the botserverid system channel
+      DISCORD_SELFASSIGNROLE: 'NSFW' #OPTIONAL allows to selfassign a role like NSFW on the BOTSERVERID
 
 volumes:
   discord_bot_data:
