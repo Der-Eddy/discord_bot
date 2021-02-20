@@ -6,6 +6,7 @@
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/Der-Eddy/discord_bot/master/LICENSE)
 [![Discord Server](https://img.shields.io/badge/Support-Discord%20Server-blue.svg)](https://discord.gg/kPMbPDc)
 ![Docker](https://github.com/Der-Eddy/discord_bot/workflows/Docker/badge.svg)
+[![CodeQL](https://github.com/Der-Eddy/discord_bot/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/Der-Eddy/discord_bot/actions/workflows/codeql-analysis.yml)
 
 **ATTENTION: This bot uses the new version of [discord.py v1.6+](https://github.com/Rapptz/discord.py), if you want to use my bot with the old legacy discord.py version check out the [legacy branch](https://github.com/Der-Eddy/discord_bot/tree/0.18.10-legacy).**
 This is mostly a german discord chat bot made with [discord.py v1.6+](https://github.com/Rapptz/discord.py).  
