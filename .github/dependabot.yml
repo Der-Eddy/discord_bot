@@ -9,6 +9,8 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+      day: "friday"
+      time: "13:00"
     labels:
       - "pip dependencies"
     assignees:
@@ -17,14 +19,21 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+      day: "friday"
+      time: "13:00"
     labels:
       - "docker dependencies"
     assignees:
       - "Der-Eddy"
+    # I want the specific Python version for the latest Debian stable release
+    ignore:
+      - dependency-name: "python"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
+      day: "friday"
+      time: "13:00"
     labels:
       - "github workflow dependencies"
     assignees:
