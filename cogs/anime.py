@@ -373,6 +373,7 @@ class anime(commands.Cog):
                     if data['chapters'] != None:
                         # https://github.com/AniList/ApiV2-GraphQL-Docs/issues/47
                         embed.add_field(name='Kapitel', value=data['chapters'], inline=True)
+                    if data['volumes'] != None:
                         embed.add_field(name='Bände', value=data['volumes'], inline=True)
                     embed.add_field(name='Gestartet', value='{}.{}.{}'.format(data['startDate']['day'], data['startDate']['month'], data['startDate']['year']), inline=True)
                     if data['endDate']['day'] != None:
