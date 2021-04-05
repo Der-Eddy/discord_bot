@@ -24,7 +24,7 @@ class admin(commands.Cog):
         '''Schaltet mich ab :( (BOT OWNER ONLY)'''
         await ctx.send('**:ok:** Bye!')
         #self.bot.gamesLoop.cancel()
-        await self.bot.logout()
+        await self.bot.close()
         sys.exit(0)
 
     @commands.command(hidden=True)
