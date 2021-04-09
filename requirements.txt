@@ -1,5 +1,5 @@
 aiohttp==3.7.4.post0
-discord.py==1.7.0
+discord.py==1.7.1
 Pillow==8.2.0
 pytz==2021.1
 websockets==8.1
