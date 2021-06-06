@@ -15,7 +15,7 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '1.5.3'
+__version__ = '1.5.4'
 description = '''Der-Eddys anime discord bot, developed with discord.py\n
                  A full list of all commands are available here: https://github.com/Der-Eddy/discord_bot#commands-list'''
 
@@ -26,10 +26,11 @@ def _currenttime():
     return datetime.datetime.now(timezone(loadconfig.__timezone__)).strftime('%H:%M:%S')
 
 class ShinobuBot(commands.AutoShardedBot):
-    def __init__(self):
+    def __init__(self, docker):
         intents = discord.Intents.default()
         intents.presences = True
         intents.members = True
+        self.docker = docker
         super().__init__(command_prefix=loadconfig.__prefix__, description=description, intents=intents)
 
     async def _randomGame(self):
@@ -46,11 +47,6 @@ class ShinobuBot(commands.AutoShardedBot):
             self.dev = True
         else:
             self.dev = False
-
-        if os.environ.get('PYTHONUNBUFFERED') == '1':
-            self.docker = True
-        else:
-            self.docker = False
 
         log.info('Logged in as')
         log.info(f'Bot-Name: {self.user.name} | ID: {self.user.id}')
@@ -177,5 +173,10 @@ class ShinobuBot(commands.AutoShardedBot):
                     pass
 
 if __name__ == '__main__':
-    bot = ShinobuBot()
+    sys.argv = ''.join(sys.argv[1:])
+    if sys.argv.lower() == 'docker':
+        docker = True
+    else:
+        docker = False
+    bot = ShinobuBot(docker)
     bot.run(loadconfig.__token__)

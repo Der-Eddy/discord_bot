@@ -28,4 +28,4 @@ LABEL org.opencontainers.image.source https://github.com/der-eddy/discord_bot
 #distroless creates automatically a nonroot user with uid 65532:65532
 USER nonroot
 
-CMD [ "main.py" ]
+CMD [ "main.py", "docker"]
