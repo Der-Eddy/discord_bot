@@ -46,7 +46,7 @@ else:
     __greetmsg__ = os.environ.get('DISCORD_GREETMSG', '')
     __leavemsg__ = os.environ.get('DISCORD_LEAVEMSG', '')
     __timezone__ = os.environ.get('DISCORD_TIMEZONE', 'Europe/London')
-    ___selfassignrole__ = os.environ.get('DISCORD_SELFASSIGNROLE', 'NSFW')
+    __selfassignrole__ = os.environ.get('DISCORD_SELFASSIGNROLE', 'NSFW')
     
 
 from config.games import __games__, __gamesTimer__
