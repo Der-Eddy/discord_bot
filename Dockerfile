@@ -1,6 +1,6 @@
 FROM python:3.9-slim AS build
 #Update first
-RUN apt-get update && apt-get upgrade -y
+RUN apt-get update && apt-get upgrade -y && apt-get install git -y
 ADD . /build
 WORKDIR /build
 RUN pip install --upgrade pip
