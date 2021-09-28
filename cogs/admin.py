@@ -54,17 +54,17 @@ class admin(commands.Cog):
         '''Ändert das derzeit spielende Spiel (BOT OWNER ONLY)'''
         gameType = gameType.lower()
         if gameType == 'playing':
-            type = discord.Activity.playing
+            activityType = discord.ActivityType.playing
         elif gameType == 'watching':
-            type = discord.Activity.watching
+            activityType = discord.ActivityType.watching
         elif gameType == 'listening':
-            type = discord.Activity.listening
+            activityType = discord.ActivityType.listening
         elif gameType == 'streaming':
-            type = discord.Activity.streaming
+            activityType = discord.ActivityType.streaming
         guildsCount = len(self.bot.guilds)
         memberCount = len(list(self.bot.get_all_members()))
         gameName = gameName.format(guilds = guildsCount, members = memberCount)
-        await self.bot.change_presence(activity=discord.Activity(type=type, name=gameName))
+        await self.bot.change_presence(activity=discord.Activity(type=activityType, name=gameName))
         await ctx.send(f'**:ok:** Ändere das Spiel zu: {gameType} **{gameName}**')
 
     @commands.command(hidden=True)
