@@ -1,4 +1,4 @@
-FROM python:3.7-slim AS build
+FROM python:3.9-slim AS build
 #Update first
 RUN apt-get update && apt-get upgrade -y
 ADD . /build
@@ -7,11 +7,11 @@ RUN pip install --upgrade pip
 RUN pip install -r ./requirements.txt
 
 #Multistage build with distroless image
-FROM gcr.io/distroless/python3-debian10:nonroot
+FROM gcr.io/distroless/python3-debian11:nonroot
 COPY --from=build --chown=nonroot:nonroot /build /discord_bot
-COPY --from=build /usr/local/lib/python3.7/site-packages /usr/local/lib/python3.7/site-packages
+COPY --from=build /usr/local/lib/python3.9/site-packages /usr/local/lib/python3.9/site-packages
 WORKDIR /discord_bot
-ENV PYTHONPATH=/usr/local/lib/python3.7/site-packages
+ENV PYTHONPATH=/usr/local/lib/python3.9/site-packages
 
 #Don't generate .pyc files, enable tracebacks on segfaults and disable STDOUT / STDERR buffering
 ENV LANG C.UTF-8

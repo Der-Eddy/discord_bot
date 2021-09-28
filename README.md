@@ -2,7 +2,7 @@
 ![Slogan](https://i.imgur.com/vfEgGLU.png)
 =====================
 
-[![Python3](https://img.shields.io/badge/python-3.7-blue.svg)](https://github.com/Der-Eddy/discord_bot)
+[![Python3](https://img.shields.io/badge/python-3.9-blue.svg)](https://github.com/Der-Eddy/discord_bot)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/Der-Eddy/discord_bot/master/LICENSE)
 [![Discord Server](https://img.shields.io/badge/Support-Discord%20Server-blue.svg)](https://discord.gg/kPMbPDc)
 ![Docker](https://github.com/Der-Eddy/discord_bot/workflows/Docker/badge.svg)
@@ -245,7 +245,7 @@ Weitere Tipps folgen
 List of requirements
 -------------
 
-    python>=3.7.0
+    python>=3.9.0
     discord.py
     aiohttp
     websockets
