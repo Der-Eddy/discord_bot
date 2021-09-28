@@ -4,6 +4,7 @@ RUN apt-get update && apt-get upgrade -y
 ADD . /build
 WORKDIR /build
 RUN pip install --upgrade pip
+RUN pip install -U git+https://github.com/Rapptz/discord.py
 RUN pip install -r ./requirements.txt
 
 #Multistage build with distroless image

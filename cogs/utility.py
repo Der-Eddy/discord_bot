@@ -11,6 +11,8 @@ import aiohttp
 import discord
 from discord.ext import commands
 from PIL import Image, ImageDraw, ImageFont
+from pytz import timezone
+import loadconfig
 
 #Stolen from https://github.com/Rapptz/RoboDanny/blob/b513a32dfbd4fdbd910f7f56d88d1d012ab44826/cogs/meta.py
 class TimeParser:
@@ -43,7 +45,7 @@ class TimeParser:
 
     @staticmethod
     def human_timedelta(dt):
-        now = datetime.utcnow()
+        now = datetime.now(timezone(loadconfig.__timezone__))
         delta = now - dt
         hours, remainder = divmod(int(delta.total_seconds()), 3600)
         minutes, seconds = divmod(remainder, 60)
@@ -262,8 +264,8 @@ class utility(commands.Cog):
             else:
                 fullName = member
             embed.add_field(name=member.name, value=fullName, inline=False)
-            embed.add_field(name='Discord beigetreten am', value='{}\n(Tage seitdem: {})'.format(member.created_at.strftime('%d.%m.%Y'), (datetime.now()-member.created_at).days), inline=True)
-            embed.add_field(name='Server beigetreten am', value='{}\n(Tage seitdem: {})'.format(member.joined_at.strftime('%d.%m.%Y'), (datetime.now()-member.joined_at).days), inline=True)
+            embed.add_field(name='Discord beigetreten am', value='{}\n(Tage seitdem: {})'.format(member.created_at.strftime('%d.%m.%Y'), (datetime.now(timezone(loadconfig.__timezone__))-member.created_at).days), inline=True)
+            embed.add_field(name='Server beigetreten am', value='{}\n(Tage seitdem: {})'.format(member.joined_at.strftime('%d.%m.%Y'), (datetime.now(timezone(loadconfig.__timezone__))-member.joined_at).days), inline=True)
             embed.add_field(name='Avatar Link', value=member.avatar.url, inline=False)
             embed.add_field(name='Rollen', value=self._getRoles(member.roles), inline=True)
             embed.add_field(name='Rollenfarbe', value='{} ({})'.format(topRoleColour, topRole), inline=True)
@@ -313,7 +315,7 @@ class utility(commands.Cog):
         #print(emojis)
         roles = self._getRoles(ctx.guild.roles)
         embed = discord.Embed(color=0xf1c40f) #Golden
-        embed.set_thumbnail(url=ctx.guild.icon_url)
+        embed.set_thumbnail(url=ctx.guild.icon.url)
         embed.set_footer(text='Es können evtl. Emojis fehlen')
         embed.add_field(name='Name', value=ctx.guild.name, inline=True)
         embed.add_field(name='ID', value=ctx.guild.id, inline=True)
@@ -353,7 +355,7 @@ class utility(commands.Cog):
             reminder = ':timer: Ok {0.mention}, Ich stelle einen Timer für `{2}` auf {1}.'
             completed = ':alarm_clock: Ding Ding Ding {0.mention}! Dein Timer für `{1}` ist abgelaufen.'
 
-        human_time = datetime.utcnow() - timedelta(seconds=time.seconds)
+        human_time = datetime.now(timezone(loadconfig.__timezone__)) - timedelta(seconds=time.seconds)
         human_time = TimeParser.human_timedelta(human_time)
         await ctx.send(reminder.format(ctx.author, human_time, message))
         await asyncio.sleep(time.seconds)
