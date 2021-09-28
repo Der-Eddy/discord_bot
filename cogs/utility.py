@@ -134,7 +134,7 @@ class utility(commands.Cog):
 
         embed = discord.Embed(color=ctx.me.top_role.colour)
         embed.set_footer(text='Dieser Bot ist Open-Source auf GitHub: https://github.com/Der-Eddy/discord_bot')
-        embed.set_thumbnail(url=ctx.me.avatar_url)
+        embed.set_thumbnail(url=ctx.me.avatar.url)
         embed.add_field(name='Admin', value=admin, inline=False)
         embed.add_field(name='Uptime', value='{0:.0f} Stunden, {1:.0f} Minuten und {2:.0f} Sekunden\n'.format(hours, minutes, seconds), inline=False)
         embed.add_field(name='Beobachtete Benutzer', value=users, inline=True)
@@ -187,7 +187,7 @@ class utility(commands.Cog):
 
         embed = discord.Embed(color=ctx.me.top_role.colour)
         embed.set_footer(text='Dieser Bot ist außerdem free, Open-Source, in Python und mit Hilfe von discord.py geschrieben! https://github.com/Der-Eddy/discord_bot\n')
-        embed.set_thumbnail(url=ctx.me.avatar_url)
+        embed.set_thumbnail(url=ctx.me.avatar.url)
         embed.add_field(name='**:information_source: Shinobu Oshino (500 Jahre alt)**', value=msg, inline=False)
         await ctx.send(embed=embed)
 
@@ -256,7 +256,7 @@ class utility(commands.Cog):
         if member is not None:
             embed = discord.Embed(color=member.top_role.colour)
             embed.set_footer(text=f'UserID: {member.id}')
-            embed.set_thumbnail(url=member.avatar_url)
+            embed.set_thumbnail(url=member.avatar.url)
             if member.name != member.display_name:
                 fullName = f'{member} ({member.display_name})'
             else:
@@ -264,7 +264,7 @@ class utility(commands.Cog):
             embed.add_field(name=member.name, value=fullName, inline=False)
             embed.add_field(name='Discord beigetreten am', value='{}\n(Tage seitdem: {})'.format(member.created_at.strftime('%d.%m.%Y'), (datetime.now()-member.created_at).days), inline=True)
             embed.add_field(name='Server beigetreten am', value='{}\n(Tage seitdem: {})'.format(member.joined_at.strftime('%d.%m.%Y'), (datetime.now()-member.joined_at).days), inline=True)
-            embed.add_field(name='Avatar Link', value=member.avatar_url, inline=False)
+            embed.add_field(name='Avatar Link', value=member.avatar.url, inline=False)
             embed.add_field(name='Rollen', value=self._getRoles(member.roles), inline=True)
             embed.add_field(name='Rollenfarbe', value='{} ({})'.format(topRoleColour, topRole), inline=True)
             embed.add_field(name='Status', value=member.status, inline=True)

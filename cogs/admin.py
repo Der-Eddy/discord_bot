@@ -25,13 +25,15 @@ class admin(commands.Cog):
         await ctx.send('**:ok:** Bye!')
         #self.bot.gamesLoop.cancel()
         await self.bot.close()
+        self.bot.clear()
         sys.exit(0)
 
     @commands.command(hidden=True)
     async def restart(self, ctx):
         '''Startet mich neu (BOT OWNER ONLY)'''
         await ctx.send('**:ok:** Bis gleich!')
-        await self.bot.logout()
+        await self.bot.close()
+        self.bot.clear()
         sys.exit(6)
 
     @commands.command(hidden=True)
@@ -45,7 +47,7 @@ class admin(commands.Cog):
         await self.bot.edit_profile(avatar=f.read())
         os.remove(tempAvaFile)
         asyncio.sleep(2)
-        await ctx.send('**:ok:** Mein neuer Avatar!\n %s' % self.bot.user.avatar_url)
+        await ctx.send('**:ok:** Mein neuer Avatar!\n %s' % self.bot.user.avatar.url)
 
     @commands.command(hidden=True, aliases=['game'])
     async def changegame(self, ctx, gameType: str, *, gameName: str):
