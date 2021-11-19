@@ -2,4 +2,4 @@ aiohttp==3.7.4.post0
 discord.py==2.0.0a3575+g45d498c
 Pillow==8.4.0
 pytz==2021.3
-websockets==10.0
+websockets==10.1
