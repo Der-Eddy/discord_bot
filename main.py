@@ -15,7 +15,7 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '1.6.2'
+__version__ = '1.6.3'
 description = '''Der-Eddys anime discord bot, developed with discord.py\n
                  A full list of all commands are available here: https://github.com/Der-Eddy/discord_bot#commands-list'''
 
@@ -118,7 +118,7 @@ class ShinobuBot(commands.AutoShardedBot):
 
     async def on_guild_join(self, guild):
         embed = discord.Embed(title=':white_check_mark: Guild hinzugefügt', type='rich', color=0x2ecc71) #Green
-        embed.set_thumbnail(url=guild.icon_url)
+        embed.set_thumbnail(url=guild.icon.url)
         embed.add_field(name='Name', value=guild.name, inline=True)
         embed.add_field(name='ID', value=guild.id, inline=True)
         embed.add_field(name='Besitzer', value=f'{guild.owner} ({guild.owner.id})', inline=True)
@@ -129,7 +129,7 @@ class ShinobuBot(commands.AutoShardedBot):
 
     async def on_guild_remove(self, guild):
         embed = discord.Embed(title=':x: Guild entfernt', type='rich', color=0xe74c3c) #Red
-        embed.set_thumbnail(url=guild.icon_url)
+        embed.set_thumbnail(url=guild.icon.url)
         embed.add_field(name='Name', value=guild.name, inline=True)
         embed.add_field(name='ID', value=guild.id, inline=True)
         embed.add_field(name='Besitzer', value=f'{guild.owner} ({guild.owner.id})', inline=True)
