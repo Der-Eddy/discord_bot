@@ -247,5 +247,5 @@ class fun(commands.Cog):
         msg = f'{random.choice(emojis)} {random.choice(puns)}'
         await ctx.send(msg)
 
-def setup(bot):
-    bot.add_cog(fun(bot))
+async def setup(bot):
+    await bot.add_cog(fun(bot))

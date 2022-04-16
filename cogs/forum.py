@@ -217,5 +217,5 @@ class forum(commands.Cog):
     #         seconds = str(error)[34:]
     #         await ctx.send(f':alarm_clock: Cooldown! Versuche es in {seconds} erneut')
 
-def setup(bot):
-    bot.add_cog(forum(bot))
+async def setup(bot):
+    await bot.add_cog(forum(bot))

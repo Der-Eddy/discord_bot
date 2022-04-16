@@ -15,7 +15,7 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '1.6.3'
+__version__ = '1.6.4'
 description = '''Der-Eddys anime discord bot, developed with discord.py\n
                  A full list of all commands are available here: https://github.com/Der-Eddy/discord_bot#commands-list'''
 
@@ -58,7 +58,7 @@ class ShinobuBot(commands.AutoShardedBot):
         log.info('------')
         for cog in loadconfig.__cogs__:
             try:
-                self.load_extension(cog)
+                await self.load_extension(cog)
             except Exception:
                 log.warning(f'Couldn\'t load cog {cog}')
         self.commands_used = Counter()

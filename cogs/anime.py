@@ -476,5 +476,5 @@ class anime(commands.Cog):
     #         else:
     #             await ctx.send(':x: Konnte den Benutzer nicht finden (falsche URL?)')
 
-def setup(bot):
-    bot.add_cog(anime(bot))
+async def setup(bot):
+    await bot.add_cog(anime(bot))

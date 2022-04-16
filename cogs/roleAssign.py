@@ -14,5 +14,5 @@ class roleAssign(discord.Client):
             await self.bot.add_roles(member, role)
 
 
-def setup(bot):
-    bot.add_cog(roleAssign(bot))
+async def setup(bot):
+    await bot.add_cog(roleAssign(bot))

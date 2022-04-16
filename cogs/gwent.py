@@ -75,5 +75,5 @@ class gwent(commands.Cog):
             seconds = str(error)[34:]
             await self.bot.say(f':alarm_clock: Cooldown! Versuche es in {seconds} erneut')
 
-def setup(bot):
-    bot.add_cog(gwent(bot))
+async def setup(bot):
+    await bot.add_cog(gwent(bot))

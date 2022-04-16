@@ -74,5 +74,5 @@ class steam(commands.Cog):
         if isinstance(error, discord.ext.commands.errors.CommandInvokeError):
             await self.bot.say(':x: Konnte keine Verbindung zum Steam API aufbauen')
 
-def setup(bot):
-    bot.add_cog(steam(bot))
+async def setup(bot):
+    await bot.add_cog(steam(bot))

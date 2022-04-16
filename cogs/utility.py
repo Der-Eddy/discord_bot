@@ -650,5 +650,5 @@ class utility(commands.Cog):
         msg += '```'
         await ctx.send(msg)
 
-def setup(bot):
-    bot.add_cog(utility(bot))
+async def setup(bot):
+    await bot.add_cog(utility(bot))
