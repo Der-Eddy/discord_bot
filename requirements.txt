@@ -1,5 +1,5 @@
-aiohttp==3.7.4.post0
-discord.py==2.0.0a3575+g45d498c
-Pillow==8.4.0
-pytz==2021.3
-websockets==10.1
+aiohttp==3.8.1
+discord.py @ git+https://github.com/Rapptz/discord.py@1bfe6b2bb160ce802a1f08afed73941a19a0a651
+Pillow==9.1.0
+pytz==2022.1
+websockets==10.2
