@@ -17,7 +17,7 @@ import loadconfig
 
 __version__ = '1.6.4'
 description = '''Der-Eddys anime discord bot, developed with discord.py\n
-                 A full list of all commands are available here: https://github.com/Der-Eddy/discord_bot#commands-list'''
+                 A full list of all commands are available here: <https://github.com/Der-Eddy/discord_bot#commands-list>'''
 
 log = logging.getLogger('discord')
 logging.basicConfig(level=os.environ.get('LOGLEVEL', 'INFO'))

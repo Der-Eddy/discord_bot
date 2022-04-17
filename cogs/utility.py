@@ -314,7 +314,7 @@ class utility(commands.Cog):
         emojis = self._getEmojis(ctx.guild.emojis)
         #print(emojis)
         roles = self._getRoles(ctx.guild.roles)
-        embed = discord.Embed(color=0xf1c40f) #Golden
+        embed = discord.Embed(color=discord.Color.random()) #Golden
         embed.set_thumbnail(url=ctx.guild.icon.url)
         embed.set_footer(text='Es können evtl. Emojis fehlen')
         embed.add_field(name='Name', value=ctx.guild.name, inline=True)
