@@ -97,3 +97,4 @@ tempAva.*
 *.db
 debug.html
 .vscode/
+.directory

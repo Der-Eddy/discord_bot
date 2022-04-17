@@ -98,3 +98,4 @@ tempAva.*
 debug.html
 .vscode/
 docker-compose.yml
+.directory
