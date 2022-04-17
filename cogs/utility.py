@@ -314,19 +314,27 @@ class utility(commands.Cog):
         emojis = self._getEmojis(ctx.guild.emojis)
         #print(emojis)
         roles = self._getRoles(ctx.guild.roles)
-        embed = discord.Embed(color=discord.Color.random()) #Golden
+        embed = discord.Embed(color=discord.Color.random())
         embed.set_thumbnail(url=ctx.guild.icon.url)
         embed.set_footer(text='Es können evtl. Emojis fehlen')
         embed.add_field(name='Name', value=ctx.guild.name, inline=True)
         embed.add_field(name='ID', value=ctx.guild.id, inline=True)
         embed.add_field(name='Besitzer', value=ctx.guild.owner, inline=True)
-        embed.add_field(name='Region', value=ctx.guild.region, inline=True)
         embed.add_field(name='Mitglieder', value=ctx.guild.member_count, inline=True)
+        embed.add_field(name='Premium Mitglieder', value=ctx.guild.premium_subscription_count, inline=True)
         embed.add_field(name='Erstellt am', value=ctx.guild.created_at.strftime('%d.%m.%Y'), inline=True)
         if ctx.guild.system_channel:
             embed.add_field(name='Standard Channel', value=f'#{ctx.guild.system_channel}', inline=True)
         embed.add_field(name='AFK Voice Timeout', value=f'{int(ctx.guild.afk_timeout / 60)} min', inline=True)
         embed.add_field(name='Guild Shard', value=ctx.guild.shard_id, inline=True)
+        embed.add_field(name='NSFW Level', value=str(ctx.guild.nsfw_level).removeprefix('NSFWLevel.'), inline=True)
+        embed.add_field(name='MFA Level', value=str(ctx.guild.mfa_level).removeprefix('MFALevel.'), inline=True)
+        if ctx.guild.splash:
+            embed.add_field(name='Splash', value=ctx.guild.splash, inline=True)
+        if ctx.guild.discovery_splash:
+            embed.add_field(name='Discovery Splash', value=ctx.guild.discovery_splash, inline=True)
+        if ctx.guild.banner:
+            embed.add_field(name='Banner', value=ctx.guild.banner, inline=True)
         embed.add_field(name='Rollen', value=roles, inline=True)
         embed.add_field(name='Custom Emojis', value=emojis, inline=True)
         await ctx.send(embed=embed)
