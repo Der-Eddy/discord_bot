@@ -30,6 +30,7 @@ class ShinobuBot(commands.AutoShardedBot):
         intents = discord.Intents.default()
         intents.presences = True
         intents.members = True
+        intents.message_content = True
         self.docker = docker
         super().__init__(command_prefix=loadconfig.__prefix__, description=description, intents=intents)
 
@@ -59,7 +60,7 @@ class ShinobuBot(commands.AutoShardedBot):
         for cog in loadconfig.__cogs__:
             try:
                 await self.load_extension(cog)
-            except Exception:
+            except:
                 log.warning(f'Couldn\'t load cog {cog}')
         self.commands_used = Counter()
         self.startTime = time.time()
@@ -82,6 +83,7 @@ class ShinobuBot(commands.AutoShardedBot):
         # log.info(f'{msg.created_at}: {msg.author.name} in {dest}: {msg.content}')
 
     async def on_message(self, message):
+        #log.info(f'{message.author}: {message.content}')
         if message.author.bot or message.author.id in loadconfig.__blacklist__:
             return
         if isinstance(message.channel, discord.DMChannel):
@@ -151,14 +153,17 @@ class ShinobuBot(commands.AutoShardedBot):
             except:
                 pass
 
-    async def on_command_error(self, error, ctx):
+    async def on_command_error(self, ctx, error):
         if isinstance(error, commands.NoPrivateMessage):
             await ctx.author.send('This command cannot be used in private messages.')
         elif isinstance(error, commands.DisabledCommand):
             await ctx.channel.send(':x: Dieser Command wurde deaktiviert')
-        elif isinstance(error, commands.CommandInvokeError):
+        else:
             if self.dev:
-                raise error
+                try:
+                    log.warning(str(error))
+                except:
+                    raise error
             else:
                 embed = discord.Embed(title=':x: Command Error', colour=0x992d22) #Dark Red
                 embed.add_field(name='Error', value=error)
