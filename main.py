@@ -15,7 +15,7 @@ import discord
 from discord.ext import commands
 import loadconfig
 
-__version__ = '1.6.4'
+__version__ = '1.6.5'
 description = '''Der-Eddys anime discord bot, developed with discord.py\n
                  A full list of all commands are available here: <https://github.com/Der-Eddy/discord_bot#commands-list>'''
 
@@ -164,7 +164,7 @@ class ShinobuBot(commands.AutoShardedBot):
                     log.warning(str(error))
                 except:
                     raise error
-            else:
+            elif len(ctx.message.content) > 2:
                 embed = discord.Embed(title=':x: Command Error', colour=0x992d22) #Dark Red
                 embed.add_field(name='Error', value=error)
                 embed.add_field(name='Guild', value=ctx.guild)
