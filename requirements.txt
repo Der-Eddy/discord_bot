@@ -1,5 +1,5 @@
 aiohttp==3.8.1
 discord.py @ git+https://github.com/Rapptz/discord.py@1bfe6b2bb160ce802a1f08afed73941a19a0a651
 Pillow==9.2.0
-pytz==2022.2
+pytz==2022.2.1
 
