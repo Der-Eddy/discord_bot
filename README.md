@@ -4,7 +4,7 @@
 
 [![Python3](https://img.shields.io/badge/python-3.9-blue.svg)](https://github.com/Der-Eddy/discord_bot)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/Der-Eddy/discord_bot/master/LICENSE)
-[![Discord Server](https://img.shields.io/badge/Support-Discord%20Server-blue.svg)](https://discord.gg/kPMbPDc)
+[![Discord Server](https://img.shields.io/badge/Support-Discord%20Server-blue.svg)](https://discord.gg/xm2TQFt)
 ![Docker](https://github.com/Der-Eddy/discord_bot/workflows/Docker/badge.svg)
 [![CodeQL](https://github.com/Der-Eddy/discord_bot/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/Der-Eddy/discord_bot/actions/workflows/codeql-analysis.yml)
 
@@ -23,13 +23,6 @@ Commands List
 Command und Aliases | Beschreibung | Nutzung
 ----------------|--------------|-------
 `:help` | Zeigt eine Liste aller öffentlichen Commands | `:help`, `:help kawaii`
-
-### Forum ###
-
-Command und Aliases | Beschreibung | Nutzung
-----------------|--------------|-------
-`:epvpis`, `:epvp` | Sucht nach einem Benutzernamen auf Elitepvpers | `:epvpis Der-Eddy`
-`:epvpverify`, `:verify` | Verifiziert einen Discord Benutzer über Elitepvpers | `:epvpverify`, `:epvpverify Der-Eddy`
 
 ### Utility ###
 
@@ -59,7 +52,6 @@ Command und Aliases | Beschreibung | Nutzung
 Command und Aliases | Beschreibung | Nutzung
 ----------------|--------------|-------
 `:kawaii` | Gibt ein zufälliges kawaii Bild aus | `:kawaii`
-`:nsfw` | Vergibt die Rolle um auf die NSFW Channel zugreifen zu können. **Nur auf Eddys Server!** | `:nsfw`
 `:hello`, `:wave`, `:hi`, `:ohaiyo` | Nonsense gifs zum Hallo sagen | `:hello`
 `:nep`, `:nepu`, `:topnep` | Can't stop the Nep | `:nep`
 `:pat` | /r/headpats Pat Pat Pat :3 | `:pat @Der-Eddy#6508`
@@ -113,7 +105,6 @@ Command und Aliases | Beschreibung | Nutzung
 `:servers` | Listet die aktuellen verbundenen Server auf. **BOT OWNER ONLY** | `:servers`
 `:leaveserver` | Schaltet den Bot aus. **BOT OWNER ONLY** | `:leaveserver 102817255661772800`
 `:echo` | Gibt eine Nachricht als Bot auf einem bestimmten Channel aus. **BOT OWNER ONLY** | `:echo 102817255661772800 Ich bin ein Bot!`
-`:discriminator` | Gibt Benutzer mit dem jeweiligen Discriminator zurück. **BOT OWNER ONLY** | `:discriminator 6508`
 `:nickname` | Ändert den Server Nickname vom Bot. **BOT OWNER ONLY** | `:nickname Shinobu`
 `:setnickname` | Ändert den Nickname eines Benutzer. **BOT OWNER ONLY** | `:setnickname @Der-Eddy#6508 Shinobu`
 `:geninvite` | Generiert einen Invite für einen Server wenn möglich. **BOT OWNER ONLY** | `:geninvite 102817255661772800`
@@ -184,7 +175,6 @@ Vor dem Start muss im Ordner `config` eine Datei namens `config.py` angelegt wer
     __kawaiichannel__ = 207909155556687872 #OPTIONAL specified a channel where the :kawaii commands gets this pinned messages
     __greetmsg__ = '{emoji} Welcome {member} on my server!' #OPTIONAL sends a greet message to new user in the botserverid system channel
     __leavemsg__ = ':sad: {member} left the server' #OPTIONAL sends a leave message to the botserverid system channel
-    __selfassignrole__ = 'NSFW' #OPTIONAL allows to selfassign a role like NSFW on the BOTSERVERID
 
 Alternativ für Heroku oder Docker Umgebungen können environment variables statt einer `config.py` Datei genutzt werden:
 
@@ -195,7 +185,6 @@ Alternativ für Heroku oder Docker Umgebungen können environment variables stat
     DISCORD_KAWAIICHANNEL: '207909155556687872' #OPTIONAL specified a channel where the :kawaii commands gets this pinned messages
     DISCORD_GREETMSG: '{emoji} Welcome {member} on my server!' #OPTIONAL sends a greet message to new user in the botserverid system channel
     DISCORD_LEAVEMSG: ':sad: {member} left the server' #OPTIONAL sends a leave message to the botserverid system channel
-    DISCORD_SELFASSIGNROLE: 'NSFW' #OPTIONAL allows to selfassign a role like NSFW on the BOTSERVERID
 
 
 In `games.py` kann man die Titel der "Playing-" Rotation anpassen. Platzhalter wie `{servers}` oder `{members}` sind möglich.
@@ -234,7 +223,7 @@ Erweiterungen (Cogs) die beim starten aktiviert werden sollen, kann man in `cogs
 
 Support
 -------------
-Gibts auf meinem Discord Server: `https://discord.gg/kPMbPDc`
+Gibts auf meinem Discord Server: `https://discord.gg/xm2TQFt`
 
 
 Troubleshooting
