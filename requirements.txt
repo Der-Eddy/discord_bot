@@ -1,4 +1,4 @@
-aiohttp==3.9.0
+aiohttp==3.9.1
 discord.py==2.3.2
 Pillow==10.1.0
 pytz==2023.3.post1
