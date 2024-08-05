@@ -1,5 +1,5 @@
 ![Avatar](img/ava.png)
-![Slogan](https://i.imgur.com/vfEgGLU.png)
+![Slogan](img/title.png)
 =====================
 
 [![Python3](https://img.shields.io/badge/python-3.9-blue.svg)](https://github.com/Der-Eddy/discord_bot)
