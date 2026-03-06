@@ -72,7 +72,7 @@ jobs:
           password: ${{ secrets.CR_PAT }}
       -
         name: Build and push
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: ./Dockerfile
